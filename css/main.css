@@ -3607,6 +3607,9 @@ div.swiper-slide img {
   background: #fff !important;
   --swiper-theme-color: #ff5722 !important;
 }
+.vpower.txt-right {
+  display: none;
+}
 .cmt-body.valine {
   --more-before: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(246,246,246,0.9));
   --more-after: rgba(246,246,246,0.9);
