@@ -17,28 +17,23 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>苏三</title>
+  <title>pythonpdf：从零开始入坑python - 苏三</title>
 
   
-    <meta name="description" content="2021年11月                                                                                                                    搞开发这么多年来没怎么写过博客，主要吧是因为懒，现在开始慢慢养成写博客的习惯，加油吧，看看能坚持多久~">
+    <meta name="description" content="公司赶项目，没有时间打基础，本着求快和实用的原则，直接开始入坑。 开始前的准备工作这个没的说，第一件事前肯定是安装开发环境 Window 平台安装 Python: 打开 WEB 浏览器访问https:&#x2F;&#x2F;www.python.org&#x2F;downloads&#x2F;windows&#x2F;">
 <meta property="og:type" content="website">
-<meta property="og:title" content="苏三">
-<meta property="og:url" content="https://su3.cn/talk/index.html">
+<meta property="og:title" content="从零开始入坑python，实现报表生成和导出pdf文件(更新中...)">
+<meta property="og:url" content="https://su3.cn/wiki/pythenpdf/index.html">
 <meta property="og:site_name" content="苏三">
-<meta property="og:description" content="2021年11月                                                                                                                    搞开发这么多年来没怎么写过博客，主要吧是因为懒，现在开始慢慢养成写博客的习惯，加油吧，看看能坚持多久~">
+<meta property="og:description" content="公司赶项目，没有时间打基础，本着求快和实用的原则，直接开始入坑。 开始前的准备工作这个没的说，第一件事前肯定是安装开发环境 Window 平台安装 Python: 打开 WEB 浏览器访问https:&#x2F;&#x2F;www.python.org&#x2F;downloads&#x2F;windows&#x2F;">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://su3.cn/pic.jpg">
-<meta property="og:image" content="https://su3.cn/pic.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/custom/cungudafa.jpg">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/custom/cungudafa.jpg">
-<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582636990314&di=2421dcd34e1cc519b7f7f9559afbe7b1&imgtype=0&src=http%3A%2F%2Fpics1.baidu.com%2Ffeed%2Fb17eca8065380cd7531865282a19873258828151.jpeg%3Ftoken%3Dce6f76a2b9dc38c02c91acfc2a4bb8d8%26s%3D3C79EF14C510746516F547E003007036">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/custom/cungudafa.jpg">
-<meta property="article:published_time" content="2021-11-05T09:34:16.405Z">
-<meta property="article:modified_time" content="2021-11-05T09:34:16.405Z">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2013/11/721E917D-CCA5-4F37-8FD6-486315EC8CF8.png">
+<meta property="article:published_time" content="2021-11-05T09:34:43.274Z">
+<meta property="article:modified_time" content="2021-11-05T09:34:43.274Z">
 <meta property="article:author" content="SuSan">
 <meta property="article:tag" content="javascript,java,jquery,uniapp,php,c#,算法,andriod,苏三博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://su3.cn/pic.jpg">
+<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2013/11/721E917D-CCA5-4F37-8FD6-486315EC8CF8.png">
   
   
 
@@ -58,46 +53,27 @@
 
 <body>
   
-
+<div class="l_cover"><article class="cover-wrap md"><div class="preview"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fquanzhan.applemei.com%2Fimg%2Fit%2FpythonLogo.png" height="128px"></div><div class="cover-title"><span>零基础开始python报表生成</span></div><div class="description">因为项目需求，APP需要用到一键生成和导出pdf文件，该数据文件量大，结构复杂，而且需要根据一份半成品pythen代码来入手。</div><div class="start-wrap"><a class="button theme start" href="#start">开始阅读</a></div></article></div><hr>
 
   <div class='l_body' id='start'>
-    <aside class='l_left' layout='page'>
+    <aside class='l_left' layout='wiki'>
     
 
 
 <header class="header">
 
-<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(/p/imgs/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='/p/imgs/2659360.svg';"></a><a class="title" href="/"><div class="main">苏三</div><div class="sub cap">一个不知道干啥的博客</div></a></div>
-<nav class="menu dis-select"><a class="nav-item" href="/">博客</a><a class="nav-item" href="/wiki/">专栏</a><a class="nav-item active" href="/about/">更多</a></nav></header>
+<div class="logo-wrap wiki"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>所有项目</a><a class="title" href="/wiki/pythenpdf/index.html"><div class="main">零基础开始python报表生成</div></a></div>
+</header>
 
-<div class="widgets"><div class='widget-wrap' id='markdown'>
-  <div class='widget-header cap dis-select'>
-    <span class='name'></span>
-  </div>
-  <div class='widget-body fs14'>
-    
-      <p>愿美好与你不期而遇…</p>
+<div class="widgets">
 
-    
-  </div>
-  
-  <!-- <div id="bser" style="position: fixed;left:0;top:0;width:100%;height:100%;background-color:hsl(0, 3%, 6%);opacity:0.5;z-index:99;" onclick="document.getElementById('bser').style='display:none'">
-  </div>
-    <section style="z-index:999;position: fixed;left:20%;top:10%;background-color: white;height: auto;width:80%;min-height: 150px;display: flex;align-items: center;justify-content: center;text-align: center;">
-    <div id="site_search" style="width: 100%;">
-      <input type="text" id="local-search-input" style="width: 80%;height:60px;border:1px solid rgb(56, 56, 56)" placeholder="想要查找什么..." results="0"/>
-      <div id="local-search-result"></div>
-    </div>
-  </section> -->
-
-  </div>
-  <!-- <section style="margin-top:30px;"><div id="site_search"><input type="text" id="local-search-input" style="width: 200px;border:1px solid #000" placeholder="想要查找什么..." results="0"/><div id="local-search-result"></div></div></section> -->
+<div class="widget-wrap single" id="toc"><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">开始前的准备工作</span></a></li></ol></div></div></div>
 
 
 
-<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">说说</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2021%E5%B9%B411%E6%9C%88"><span class="toc-text">2021年11月</span></a></li></ol></div></div></div>
+
 </div>
-<footer class="footer dis-select"><div class="social-wrap"><a class="social" title="GitHub" href="https://su3.cn" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/08a41b181ce68.svg"/></a><a class="social" title="Spotify" href="https://su3.cn/wiki/" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/3845874.svg"/></a><a class="social" title="Unsplash" href="https://su3.cn/about/" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/3616429.svg"/></a><a class="social" title="Comments" href="/about/#comments" rel="noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/942ebbf1a4b91.svg"/></a></div></footer>
+
 
     </aside>
     <div class='l_main'>
@@ -106,104 +82,24 @@
       
 
   
-
-
-  <article class='content md page'>
   
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">苏三</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">专栏</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/pythenpdf/index.html">零基础开始python报表生成</a></div><div id="post-meta">更新于&nbsp;<time datetime="2021-11-05T09:34:43.274Z">2021-11-05</time></div></div>
+
+  <article class='content md wiki'>
+  <h1 class="article-title"><span>从零开始入坑python，实现报表生成和导出pdf文件(更新中...)</span></h1>
+  <p>公司赶项目，没有时间打基础，本着求快和实用的原则，直接开始入坑。</p>
+<h2 id="开始前的准备工作"><a href="#开始前的准备工作" class="headerlink" title="开始前的准备工作"></a>开始前的准备工作</h2><p>这个没的说，第一件事前肯定是安装开发环境</p>
+<p>Window 平台安装 Python:</p>
+<p>打开 WEB 浏览器访问<a target="_blank" rel="noopener" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></p>
+<img class="lazy" alt="苏三" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://www.runoob.com/wp-content/uploads/2013/11/721E917D-CCA5-4F37-8FD6-486315EC8CF8.png">
   
-    <link rel="stylesheet" href="/css/talk.css">
- 
-<h2 id="2021年11月"><a href="#2021年11月" class="headerlink" title="2021年11月"></a>2021年11月</h2><div id="primary" class="content-area" style="">
-    <main id="main" class="site-main" role="main">
-        <div id="shuoshuo_content">
-            <ul class="cbp_tmtimeline">
-                <li> <span class="shuoshuo_author_img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic.jpg" class="avatar avatar-48 zhuan lazy" width="48" height="48"></span>
-                    <a class="cbp_tmlabel" href="">
-                        <p></p>
-                        <p>搞开发这么多年来没怎么写过博客，主要吧是因为懒，现在开始慢慢养成写博客的习惯，加油吧，看看能坚持多久~</p>
-                        <p></p>
-                        <p class="shuoshuo_time"><i class="fa fa-clock-o"></i>
-                            2021年11月5日
-                        </p>
-                    </a>
-                </li>
-                <li> <span class="shuoshuo_author_img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/pic.jpg" class="avatar avatar-48 zhuan lazy" width="48" height="48"></span>
-                    <a class="cbp_tmlabel" href="">
-                        <p></p>
-                        <p>第一条动态~</p>
-                        <p></p>
-                        <p class="shuoshuo_time"><i class="fa fa-clock-o"></i>
-                            2021年11月5日
-                        </p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-</div>
-
-<!-- ## 22
-
-<div id="primary" class="content-area" style="">
-    <main id="main" class="site-main" role="main">
-        <div id="shuoshuo_content">
-            <ul class="cbp_tmtimeline">
-                <li> <span class="shuoshuo_author_img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/custom/cungudafa.jpg" class="avatar avatar-48 zhuan lazy" width="48" height="48"></span>
-                    <a class="cbp_tmlabel" href="">
-                        <p></p>
-                        <p>想要开学，想吃火锅，想吃烧烤，想吃蟹肉煲，想吃鸡脚米线，想喝奶茶~</p>
-                        <iframe frameborder="no" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1338809890&auto=1&height=66"></iframe>
-                        <p></p>
-                        <p class="shuoshuo_time"><i class="fa fa-clock-o"></i>
-                            2020年2月25日
-                        </p>
-                    </a>
-                </li>
-                 <li> <span class="shuoshuo_author_img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/custom/cungudafa.jpg" class="avatar avatar-48 zhuan lazy" width="48" height="48"></span>
-                    <a class="cbp_tmlabel" href="">
-                        <p></p>
-                        <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582636990314&di=2421dcd34e1cc519b7f7f9559afbe7b1&imgtype=0&src=http%3A%2F%2Fpics1.baidu.com%2Ffeed%2Fb17eca8065380cd7531865282a19873258828151.jpeg%3Ftoken%3Dce6f76a2b9dc38c02c91acfc2a4bb8d8%26s%3D3C79EF14C510746516F547E003007036" height="200" width="100" />
-                        <p>武汉加油！中国加油！</p>
-                        <p></p>
-                        <p class="shuoshuo_time"><i class="fa fa-clock-o"></i>
-                            2020年2月25日
-                        </p>
-                    </a>
-                </li>
-                <li> <span class="shuoshuo_author_img"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/cungudafa/cdn/img/custom/cungudafa.jpg" class="avatar avatar-48 zhuan lazy" width="48" height="48"></span>
-                    <a class="cbp_tmlabel" href="">
-                        <p></p>
-                        <p>第一个说说</p>
-                        <p></p>
-                        <p class="shuoshuo_time"><i class="fa fa-clock-o"></i>
-                            2020年2月25日
-                        </p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-</div> -->
 
 
-<script type="text/javascript">
-    (function () {
-        var oldClass = "";
-        var Obj = "";
-        $(".cbp_tmtimeline li").hover(function () {
-            Obj = $(this).children(".shuoshuo_author_img");
-            Obj = Obj.children("img");
-            oldClass = Obj.attr("class");
-            var newClass = oldClass + " zhuan";
-            Obj.attr("class", newClass);
-        }, function () {
-            Obj.attr("class", oldClass);
-        })
-    })
-</script>
-
-  
   </article>
+  
+<br>
 
-
+  
 
   <div class='related-wrap md reveal' id="comments">
     <div class='cmt-title cap theme'>
@@ -216,6 +112,7 @@
 
     </div>
   </div>
+
 
 
 
