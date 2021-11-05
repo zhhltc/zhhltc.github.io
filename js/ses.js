@@ -82,9 +82,12 @@ var searchFunc = function(path, search_id, content_id) {
         }
     })
 };
+
+if ( $("#search_view").length > 0 ) {
 // var path = "../search.xml";
 var path = "https://su3.cn/search.xml";
 searchFunc(path, 'local-search-input', 'local-search-result');
+}
 
 function sercilce(){
     
@@ -93,4 +96,41 @@ function sercilce(){
     else
         $("#search_view").hide();//隐藏div 
 
+}
+
+if ( $("#aplayer").length > 0 ) {
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    listFolded: true,
+    audio: [{
+        name: '最爱',
+        artist: '周慧敏',
+        url: 'http://music.163.com/song/media/outer/url?id=329925.mp3',
+        cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+    },
+    {
+        name: 'Send It',
+        artist: 'feat',
+        url: 'http://music.163.com/song/media/outer/url?id=426291544.mp3',
+        cover: 'https://p3.music.126.net/4ZgCt77ZOVJXegIdVtSo-Q==/109951166442911780.jpg'
+    },
+    {
+        name: 'Friendships',
+        artist: 'Pascal Letoublon',
+        url: 'http://music.163.com/song/media/outer/url?id=505449407.mp3',
+        cover: 'https://p3.music.126.net/FMRlfgv5H-Kwj2eBam8Siw==/109951165623959723.jpg'
+    },
+    {
+        name: '一生何求',
+        artist: '陈百强',
+        url: 'http://music.163.com/song/media/outer/url?id=27874888.mp3',
+        cover: 'https://p3.music.126.net/GusXTGbAGQ-K4EqB_xnQvQ==/109951165441187746.jpg'
+    },
+    {
+        name: '一直很安静',
+        artist: '阿桑',
+        url: 'http://music.163.com/song/media/outer/url?id=1430692755.mp3',
+        cover: 'https://p3.music.126.net/eik40RMjIhS_ydNxyj9VCw==/109951166553471295.jpg'
+    }]
+});
 }
