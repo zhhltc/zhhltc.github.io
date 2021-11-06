@@ -33,9 +33,26 @@ var searchFunc = function(path, search_id, content_id) {
                     var index_content = -1;
                     var first_occur = -1;
                     // 只匹配非空文章
-                    if(data_title != '' && data_content != '') {
+                    // if(data_title != '' && data_content != '') {
+                    //     keywords.forEach(function(keyword, i) {
+                    //         index_title = data_title.indexOf(keyword);
+                    //         index_content = data_content.indexOf(keyword);
+                    //         if( index_title < 0 && index_content < 0 ){
+                    //             isMatch = false;
+                    //         } else {
+                    //             if (index_content < 0) {
+                    //                 index_content = 0;
+                    //             }
+                    //             if (i == 0) {
+                    //                 first_occur = index_content;
+                    //             }
+                    //         }
+                    //     });
+                    // }
+                    if(data_title != '') {
                         keywords.forEach(function(keyword, i) {
                             index_title = data_title.indexOf(keyword);
+                            if(data_content != '')
                             index_content = data_content.indexOf(keyword);
                             if( index_title < 0 && index_content < 0 ){
                                 isMatch = false;
@@ -73,7 +90,8 @@ var searchFunc = function(path, search_id, content_id) {
                                 var regS = new RegExp(keyword, "gi");
                                 match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
                             })
-                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                            if(data_content != '')
+                                str += "<p class=\"search-result\">" + match_content +"...</p>"
                         }
                     }
                 })
