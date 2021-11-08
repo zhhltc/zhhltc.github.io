@@ -149,6 +149,12 @@ const ap = new APlayer({
         artist: '阿桑',
         url: 'http://music.163.com/song/media/outer/url?id=1430692755.mp3',
         cover: 'https://p3.music.126.net/eik40RMjIhS_ydNxyj9VCw==/109951166553471295.jpg'
+    },
+    {
+        name: '金玉良缘',
+        artist: '是菲菲呀',
+        url: 'http://music.163.com/song/media/outer/url?id=1892891519.mp3',
+        cover: 'https://p3.music.126.net/ZfNz87YiVbFao0AYhDzCZw==/109951166582212748.jpg'
     }]
 });
 }

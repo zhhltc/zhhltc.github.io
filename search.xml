@@ -156,6 +156,15 @@
     
     
     <entry>
+      <title>便笺</title>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>categories</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
@@ -184,15 +193,6 @@
     
     <entry>
       <title></title>
-      <link href="/websiteguide/index.html"/>
-      <url>/websiteguide/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/talk/index.html"/>
       <url>/talk/index.html</url>
       
@@ -201,9 +201,45 @@
     
     
     <entry>
-      <title>从零开始入坑python，实现报表生成和导出pdf文件(更新中...)</title>
-      <link href="/wiki/pythenpdf/index.html"/>
-      <url>/wiki/pythenpdf/index.html</url>
+      <title>Flutter 相关问题</title>
+      <link href="/notes/flutter/index.html"/>
+      <url>/notes/flutter/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/notes/ios/index.html"/>
+      <url>/notes/ios/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Mac 相关问题</title>
+      <link href="/notes/mac/index.html"/>
+      <url>/notes/mac/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
       
     </entry>
     
@@ -213,6 +249,15 @@
       <title>认识 Git</title>
       <link href="/wiki/git/index.html"/>
       <url>/wiki/git/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>从零开始入坑python，实现报表生成和导出pdf文件(更新中...)</title>
+      <link href="/wiki/pythenpdf/index.html"/>
+      <url>/wiki/pythenpdf/index.html</url>
       
     </entry>
     
