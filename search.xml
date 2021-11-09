@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>python新的环境下安装所有项目依赖+报错处理</title>
+      <link href="/2021/11/08/pythonyilai/"/>
+      <url>/2021/11/08/pythonyilai/</url>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+            <tag> bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>uniapp退出APP</title>
       <link href="/2021/11/06/exitapp/"/>
       <url>/2021/11/06/exitapp/</url>
@@ -147,15 +172,6 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -165,9 +181,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
@@ -184,15 +200,6 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/talk/index.html"/>
       <url>/talk/index.html</url>
       
@@ -201,9 +208,27 @@
     
     
     <entry>
-      <title>Flutter 相关问题</title>
-      <link href="/notes/flutter/index.html"/>
-      <url>/notes/flutter/index.html</url>
+      <title></title>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/notes/gitnote/index.html"/>
+      <url>/notes/gitnote/index.html</url>
       
     </entry>
     
@@ -219,9 +244,9 @@
     
     
     <entry>
-      <title>Node.js 相关问题</title>
-      <link href="/notes/nodejs/index.html"/>
-      <url>/notes/nodejs/index.html</url>
+      <title>Flutter 相关问题</title>
+      <link href="/notes/flutter/index.html"/>
+      <url>/notes/flutter/index.html</url>
       
     </entry>
     
@@ -237,18 +262,9 @@
     
     
     <entry>
-      <title>服务器相关问题</title>
-      <link href="/notes/server/index.html"/>
-      <url>/notes/server/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>快速开始您的博客之旅</title>
-      <link href="/wiki/stellar/index.html"/>
-      <url>/wiki/stellar/index.html</url>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
       
     </entry>
     
@@ -264,9 +280,9 @@
     
     
     <entry>
-      <title>编写文章以及独立页面</title>
-      <link href="/wiki/stellar/pages/index.html"/>
-      <url>/wiki/stellar/pages/index.html</url>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
       
     </entry>
     
@@ -291,6 +307,24 @@
     
     
     <entry>
+      <title>快速开始您的博客之旅</title>
+      <link href="/wiki/stellar/index.html"/>
+      <url>/wiki/stellar/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>编写文章以及独立页面</title>
+      <link href="/wiki/stellar/pages/index.html"/>
+      <url>/wiki/stellar/pages/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>如何使用半自动化的文档系统</title>
       <link href="/wiki/stellar/wiki-settings/index.html"/>
       <url>/wiki/stellar/wiki-settings/index.html</url>
@@ -303,6 +337,15 @@
       <title>使用标签插件增强阅读体验</title>
       <link href="/wiki/stellar/tag-plugins/index.html"/>
       <url>/wiki/stellar/tag-plugins/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/notes/linuxnote/index.html"/>
+      <url>/notes/linuxnote/index.html</url>
       
     </entry>
     
