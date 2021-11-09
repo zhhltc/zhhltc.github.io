@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Vue-websocket,vue全局通讯</title>
+      <link href="/2021/11/09/websocket/"/>
+      <url>/2021/11/09/websocket/</url>
+      
+      
+      <categories>
+          
+          <category> Vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>python新的环境下安装所有项目依赖+报错处理</title>
       <link href="/2021/11/08/pythonyilai/"/>
       <url>/2021/11/08/pythonyilai/</url>
@@ -172,15 +195,6 @@
     
     
     <entry>
-      <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>categories</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
@@ -191,8 +205,17 @@
     
     <entry>
       <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
       
     </entry>
     
@@ -209,8 +232,8 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
@@ -235,15 +258,6 @@
     
     
     <entry>
-      <title></title>
-      <link href="/notes/ios/index.html"/>
-      <url>/notes/ios/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Flutter 相关问题</title>
       <link href="/notes/flutter/index.html"/>
       <url>/notes/flutter/index.html</url>
@@ -253,9 +267,9 @@
     
     
     <entry>
-      <title>Mac 相关问题</title>
-      <link href="/notes/mac/index.html"/>
-      <url>/notes/mac/index.html</url>
+      <title></title>
+      <link href="/notes/ios/index.html"/>
+      <url>/notes/ios/index.html</url>
       
     </entry>
     
@@ -271,9 +285,9 @@
     
     
     <entry>
-      <title>认识 Git</title>
-      <link href="/wiki/git/index.html"/>
-      <url>/wiki/git/index.html</url>
+      <title>Mac 相关问题</title>
+      <link href="/notes/mac/index.html"/>
+      <url>/notes/mac/index.html</url>
       
     </entry>
     
@@ -289,18 +303,9 @@
     
     
     <entry>
-      <title>探索个性化选项</title>
-      <link href="/wiki/stellar/advanced-settings/index.html"/>
-      <url>/wiki/stellar/advanced-settings/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>基本信息配置</title>
-      <link href="/wiki/stellar/theme-settings/index.html"/>
-      <url>/wiki/stellar/theme-settings/index.html</url>
+      <title>认识 Git</title>
+      <link href="/wiki/git/index.html"/>
+      <url>/wiki/git/index.html</url>
       
     </entry>
     
@@ -319,6 +324,24 @@
       <title>编写文章以及独立页面</title>
       <link href="/wiki/stellar/pages/index.html"/>
       <url>/wiki/stellar/pages/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>探索个性化选项</title>
+      <link href="/wiki/stellar/advanced-settings/index.html"/>
+      <url>/wiki/stellar/advanced-settings/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>基本信息配置</title>
+      <link href="/wiki/stellar/theme-settings/index.html"/>
+      <url>/wiki/stellar/theme-settings/index.html</url>
       
     </entry>
     
