@@ -85,7 +85,7 @@
   <!-- <section style="margin-top:30px;"><div id="site_search"><input type="text" id="local-search-input" style="width: 200px;border:1px solid #000" placeholder="想要查找什么..." results="0"/><div id="local-search-result"></div></div></section> -->
 
 
-<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="line"></div><a class="more-item" href="/2021/11/09/websocket/"><div class="cap"><time>2021-11-09</time><span>Vue</span></div><span class="title">Vue-websocket,vue全局通讯</span></a><div class="line"></div><a class="more-item" href="/2021/11/08/pythonyilai/"><div class="cap"><time>2021-11-08</time><span>python</span></div><span class="title">python新的环境下安装所有项目依赖+报错处理</span></a><div class="line"></div><a class="more-item" href="/2021/11/06/exitapp/"><div class="cap"><time>2021-11-06</time><span>随笔</span></div><span class="title">uniapp退出APP</span></a><div class="line"></div><a class="more-item" href="/2021/11/02/pagesbounce/"><div class="cap"><time>2021-11-06</time><span>uniapp</span></div><span class="title">页面回弹bounce失效问题</span></a><div class="line"></div><a class="more-item" href="/2021/11/03/iosgetidfa/"><div class="cap"><time>2021-11-06</time><span>uniapp</span></div><span class="title">ios获取idfa</span></a></div></div>
+<div class="widget-wrap" id="recent"><div class="widget-header cap dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><div class="line"></div><a class="more-item" href="/2021/11/10/cssheightmax/"><div class="cap"><time>2021-11-10</time><span>css</span></div><span class="title">css设置高度占满</span></a><div class="line"></div><a class="more-item" href="/2021/11/09/websocket/"><div class="cap"><time>2021-11-09</time><span>Vue</span></div><span class="title">Vue-websocket,vue全局通讯</span></a><div class="line"></div><a class="more-item" href="/2021/11/08/pythonyilai/"><div class="cap"><time>2021-11-08</time><span>python</span></div><span class="title">python新的环境下安装所有项目依赖+报错处理</span></a><div class="line"></div><a class="more-item" href="/2021/11/06/exitapp/"><div class="cap"><time>2021-11-06</time><span>随笔</span></div><span class="title">uniapp退出APP</span></a><div class="line"></div><a class="more-item" href="/2021/11/02/pagesbounce/"><div class="cap"><time>2021-11-06</time><span>uniapp</span></div><span class="title">页面回弹bounce失效问题</span></a></div></div>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" title="GitHub" href="https://su3.cn" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/08a41b181ce68.svg"/></a><a class="social" title="Spotify" href="https://su3.cn/wiki/" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/3845874.svg"/></a><a class="social" title="Unsplash" href="https://su3.cn/about/" target="_blank" rel="external nofollow noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/3616429.svg"/></a><a class="social" title="Comments" href="/about/#comments" rel="noopener noreferrer"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/942ebbf1a4b91.svg"/></a></div></footer>
 
@@ -176,6 +176,43 @@
     setInterval("createtime()", 250);
 </script>
 <!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+/*返回顶部 和返回底部*/
+window.onload=function(){
+	/*添加返回顶部按钮*/
+	var a=document.createElement("a"); 
+	a.setAttribute("href","JavaScript:window.scrollTo(0,0);"); 
+	a.setAttribute("id","All_url_totop")
+	a.setAttribute("class","All_url_totop");
+	document.body.appendChild(a);
+	/*添加返回底部的按钮*/
+	var a=document.createElement("a");
+	a.setAttribute("href","JavaScript:window.scrollTo(0,document.body.scrollHeight);"); 
+	a.setAttribute("id","All_url_totop2")
+	a.setAttribute("class","All_url_totop");
+	document.body.appendChild(a);
+}
+</script>
 
       <div class='float-panel mobile-only blur' style='display:none'>
   <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
