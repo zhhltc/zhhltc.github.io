@@ -218,18 +218,18 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
@@ -362,18 +362,18 @@
     
     
     <entry>
-      <title>如何使用半自动化的文档系统</title>
-      <link href="/wiki/stellar/wiki-settings/index.html"/>
-      <url>/wiki/stellar/wiki-settings/index.html</url>
+      <title>基本信息配置</title>
+      <link href="/wiki/stellar/theme-settings/index.html"/>
+      <url>/wiki/stellar/theme-settings/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>基本信息配置</title>
-      <link href="/wiki/stellar/theme-settings/index.html"/>
-      <url>/wiki/stellar/theme-settings/index.html</url>
+      <title>如何使用半自动化的文档系统</title>
+      <link href="/wiki/stellar/wiki-settings/index.html"/>
+      <url>/wiki/stellar/wiki-settings/index.html</url>
       
     </entry>
     
