@@ -4,6 +4,52 @@
   
     
     <entry>
+      <title>navicat连接mysql出现2059错误</title>
+      <link href="/2021/11/11/mysql2059/"/>
+      <url>/2021/11/11/mysql2059/</url>
+      
+      
+      <categories>
+          
+          <category> 报错 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>应用程序无法正常启动(0xc000007b)</title>
+      <link href="/2021/11/11/0xc000007b/"/>
+      <url>/2021/11/11/0xc000007b/</url>
+      
+      
+      <categories>
+          
+          <category> windows </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 报错 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>css设置高度占满</title>
       <link href="/2021/11/10/cssheightmax/"/>
       <url>/2021/11/10/cssheightmax/</url>
@@ -245,18 +291,18 @@
     
     
     <entry>
-      <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title></title>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
@@ -282,8 +328,8 @@
     
     <entry>
       <title></title>
-      <link href="/notes/ios/index.html"/>
-      <url>/notes/ios/index.html</url>
+      <link href="/notes/gitnote/index.html"/>
+      <url>/notes/gitnote/index.html</url>
       
     </entry>
     
@@ -291,8 +337,8 @@
     
     <entry>
       <title></title>
-      <link href="/notes/gitnote/index.html"/>
-      <url>/notes/gitnote/index.html</url>
+      <link href="/notes/ios/index.html"/>
+      <url>/notes/ios/index.html</url>
       
     </entry>
     
@@ -302,15 +348,6 @@
       <title>Mac 相关问题</title>
       <link href="/notes/mac/index.html"/>
       <url>/notes/mac/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Node.js 相关问题</title>
-      <link href="/notes/nodejs/index.html"/>
-      <url>/notes/nodejs/index.html</url>
       
     </entry>
     
@@ -329,6 +366,15 @@
       <title>认识 Git</title>
       <link href="/wiki/git/index.html"/>
       <url>/wiki/git/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
       
     </entry>
     
