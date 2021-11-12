@@ -4,6 +4,351 @@
   
     
     <entry>
+      <title>Vue详细笔记</title>
+      <link href="/2021/11/12/vuenote/"/>
+      <url>/2021/11/12/vuenote/</url>
+      
+      
+      <categories>
+          
+          <category> Vue </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SpringBoot整合Thymleaf实现页面静态化</title>
+      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
+      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot整合富文本编辑器editor.md</title>
+      <link href="/2021/11/12/SpringBoot-editor/"/>
+      <url>/2021/11/12/SpringBoot-editor/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Git常用命令总结</title>
+      <link href="/2021/11/12/git-richang/"/>
+      <url>/2021/11/12/git-richang/</url>
+      
+      
+      <categories>
+          
+          <category> git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java设计模式之——适配器模式</title>
+      <link href="/2021/11/12/java-shejimoshi/"/>
+      <url>/2021/11/12/java-shejimoshi/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JDK集合源码之HashSet解析</title>
+      <link href="/2021/11/12/jdk-HashSet/"/>
+      <url>/2021/11/12/jdk-HashSet/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>nginx限流案例</title>
+      <link href="/2021/11/12/nginx-xianliu/"/>
+      <url>/2021/11/12/nginx-xianliu/</url>
+      
+      
+      <categories>
+          
+          <category> nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot整合swagger入门</title>
+      <link href="/2021/11/12/swagger1/"/>
+      <url>/2021/11/12/swagger1/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker学习笔记2</title>
+      <link href="/2021/11/12/Docker-jinjie/"/>
+      <url>/2021/11/12/Docker-jinjie/</url>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>资源服务器授权以及OAuth2对接微服务</title>
+      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
+      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Docker学习笔记1</title>
+      <link href="/2021/11/12/Docker-rumen/"/>
+      <url>/2021/11/12/Docker-rumen/</url>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Nginx快速入门</title>
+      <link href="/2021/11/12/nginx-rumen/"/>
+      <url>/2021/11/12/nginx-rumen/</url>
+      
+      
+      <categories>
+          
+          <category> Nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>零基础spring学习笔记</title>
+      <link href="/2021/11/12/spring-1/"/>
+      <url>/2021/11/12/spring-1/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot学习笔记</title>
+      <link href="/2021/11/12/SpringBoot-1/"/>
+      <url>/2021/11/12/SpringBoot-1/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SpringCloud笔记</title>
+      <link href="/2021/11/12/springcloudnote/"/>
+      <url>/2021/11/12/springcloudnote/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>navicat连接mysql出现2059错误</title>
       <link href="/2021/11/11/mysql2059/"/>
       <url>/2021/11/11/mysql2059/</url>
@@ -264,18 +609,18 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
@@ -292,8 +637,8 @@
     
     <entry>
       <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
     </entry>
     
@@ -318,18 +663,18 @@
     
     
     <entry>
-      <title></title>
-      <link href="/notes/gitnote/index.html"/>
-      <url>/notes/gitnote/index.html</url>
+      <title>Flutter 相关问题</title>
+      <link href="/notes/flutter/index.html"/>
+      <url>/notes/flutter/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>Flutter 相关问题</title>
-      <link href="/notes/flutter/index.html"/>
-      <url>/notes/flutter/index.html</url>
+      <title></title>
+      <link href="/notes/gitnote/index.html"/>
+      <url>/notes/gitnote/index.html</url>
       
     </entry>
     
@@ -390,9 +735,9 @@
     
     
     <entry>
-      <title>探索个性化选项</title>
-      <link href="/wiki/stellar/advanced-settings/index.html"/>
-      <url>/wiki/stellar/advanced-settings/index.html</url>
+      <title>编写文章以及独立页面</title>
+      <link href="/wiki/stellar/pages/index.html"/>
+      <url>/wiki/stellar/pages/index.html</url>
       
     </entry>
     
@@ -408,18 +753,18 @@
     
     
     <entry>
-      <title>编写文章以及独立页面</title>
-      <link href="/wiki/stellar/pages/index.html"/>
-      <url>/wiki/stellar/pages/index.html</url>
+      <title>如何使用半自动化的文档系统</title>
+      <link href="/wiki/stellar/wiki-settings/index.html"/>
+      <url>/wiki/stellar/wiki-settings/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>如何使用半自动化的文档系统</title>
-      <link href="/wiki/stellar/wiki-settings/index.html"/>
-      <url>/wiki/stellar/wiki-settings/index.html</url>
+      <title>探索个性化选项</title>
+      <link href="/wiki/stellar/advanced-settings/index.html"/>
+      <url>/wiki/stellar/advanced-settings/index.html</url>
       
     </entry>
     

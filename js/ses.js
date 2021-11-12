@@ -159,3 +159,6 @@ const ap = new APlayer({
     }]
 });
 }
+
+
+$('.lazy').zoomify();
