@@ -161,4 +161,11 @@ const ap = new APlayer({
 }
 
 
+$(function(){
+$("script").each(function(i,e){
+if(e.src.indexOf("zoomify.min.js")>=0){
+<!--console.log("zoomify已加载！");-->
 $('.lazy').zoomify();
+}
+});
+});
