@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>springcloud-更换电脑后报错无法解析插件</title>
+      <link href="/2021/11/26/ideabaocuo/"/>
+      <url>/2021/11/26/ideabaocuo/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 报错 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>org.apache.maven.plugins:maven-site-plugin:3.3</title>
       <link href="/2021/11/15/maven3/"/>
       <url>/2021/11/15/maven3/</url>
@@ -18,7 +41,7 @@
       
         <tags>
             
-            <tag> 错误 </tag>
+            <tag> 报错 </tag>
             
         </tags>
       
@@ -96,29 +119,6 @@
     
     
     <entry>
-      <title>Java设计模式之——适配器模式</title>
-      <link href="/2021/11/12/java-shejimoshi/"/>
-      <url>/2021/11/12/java-shejimoshi/</url>
-      
-      
-      <categories>
-          
-          <category> Java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 设计模式 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Git常用命令总结</title>
       <link href="/2021/11/12/git-richang/"/>
       <url>/2021/11/12/git-richang/</url>
@@ -134,6 +134,29 @@
         <tags>
             
             <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java设计模式之——适配器模式</title>
+      <link href="/2021/11/12/java-shejimoshi/"/>
+      <url>/2021/11/12/java-shejimoshi/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
             
         </tags>
       
@@ -172,7 +195,7 @@
       
       <categories>
           
-          <category> nginx </category>
+          <category> Nginx </category>
           
       </categories>
       
@@ -632,15 +655,6 @@
     
     
     <entry>
-      <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>categories</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
@@ -651,8 +665,8 @@
     
     <entry>
       <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
     </entry>
     
@@ -662,6 +676,15 @@
       <title></title>
       <link href="/friends/index.html"/>
       <url>/friends/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
@@ -686,18 +709,18 @@
     
     
     <entry>
-      <title>Flutter 相关问题</title>
-      <link href="/notes/flutter/index.html"/>
-      <url>/notes/flutter/index.html</url>
+      <title></title>
+      <link href="/notes/gitnote/index.html"/>
+      <url>/notes/gitnote/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title></title>
-      <link href="/notes/gitnote/index.html"/>
-      <url>/notes/gitnote/index.html</url>
+      <title>Flutter 相关问题</title>
+      <link href="/notes/flutter/index.html"/>
+      <url>/notes/flutter/index.html</url>
       
     </entry>
     
@@ -713,15 +736,6 @@
     
     
     <entry>
-      <title>服务器相关问题</title>
-      <link href="/notes/server/index.html"/>
-      <url>/notes/server/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Mac 相关问题</title>
       <link href="/notes/mac/index.html"/>
       <url>/notes/mac/index.html</url>
@@ -731,9 +745,18 @@
     
     
     <entry>
-      <title>认识 Git</title>
-      <link href="/wiki/git/index.html"/>
-      <url>/wiki/git/index.html</url>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
       
     </entry>
     
@@ -749,9 +772,18 @@
     
     
     <entry>
-      <title>Node.js 相关问题</title>
-      <link href="/notes/nodejs/index.html"/>
-      <url>/notes/nodejs/index.html</url>
+      <title>认识 Git</title>
+      <link href="/wiki/git/index.html"/>
+      <url>/wiki/git/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>探索个性化选项</title>
+      <link href="/wiki/stellar/advanced-settings/index.html"/>
+      <url>/wiki/stellar/advanced-settings/index.html</url>
       
     </entry>
     
@@ -770,15 +802,6 @@
       <title>基本信息配置</title>
       <link href="/wiki/stellar/theme-settings/index.html"/>
       <url>/wiki/stellar/theme-settings/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>探索个性化选项</title>
-      <link href="/wiki/stellar/advanced-settings/index.html"/>
-      <url>/wiki/stellar/advanced-settings/index.html</url>
       
     </entry>
     

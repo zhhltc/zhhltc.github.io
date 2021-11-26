@@ -162,11 +162,13 @@ if ($("#aplayer").length > 0) {
     });
 }
 
-$(function() {
-    $("script").each(function(i, e) {
-        if (e.src.indexOf("zoomify.min.js") >= 0) { 
-            <!--console.log("zoomify已加载！"); -->
-            $('.lazy').zoomify();
-        }
-    });
-});
+
+//双击放大图片
+// $(function() {
+//     $("script").each(function(i, e) {
+//         if (e.src.indexOf("zoomify.min.js") >= 0) { 
+//             <!--console.log("zoomify已加载！"); -->
+//             $('.lazy').zoomify();
+//         }
+//     });
+// });
