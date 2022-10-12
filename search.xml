@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>笔记本外接显示器关闭笔记本屏幕？</title>
+      <link href="/2022/10/12/bijiben/"/>
+      <url>/2022/10/12/bijiben/</url>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 其他 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>nodejs笔记二</title>
       <link href="/2021/12/07/node_note2/"/>
       <url>/2021/12/07/node_note2/</url>
@@ -142,55 +165,32 @@
     
     
     <entry>
-      <title>资源服务器授权以及OAuth2对接微服务</title>
-      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
-      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
-      
-      
-      <categories>
-          
-          <category> Java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>springboot学习笔记</title>
-      <link href="/2021/11/12/SpringBoot-1/"/>
-      <url>/2021/11/12/SpringBoot-1/</url>
-      
-      
-      <categories>
-          
-          <category> Java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>SpringBoot整合Thymleaf实现页面静态化</title>
       <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
       <url>/2021/11/12/SpringBoot-Thymleaf/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot整合富文本编辑器editor.md</title>
+      <link href="/2021/11/12/SpringBoot-editor/"/>
+      <url>/2021/11/12/SpringBoot-editor/</url>
       
       
       <categories>
@@ -234,9 +234,9 @@
     
     
     <entry>
-      <title>springboot整合富文本编辑器editor.md</title>
-      <link href="/2021/11/12/SpringBoot-editor/"/>
-      <url>/2021/11/12/SpringBoot-editor/</url>
+      <title>资源服务器授权以及OAuth2对接微服务</title>
+      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
+      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
       
       
       <categories>
@@ -326,14 +326,14 @@
     
     
     <entry>
-      <title>nginx限流案例</title>
-      <link href="/2021/11/12/nginx-xianliu/"/>
-      <url>/2021/11/12/nginx-xianliu/</url>
+      <title>springboot学习笔记</title>
+      <link href="/2021/11/12/SpringBoot-1/"/>
+      <url>/2021/11/12/SpringBoot-1/</url>
       
       
       <categories>
           
-          <category> Nginx </category>
+          <category> Java </category>
           
       </categories>
       
@@ -372,9 +372,32 @@
     
     
     <entry>
-      <title>零基础spring学习笔记</title>
-      <link href="/2021/11/12/spring-1/"/>
-      <url>/2021/11/12/spring-1/</url>
+      <title>nginx限流案例</title>
+      <link href="/2021/11/12/nginx-xianliu/"/>
+      <url>/2021/11/12/nginx-xianliu/</url>
+      
+      
+      <categories>
+          
+          <category> Nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot整合swagger入门</title>
+      <link href="/2021/11/12/swagger1/"/>
+      <url>/2021/11/12/swagger1/</url>
       
       
       <categories>
@@ -395,9 +418,9 @@
     
     
     <entry>
-      <title>springboot整合swagger入门</title>
-      <link href="/2021/11/12/swagger1/"/>
-      <url>/2021/11/12/swagger1/</url>
+      <title>零基础spring学习笔记</title>
+      <link href="/2021/11/12/spring-1/"/>
+      <url>/2021/11/12/spring-1/</url>
       
       
       <categories>
@@ -701,9 +724,9 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
       
     </entry>
     
@@ -711,8 +734,8 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
@@ -729,8 +752,17 @@
     
     <entry>
       <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
+      <link href="/talk/index.html"/>
+      <url>/talk/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Flutter 相关问题</title>
+      <link href="/notes/flutter/index.html"/>
+      <url>/notes/flutter/index.html</url>
       
     </entry>
     
@@ -746,9 +778,9 @@
     
     
     <entry>
-      <title>Flutter 相关问题</title>
-      <link href="/notes/flutter/index.html"/>
-      <url>/notes/flutter/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
@@ -765,35 +797,8 @@
     
     <entry>
       <title></title>
-      <link href="/talk/index.html"/>
-      <url>/talk/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/notes/linuxnote/index.html"/>
-      <url>/notes/linuxnote/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/notes/ios/index.html"/>
       <url>/notes/ios/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>服务器相关问题</title>
-      <link href="/notes/server/index.html"/>
-      <url>/notes/server/index.html</url>
       
     </entry>
     
@@ -809,6 +814,15 @@
     
     
     <entry>
+      <title></title>
+      <link href="/notes/linuxnote/index.html"/>
+      <url>/notes/linuxnote/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Node.js 相关问题</title>
       <link href="/notes/nodejs/index.html"/>
       <url>/notes/nodejs/index.html</url>
@@ -818,9 +832,9 @@
     
     
     <entry>
-      <title>认识 Git</title>
-      <link href="/wiki/git/index.html"/>
-      <url>/wiki/git/index.html</url>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
       
     </entry>
     
@@ -836,9 +850,9 @@
     
     
     <entry>
-      <title>探索个性化选项</title>
-      <link href="/wiki/stellar/advanced-settings/index.html"/>
-      <url>/wiki/stellar/advanced-settings/index.html</url>
+      <title>认识 Git</title>
+      <link href="/wiki/git/index.html"/>
+      <url>/wiki/git/index.html</url>
       
     </entry>
     
@@ -854,9 +868,9 @@
     
     
     <entry>
-      <title>如何使用半自动化的文档系统</title>
-      <link href="/wiki/stellar/wiki-settings/index.html"/>
-      <url>/wiki/stellar/wiki-settings/index.html</url>
+      <title>探索个性化选项</title>
+      <link href="/wiki/stellar/advanced-settings/index.html"/>
+      <url>/wiki/stellar/advanced-settings/index.html</url>
       
     </entry>
     
@@ -875,6 +889,15 @@
       <title>基本信息配置</title>
       <link href="/wiki/stellar/theme-settings/index.html"/>
       <url>/wiki/stellar/theme-settings/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何使用半自动化的文档系统</title>
+      <link href="/wiki/stellar/wiki-settings/index.html"/>
+      <url>/wiki/stellar/wiki-settings/index.html</url>
       
     </entry>
     
