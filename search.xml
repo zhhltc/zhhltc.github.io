@@ -142,6 +142,52 @@
     
     
     <entry>
+      <title>资源服务器授权以及OAuth2对接微服务</title>
+      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
+      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot学习笔记</title>
+      <link href="/2021/11/12/SpringBoot-1/"/>
+      <url>/2021/11/12/SpringBoot-1/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SpringBoot整合Thymleaf实现页面静态化</title>
       <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
       <url>/2021/11/12/SpringBoot-Thymleaf/</url>
@@ -211,29 +257,6 @@
     
     
     <entry>
-      <title>资源服务器授权以及OAuth2对接微服务</title>
-      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
-      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
-      
-      
-      <categories>
-          
-          <category> Java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Git常用命令总结</title>
       <link href="/2021/11/12/git-richang/"/>
       <url>/2021/11/12/git-richang/</url>
@@ -242,29 +265,6 @@
       <categories>
           
           <category> git </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>springboot学习笔记</title>
-      <link href="/2021/11/12/SpringBoot-1/"/>
-      <url>/2021/11/12/SpringBoot-1/</url>
-      
-      
-      <categories>
-          
-          <category> Java </category>
           
       </categories>
       
@@ -711,8 +711,8 @@
     
     <entry>
       <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
       
     </entry>
     
@@ -720,8 +720,8 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
     </entry>
     
@@ -740,15 +740,6 @@
       <title>tags</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/talk/index.html"/>
-      <url>/talk/index.html</url>
       
     </entry>
     
@@ -774,8 +765,8 @@
     
     <entry>
       <title></title>
-      <link href="/notes/ios/index.html"/>
-      <url>/notes/ios/index.html</url>
+      <link href="/talk/index.html"/>
+      <url>/talk/index.html</url>
       
     </entry>
     
@@ -791,9 +782,18 @@
     
     
     <entry>
-      <title>Node.js 相关问题</title>
-      <link href="/notes/nodejs/index.html"/>
-      <url>/notes/nodejs/index.html</url>
+      <title></title>
+      <link href="/notes/ios/index.html"/>
+      <url>/notes/ios/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
       
     </entry>
     
@@ -809,9 +809,9 @@
     
     
     <entry>
-      <title>服务器相关问题</title>
-      <link href="/notes/server/index.html"/>
-      <url>/notes/server/index.html</url>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
       
     </entry>
     
@@ -854,18 +854,18 @@
     
     
     <entry>
-      <title>使用标签插件增强阅读体验</title>
-      <link href="/wiki/stellar/tag-plugins/index.html"/>
-      <url>/wiki/stellar/tag-plugins/index.html</url>
+      <title>如何使用半自动化的文档系统</title>
+      <link href="/wiki/stellar/wiki-settings/index.html"/>
+      <url>/wiki/stellar/wiki-settings/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>如何使用半自动化的文档系统</title>
-      <link href="/wiki/stellar/wiki-settings/index.html"/>
-      <url>/wiki/stellar/wiki-settings/index.html</url>
+      <title>使用标签插件增强阅读体验</title>
+      <link href="/wiki/stellar/tag-plugins/index.html"/>
+      <url>/wiki/stellar/tag-plugins/index.html</url>
       
     </entry>
     
