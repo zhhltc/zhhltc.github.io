@@ -17,6 +17,9 @@
     --gap-l: 64px;
   }
 }
+.vpower.txt-right {
+  display: none;
+}
 :root {
   --site-bg: #f8f8f8;
   --block: #f2f2f2;
