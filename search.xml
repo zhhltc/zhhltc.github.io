@@ -4,6 +4,466 @@
   
     
     <entry>
+      <title>Idea-JenKins插件</title>
+      <link href="/2023/01/06/JenKinsidea/"/>
+      <url>/2023/01/06/JenKinsidea/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JenKins配置参考</title>
+      <link href="/2023/01/05/JenKinssh/"/>
+      <url>/2023/01/05/JenKinssh/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SpringWeb调试入口</title>
+      <link href="/2023/01/04/SpringWebDebugging/"/>
+      <url>/2023/01/04/SpringWebDebugging/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>has not been refreshed yet</title>
+      <link href="/2023/01/03/HasNotBeenRefreshedYet/"/>
+      <url>/2023/01/03/HasNotBeenRefreshedYet/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 报错 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>jar启动脚本</title>
+      <link href="/2022/12/19/startfile/"/>
+      <url>/2022/12/19/startfile/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Nginx配置文件</title>
+      <link href="/2022/11/11/Nginx-config/"/>
+      <url>/2022/11/11/Nginx-config/</url>
+      
+      
+      <categories>
+          
+          <category> nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>其他笔记</title>
+      <link href="/2022/11/11/otherNote/"/>
+      <url>/2022/11/11/otherNote/</url>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>rs.getDate()获取日期 时分秒为0</title>
+      <link href="/2022/11/01/java-getTimestamp/"/>
+      <url>/2022/11/01/java-getTimestamp/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>idea打开项目无法引入,解析包和类</title>
+      <link href="/2022/10/19/java-idea-ca/"/>
+      <url>/2022/10/19/java-idea-ca/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 报错 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java,统一接口异常</title>
+      <link href="/2022/10/19/java-RestControllerAdvice/"/>
+      <url>/2022/10/19/java-RestControllerAdvice/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java,统一接口返回</title>
+      <link href="/2022/10/19/java-r/"/>
+      <url>/2022/10/19/java-r/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java,获取当前时间</title>
+      <link href="/2022/10/17/java-gettime%20-%20cur/"/>
+      <url>/2022/10/17/java-gettime%20-%20cur/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java,jdbcTemplate分页实现</title>
+      <link href="/2022/10/17/java-jdbcTemplate-page/"/>
+      <url>/2022/10/17/java-jdbcTemplate-page/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>java,字符串转枚举</title>
+      <link href="/2022/10/17/java-enumtostring/"/>
+      <url>/2022/10/17/java-enumtostring/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>centos7安装whmcs8.5.1</title>
+      <link href="/2022/10/15/centosiwhmcs/"/>
+      <url>/2022/10/15/centosiwhmcs/</url>
+      
+      
+      <categories>
+          
+          <category> whmcs </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Linux安装nginx，并部署html网站</title>
+      <link href="/2022/10/13/centosinginx/"/>
+      <url>/2022/10/13/centosinginx/</url>
+      
+      
+      <categories>
+          
+          <category> nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Centos7下安装Node环境</title>
+      <link href="/2022/10/13/centosinode/"/>
+      <url>/2022/10/13/centosinode/</url>
+      
+      
+      <categories>
+          
+          <category> Node </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>centos（linux） 中运行/停止jar包</title>
+      <link href="/2022/10/13/linuxrunjar/"/>
+      <url>/2022/10/13/linuxrunjar/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Centos安装jdk18</title>
+      <link href="/2022/10/13/cenosijdk18/"/>
+      <url>/2022/10/13/cenosijdk18/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 环境 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>导入数据库文件报1067错误</title>
+      <link href="/2022/10/13/mysql1067/"/>
+      <url>/2022/10/13/mysql1067/</url>
+      
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 报错 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>笔记本外接显示器关闭笔记本屏幕？</title>
       <link href="/2022/10/12/bijiben/"/>
       <url>/2022/10/12/bijiben/</url>
@@ -188,9 +648,9 @@
     
     
     <entry>
-      <title>SpringBoot整合Thymleaf实现页面静态化</title>
-      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
-      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
+      <title>资源服务器授权以及OAuth2对接微服务</title>
+      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
+      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
       
       
       <categories>
@@ -211,9 +671,9 @@
     
     
     <entry>
-      <title>资源服务器授权以及OAuth2对接微服务</title>
-      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
-      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
+      <title>SpringBoot整合Thymleaf实现页面静态化</title>
+      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
+      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
       
       
       <categories>
@@ -349,29 +809,6 @@
     
     
     <entry>
-      <title>Nginx快速入门</title>
-      <link href="/2021/11/12/nginx-rumen/"/>
-      <url>/2021/11/12/nginx-rumen/</url>
-      
-      
-      <categories>
-          
-          <category> Nginx </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>nginx限流案例</title>
       <link href="/2021/11/12/nginx-xianliu/"/>
       <url>/2021/11/12/nginx-xianliu/</url>
@@ -395,9 +832,32 @@
     
     
     <entry>
-      <title>零基础spring学习笔记</title>
-      <link href="/2021/11/12/spring-1/"/>
-      <url>/2021/11/12/spring-1/</url>
+      <title>Nginx快速入门</title>
+      <link href="/2021/11/12/nginx-rumen/"/>
+      <url>/2021/11/12/nginx-rumen/</url>
+      
+      
+      <categories>
+          
+          <category> Nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot整合swagger入门</title>
+      <link href="/2021/11/12/swagger1/"/>
+      <url>/2021/11/12/swagger1/</url>
       
       
       <categories>
@@ -418,9 +878,9 @@
     
     
     <entry>
-      <title>springboot整合swagger入门</title>
-      <link href="/2021/11/12/swagger1/"/>
-      <url>/2021/11/12/swagger1/</url>
+      <title>零基础spring学习笔记</title>
+      <link href="/2021/11/12/spring-1/"/>
+      <url>/2021/11/12/spring-1/</url>
       
       
       <categories>
@@ -725,8 +1185,8 @@
     
     <entry>
       <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <link href="/about/index%20-%20bf.html"/>
+      <url>/about/index%20-%20bf.html</url>
       
     </entry>
     
@@ -734,8 +1194,8 @@
     
     <entry>
       <title></title>
-      <link href="/comments/index.html"/>
-      <url>/comments/index.html</url>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
     </entry>
     
@@ -761,8 +1221,8 @@
     
     <entry>
       <title></title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <link href="/comments/index.html"/>
+      <url>/comments/index.html</url>
       
     </entry>
     
@@ -772,6 +1232,15 @@
       <title></title>
       <link href="/notes/index.html"/>
       <url>/notes/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
     </entry>
     
@@ -796,6 +1265,15 @@
     
     
     <entry>
+      <title></title>
+      <link href="/notes/gitnote/index.html"/>
+      <url>/notes/gitnote/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Flutter 相关问题</title>
       <link href="/notes/flutter/index.html"/>
       <url>/notes/flutter/index.html</url>
@@ -805,9 +1283,18 @@
     
     
     <entry>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title></title>
-      <link href="/notes/gitnote/index.html"/>
-      <url>/notes/gitnote/index.html</url>
+      <link href="/notes/linuxnote/index.html"/>
+      <url>/notes/linuxnote/index.html</url>
       
     </entry>
     
@@ -832,18 +1319,9 @@
     
     
     <entry>
-      <title></title>
-      <link href="/notes/linuxnote/index.html"/>
-      <url>/notes/linuxnote/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Node.js 相关问题</title>
-      <link href="/notes/nodejs/index.html"/>
-      <url>/notes/nodejs/index.html</url>
+      <title>认识 Git</title>
+      <link href="/wiki/git/index.html"/>
+      <url>/wiki/git/index.html</url>
       
     </entry>
     
@@ -868,15 +1346,6 @@
     
     
     <entry>
-      <title>认识 Git</title>
-      <link href="/wiki/git/index.html"/>
-      <url>/wiki/git/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>探索个性化选项</title>
       <link href="/wiki/stellar/advanced-settings/index.html"/>
       <url>/wiki/stellar/advanced-settings/index.html</url>
@@ -895,18 +1364,18 @@
     
     
     <entry>
-      <title>基本信息配置</title>
-      <link href="/wiki/stellar/theme-settings/index.html"/>
-      <url>/wiki/stellar/theme-settings/index.html</url>
+      <title>使用标签插件增强阅读体验</title>
+      <link href="/wiki/stellar/tag-plugins/index.html"/>
+      <url>/wiki/stellar/tag-plugins/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>使用标签插件增强阅读体验</title>
-      <link href="/wiki/stellar/tag-plugins/index.html"/>
-      <url>/wiki/stellar/tag-plugins/index.html</url>
+      <title>基本信息配置</title>
+      <link href="/wiki/stellar/theme-settings/index.html"/>
+      <url>/wiki/stellar/theme-settings/index.html</url>
       
     </entry>
     
