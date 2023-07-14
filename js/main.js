@@ -1,4 +1,5 @@
-console.log('\n' + '%c Stellar v' + stellar.version + ' %c\n' + stellar.github + '\n', 'color:#e8fafe;background:#03c7fa;padding:8px;border-radius:4px', 'margin-top:8px');
+//console.log('\n' + '%c Stellar v' + stellar.version + ' %c\n' + stellar.github + '\n', 'color:#e8fafe;background:#03c7fa;padding:8px;border-radius:4px', 'margin-top:8px');
+console.log('\n' + '%c Su3'  + ' %c\n' +  '\n', 'color:#e8fafe;background:#03c7fa;padding:8px;border-radius:4px', 'margin-top:8px');
 // utils
 const util = {
 
@@ -334,9 +335,10 @@ if (stellar.search.service) {
         var $resultArea = document.querySelector("div#search-result");
         $inputArea.focus(function() {
           var path = stellar.search[stellar.search.service]?.path || '/search.json';
-          if (!path.startsWith('/')) {
-            path = '/' + path;
+           if (path.startsWith('/')) {
+            path = path.substring(1);
           }
+          path = stellar.config.root + path;
           const filter = $inputArea.attr('data-filter') || '';
           searchFunc(path, filter, 'search-input', 'search-result');
         });
@@ -383,4 +385,8 @@ if (stellar.plugins.heti) {
 
     stellar.plugins.heti.enable = false;
   });
+}
+
+if (stellar.plugins.copycode) {
+  stellar.loadScript(stellar.plugins.copycode.js, { defer: true })
 }
