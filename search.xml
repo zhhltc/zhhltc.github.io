@@ -1184,15 +1184,6 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
       <link href="/about/index%20-%20bf.html"/>
       <url>/about/index%20-%20bf.html</url>
@@ -1205,6 +1196,15 @@
       <title></title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
@@ -1301,18 +1301,18 @@
     
     
     <entry>
-      <title>Node.js 相关问题</title>
-      <link href="/notes/nodejs/index.html"/>
-      <url>/notes/nodejs/index.html</url>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>服务器相关问题</title>
-      <link href="/notes/server/index.html"/>
-      <url>/notes/server/index.html</url>
+      <title>Node.js 相关问题</title>
+      <link href="/notes/nodejs/index.html"/>
+      <url>/notes/nodejs/index.html</url>
       
     </entry>
     
