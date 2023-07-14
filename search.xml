@@ -1184,18 +1184,18 @@
     
     
     <entry>
-      <title></title>
-      <link href="/about/index%20-%20bf.html"/>
-      <url>/about/index%20-%20bf.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title></title>
+      <link href="/about/index%20-%20bf.html"/>
+      <url>/about/index%20-%20bf.html</url>
       
     </entry>
     
@@ -1238,15 +1238,6 @@
     
     
     <entry>
-      <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>tags</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
@@ -1257,8 +1248,8 @@
     
     <entry>
       <title></title>
-      <link href="/talk/index.html"/>
-      <url>/talk/index.html</url>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
@@ -1275,8 +1266,8 @@
     
     <entry>
       <title></title>
-      <link href="/notes/ios/index.html"/>
-      <url>/notes/ios/index.html</url>
+      <link href="/talk/index.html"/>
+      <url>/talk/index.html</url>
       
     </entry>
     
@@ -1286,6 +1277,15 @@
       <title></title>
       <link href="/notes/gitnote/index.html"/>
       <url>/notes/gitnote/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/notes/ios/index.html"/>
+      <url>/notes/ios/index.html</url>
       
     </entry>
     
