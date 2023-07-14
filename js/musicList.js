@@ -1,8 +1,8 @@
  const ap = new APlayer({
         container: document.getElementById('player'),
         listFolded: false,
-        fixed: true, //吸底模式
-        mini: false, //迷你模式
+        fixed: false, //吸底模式
+        mini: true, //迷你模式
         listMaxHeight: 900,
         volume: 0.4,
        audio: [{
