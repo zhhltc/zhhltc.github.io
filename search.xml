@@ -1184,15 +1184,6 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
       <link href="/about/index%20-%20bf.html"/>
       <url>/about/index%20-%20bf.html</url>
@@ -1211,6 +1202,15 @@
     
     
     <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title></title>
       <link href="/comments/index.html"/>
       <url>/comments/index.html</url>
@@ -1221,8 +1221,8 @@
     
     <entry>
       <title></title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
       
     </entry>
     
@@ -1230,8 +1230,8 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
     </entry>
     
