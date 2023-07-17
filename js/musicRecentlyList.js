@@ -17,10 +17,88 @@
             url: 'http://music.163.com/song/media/outer/url?id=1401924960.mp3',
             cover: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2016%2F08%2F06%2F30457313657211015_580x580.jpg&refer=http%3A%2F%2Fcdnimg103.lizhi.fm&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1668307514&t=659b012b9400bc6dd6e0e6938d4d7807'
         },
+		{
+            name: '缠绵游戏',
+            artist: '梁汉文',
+            url: 'http://music.163.com/song/media/outer/url?id=1366291340.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
         {
             name: '最爱',
             artist: '周慧敏',
             url: 'http://music.163.com/song/media/outer/url?id=329925.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '无赖',
+            artist: '郑中基',
+            url: 'http://music.163.com/song/media/outer/url?id=1329722731.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '恋曲1990',
+            artist: '罗大佑',
+            url: 'http://music.163.com/song/media/outer/url?id=109198.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '一万个理由',
+            artist: '郑源',
+            url: 'http://music.163.com/song/media/outer/url?id=2003577028.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '天天看到你',
+            artist: '阿杜',
+            url: 'http://music.163.com/song/media/outer/url?id=5258167.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '他一定很爱你',
+            artist: '阿杜',
+            url: 'http://music.163.com/song/media/outer/url?id=5252776.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '黄昏',
+            artist: '周传雄',
+            url: 'http://music.163.com/song/media/outer/url?id=5255640.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '寂寞沙洲冷',
+            artist: '周传雄',
+            url: 'http://music.163.com/song/media/outer/url?id=33916775.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '青花',
+            artist: '周传雄',
+            url: 'http://music.163.com/song/media/outer/url?id=189602.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '男人海洋',
+            artist: '周传雄',
+            url: 'http://music.163.com/song/media/outer/url?id=5239638.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '吻别 (英文版)',
+            artist: 'Sue',
+            url: 'http://music.163.com/song/media/outer/url?id=1911206021.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '拯救',
+            artist: '孙楠',
+            url: 'http://music.163.com/song/media/outer/url?id=145489.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '死性不改',
+            artist: 'kie音乐',
+            url: 'http://music.163.com/song/media/outer/url?id=1332682288.mp3',
             cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
         },
 		{
@@ -35,6 +113,18 @@
             url: 'http://music.163.com/song/media/outer/url?id=5257942.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
+		{
+            name: '难念的经',
+            artist: 'wispering',
+            url: 'http://music.163.com/song/media/outer/url?id=437753278.mp3',
+            cover: 'https://img1.baidu.com/it/u=3773827282,1374643760&fm=253&fmt=auto&app=120&f=JPEG?w=750&h=500'
+        },
+		{
+            name: '难念的经',
+            artist: '亮声open',
+            url: 'http://music.163.com/song/media/outer/url?id=1374028236.mp3',
+            cover: 'https://img1.baidu.com/it/u=3773827282,1374643760&fm=253&fmt=auto&app=120&f=JPEG?w=750&h=500'
+        },
         {
             name: '难念的经',
             artist: '周华健',
@@ -45,6 +135,12 @@
             name: '下一站天后',
             artist: '翘翘',
             url: 'http://music.163.com/song/media/outer/url?id=1418602991.mp3',
+            cover: 'https://img2.baidu.com/it/u=1070975816,873380581&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=451'
+        },
+		 {
+            name: '你',
+            artist: '凉w风',
+            url: 'http://music.163.com/song/media/outer/url?id=1819963069.mp3',
             cover: 'https://img2.baidu.com/it/u=1070975816,873380581&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=451'
         },
         {
@@ -74,13 +170,13 @@
         {
             name: '你瞒我瞒',
             artist: '陈柏宇',
-            url: 'http://music.163.com/song/media/outer/url?id=455345415.mp3',
+            url: 'http://music.163.com/song/media/outer/url?id=2044378969.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
         {
             name: '沉默是金',
             artist: '张国荣',
-            url: 'http://music.163.com/song/media/outer/url?id=1851228571.mp3',
+            url: 'http://music.163.com/song/media/outer/url?id=26018915.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
         {
