@@ -18,6 +18,24 @@
             cover: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdnimg103.lizhi.fm%2Faudio_cover%2F2016%2F08%2F06%2F30457313657211015_580x580.jpg&refer=http%3A%2F%2Fcdnimg103.lizhi.fm&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1668307514&t=659b012b9400bc6dd6e0e6938d4d7807'
         },
 		{
+            name: 'Scarborough Fair',
+            artist: 'Sarah Brightman',
+            url: 'http://music.163.com/song/media/outer/url?id=19168948.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '只要平凡',
+            artist: '张杰 / 张碧晨',
+            url: 'http://music.163.com/song/media/outer/url?id=574919767.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '相思',
+            artist: '毛阿敏',
+            url: 'http://music.163.com/song/media/outer/url?id=276294.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
             name: '缠绵游戏',
             artist: '梁汉文',
             url: 'http://music.163.com/song/media/outer/url?id=1366291340.mp3',
@@ -36,6 +54,36 @@
             cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
         },
 		{
+            name: '放生',
+            artist: 'DJ Coffee',
+            url: 'http://music.163.com/song/media/outer/url?id=25642898.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '爱转角',
+            artist: '罗志祥',
+            url: 'http://music.163.com/song/media/outer/url?id=25642898.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '三生缘',
+            artist: '小栀晚',
+            url: 'http://music.163.com/song/media/outer/url?id=1464253247.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '梦里水乡',
+            artist: '江珊',
+            url: 'http://music.163.com/song/media/outer/url?id=1952813658.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '梨花情',
+            artist: '火雅',
+            url: 'http://music.163.com/song/media/outer/url?id=862099039.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
             name: '恋曲1990',
             artist: '罗大佑',
             url: 'http://music.163.com/song/media/outer/url?id=109198.mp3',
@@ -45,6 +93,24 @@
             name: '一万个理由',
             artist: '郑源',
             url: 'http://music.163.com/song/media/outer/url?id=2003577028.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '笑纳',
+            artist: 'Zhou小喵',
+            url: 'http://music.163.com/song/media/outer/url?id=1990745552.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '亲爱的那不是爱情',
+            artist: '张韶涵',
+            url: 'http://music.163.com/song/media/outer/url?id=36841953.mp3',
+            cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
+        },
+		{
+            name: '梦里花',
+            artist: '苏星婕',
+            url: 'http://music.163.com/song/media/outer/url?id=2005574298.mp3',
             cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
         },
 		{
@@ -114,6 +180,30 @@
             cover: 'https://su3.cn/pic.jpg'
         },
 		{
+            name: '爱的故事上集',
+            artist: '潇雨涓涓',
+            url: 'http://music.163.com/song/media/outer/url?id=1913957365.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '17岁',
+            artist: '潇雨涓涓',
+            url: 'http://music.163.com/song/media/outer/url?id=1914759564.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '你的眼神',
+            artist: '潇雨涓涓',
+            url: 'http://music.163.com/song/media/outer/url?id=2021648858.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '君が好きだと叫びたい',
+            artist: '天狼菌菌菌',
+            url: 'http://music.163.com/song/media/outer/url?id=1468024932.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
             name: '难念的经',
             artist: 'wispering',
             url: 'http://music.163.com/song/media/outer/url?id=437753278.mp3',
@@ -161,10 +251,88 @@
             url: 'http://music.163.com/song/media/outer/url?id=1479526505.mp3',
             cover: 'https://img0.baidu.com/it/u=2571294868,2631998466&fm=253&fmt=auto&app=138&f=JPEG?w=220&h=220'
         },
+		{
+            name: '犯错',
+            artist: '顾峰 / 斯琴高丽',
+            url: 'http://music.163.com/song/media/outer/url?id=1383381667.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '秋天不回来',
+            artist: '王强',
+            url: 'http://music.163.com/song/media/outer/url?id=163123.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '当',
+            artist: '金志文',
+            url: 'http://music.163.com/song/media/outer/url?id=2057712064.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '爱如潮水',
+            artist: '张信哲',
+            url: 'http://music.163.com/song/media/outer/url?id=187338.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '挥着翅膀的女孩',
+            artist: '金美辰',
+            url: 'http://music.163.com/song/media/outer/url?id=423118691.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '画心',
+            artist: '张靓颖',
+            url: 'http://music.163.com/song/media/outer/url?id=327089.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '晚秋',
+            artist: '黄凯芹',
+            url: 'http://music.163.com/song/media/outer/url?id=5257828.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '月半小夜曲',
+            artist: '李克勤',
+            url: 'http://music.163.com/song/media/outer/url?id=115162.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '记事本',
+            artist: '陈慧琳',
+            url: 'http://music.163.com/song/media/outer/url?id=189986.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '千千阕歌',
+            artist: '陈慧娴',
+            url: 'http://music.163.com/song/media/outer/url?id=212233.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '情意结',
+            artist: '陈慧娴',
+            url: 'http://music.163.com/song/media/outer/url?id=211051.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '花心',
+            artist: '周华健',
+            url: 'http://music.163.com/song/media/outer/url?id=187041.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
         {
             name: '偏爱',
             artist: '张芸京',
             url: 'http://music.163.com/song/media/outer/url?id=27731339.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '不可说',
+            artist: '霍建华 / 赵丽颖',
+            url: 'http://music.163.com/song/media/outer/url?id=32317560.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
         {
@@ -197,10 +365,64 @@
             url: 'http://music.163.com/song/media/outer/url?id=212430.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
+		{
+            name: '好久不见',
+            artist: '陈奕迅',
+            url: 'http://music.163.com/song/media/outer/url?id=65538.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '倩女幽魂',
+            artist: '张国荣',
+            url: 'http://music.163.com/song/media/outer/url?id=188175.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '无间道',
+            artist: '刘德华',
+            url: 'http://music.163.com/song/media/outer/url?id=29723039.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '粉红色的回忆',
+            artist: '韩宝仪',
+            url: 'http://music.163.com/song/media/outer/url?id=2036814200.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
         {
             name: '小城大事',
             artist: '杨千嬅',
             url: 'http://music.163.com/song/media/outer/url?id=316756.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '我只在乎你',
+            artist: '邓丽君',
+            url: 'http://music.163.com/song/media/outer/url?id=1888076998.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '雨蝶',
+            artist: '李翊君',
+            url: 'http://music.163.com/song/media/outer/url?id=258498.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '独角戏',
+            artist: '许茹芸',
+            url: 'http://music.163.com/song/media/outer/url?id=406730146.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '七月七日晴',
+            artist: '许慧欣',
+            url: 'http://music.163.com/song/media/outer/url?id=307780.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '断点',
+            artist: '张敬轩',
+            url: 'http://music.163.com/song/media/outer/url?id=1935200319.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
         {
@@ -257,10 +479,28 @@
             url: 'http://music.163.com/song/media/outer/url?id=2534006.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
+		{
+            name: 'My Heart Will Go On',
+            artist: 'Céline Dion',
+            url: 'http://music.163.com/song/media/outer/url?id=2308549.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
         {
             name: 'dream it possible',
             artist: 'Delacey',
             url: 'http://music.163.com/song/media/outer/url?id=38592976.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '眉间雪',
+            artist: 'HITA',
+            url: 'http://music.163.com/song/media/outer/url?id=29567100.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '白骨哀',
+            artist: '凌之轩',
+            url: 'http://music.163.com/song/media/outer/url?id=28819453.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
         {

@@ -25,6 +25,12 @@
             cover: 'https://su3.cn/pic.jpg'
         },
 		{
+            name: '快乐崇拜',
+            artist: '潘玮柏 / 张韶涵',
+            url: 'http://music.163.com/song/media/outer/url?id=139808.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
             name: '8D劲爆环绕',
             artist: '李寒',
             url: 'http://music.163.com/song/media/outer/url?id=1315961674.mp3',
@@ -40,6 +46,12 @@
             name: '慢摇DJ',
             artist: '69',
             url: 'http://music.163.com/song/media/outer/url?id=1406091280.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '黄昏DJ',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1480350899.mp3',
             cover: 'https://su3.cn/pic.jpg'
         },
 		{
