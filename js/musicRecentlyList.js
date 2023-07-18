@@ -56,7 +56,7 @@
 		{
             name: '放生',
             artist: 'DJ Coffee',
-            url: 'http://music.163.com/song/media/outer/url?id=25642898.mp3',
+            url: 'http://music.163.com/song/media/outer/url?id=1936890620.mp3',
             cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
         },
 		{
