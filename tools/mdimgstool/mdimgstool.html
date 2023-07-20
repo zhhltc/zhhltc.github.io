@@ -181,9 +181,9 @@
 					let imgname= Date.parse(new Date())
 							downloadPic(imgArr[0],imgname)
 							imgsgenerate(imgArr[0],imgname);
-							if (imgArr.length == 1){
-							}
+							if (Number(imgArr.length) == 1){
 							alert("处理完毕!")
+							}
 							}else{
 							imgArr.splice(0,1)
 							}
