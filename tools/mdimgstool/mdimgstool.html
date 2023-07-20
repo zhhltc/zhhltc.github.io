@@ -92,7 +92,13 @@
 				        function showImgList(imgArr)
 		        {
 		           if (imgArr.length != 0){
-								document.getElementById('imgone').src = imgArr[0];
+				   if(document.getElementById("rparameters").checked){
+									 var iurls2=imgArr[0].split("?");
+									 document.getElementById('imgone').src = iurls2[0];
+									}else{
+									document.getElementById('imgone').src = imgArr[0];
+									}
+								
 							 document.getElementById('imglen').innerHTML="待处理图片数量："+imgArr.length
 							var imgsrcs= document.getElementById('imgsrc');
 								imgsrcs.innerHTML=""
@@ -182,7 +188,12 @@
 							
 							 
 									let imgname= Date.parse(new Date())
-									downloadPic(imgArr[0],imgname)
+									var iurls=imgArr[0]
+									if(document.getElementById("rparameters").checked){
+									 var iurls2=iurls.split("?");
+									 iurls=iurls2[0]
+									}
+									downloadPic(iurls,imgname)
 									imgsgenerate(imgArr[0],imgname);
 										   if (Number(imgArr.length) == 1){
 																	alert("处理完毕!")
@@ -256,6 +267,12 @@
 				</div>
 
 				<br>
+				
+				<div class="inp">去掉url后面的参数：<input type="checkbox" id="rparameters">
+				</div>
+
+				<br>
+				
 				<div id="imglast" align="center"></div>
 				<br>
 				<input type="button" value="下载图片" onclick="downloadImg()">
