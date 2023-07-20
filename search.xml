@@ -4,6 +4,52 @@
   
     
     <entry>
+      <title>快速转载文章为md文件</title>
+      <link href="/2023/07/20/230720note/"/>
+      <url>/2023/07/20/230720note/</url>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【SpringCloud】微服务笔记</title>
+      <link href="/2023/07/20/230720jsc/"/>
+      <url>/2023/07/20/230720jsc/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Idea-JenKins插件</title>
       <link href="/2023/01/06/JenKinsidea/"/>
       <url>/2023/01/06/JenKinsidea/</url>
@@ -1184,9 +1230,9 @@
     
     
     <entry>
-      <title></title>
-      <link href="/comments/index.html"/>
-      <url>/comments/index.html</url>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
     </entry>
     
@@ -1196,15 +1242,6 @@
       <title></title>
       <link href="/about/index%20-%20bf.html"/>
       <url>/about/index%20-%20bf.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
       
     </entry>
     
@@ -1221,8 +1258,8 @@
     
     <entry>
       <title></title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <link href="/comments/index.html"/>
+      <url>/comments/index.html</url>
       
     </entry>
     
@@ -1232,6 +1269,15 @@
       <title></title>
       <link href="/friends/index.html"/>
       <url>/friends/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
       
     </entry>
     
