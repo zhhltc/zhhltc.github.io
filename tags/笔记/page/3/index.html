@@ -102,8 +102,33 @@
 
 <div class="nav-wrap"><nav class="sub post cap"><a href="/">近期发布</a><a href="/categories">分类</a><a class="active" href="/tags">标签：笔记</a><a href="/archives">归档</a></nav></div>
 
-  <div class="post-list post"><a class="post-card post " href="/2021/11/12/nginx-xianliu/">
+  <div class="post-list post"><a class="post-card post " href="/2021/11/12/OAuth2-duijieweifuwu/">
+<article class="md-text"><h2 class="post-title">资源服务器授权以及OAuth2对接微服务</h2><div class="excerpt"><p>1. 资源服务器授权配置1.1 资源服务授权配置
+
+基本上所有微服务都是资源服务。
+1. 资源服务中配置公钥：
+
+认证服务生成令牌采用非对称加密算法，认证服务采用私钥加密生成令牌，对外向资源服务提供公钥，资源服务使用公钥来校验令牌的合法性。 将公钥拷贝到 public.key 文件中，将此文件拷贝到每一个需要的资源服务工程的classpath(resources目录)下，eg: 用户微服务:...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
+</a><a class="post-card post " href="/2021/11/12/SpringBoot-1/">
+<article class="md-text"><h2 class="post-title">springboot学习笔记</h2><div class="excerpt"><p>源码+笔记哔哩哔哩视频学习链接
+一、Spring Boot 入门1、Spring Boot 简介
+简化Spring应用开发的一个框架；
+整个Spring技术栈的一个大整合；
+J2EE开发的一站式解决方案；
+
+2、微服务2014，martin fowler
+微服务：架构风格（服务微化）
+一个应用应该是一组小型服务；可以通过HTTP的方式进行互通；
+单体应用：ALL IN ONE
+微服务：每一个...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
+</a><a class="post-card post " href="/2021/11/12/git-richang/">
+<article class="md-text"><h2 class="post-title">Git常用命令总结</h2><div class="excerpt"><p>JDK集合源码之HashSet解析</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">git</span></div></article>
+</a><a class="post-card post " href="/2021/11/12/jdk-HashSet/">
+<article class="md-text"><h2 class="post-title">JDK集合源码之HashSet解析</h2><div class="excerpt"><p>JDK集合源码之HashSet解析</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
+</a><a class="post-card post " href="/2021/11/12/nginx-xianliu/">
 <article class="md-text"><h2 class="post-title">nginx限流案例</h2><div class="excerpt"><p>一般情况下，首页的并发量是比较大的，即使 有了多级缓存，当用户不停的刷新页面的时候，也是没有必要的，另外如果有恶意的请求 大量达到，也会对系统造成影响。而限流就是保护措施之一</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Nginx</span></div></article>
+</a><a class="post-card post " href="/2021/11/12/nginx-rumen/">
+<article class="md-text"><h2 class="post-title">Nginx快速入门</h2><div class="excerpt"><p>Nginx 快速入门笔记(带jdk1.8、tomcat、以及相关环境配置介绍 )</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Nginx</span></div></article>
 </a><a class="post-card post " href="/2021/11/12/swagger1/">
 <article class="md-text"><h2 class="post-title">springboot整合swagger入门</h2><div class="excerpt"><p>Swagger 简介学习目标：
 
@@ -122,30 +147,6 @@ Swagger协调前后端分离
 产生的问题
 
 前后端集成，前端或者后端无法做到“及时协商，尽早解决”，最终导致问题集中爆发...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
-</a><a class="post-card post " href="/2021/11/12/Docker-jinjie/">
-<article class="md-text"><h2 class="post-title">Docker学习笔记2</h2><div class="excerpt"><p>容器数据卷什么是容器数据卷将应用和环境打包成一个镜像！
-数据？如果数据都在容器中，那么我们容器删除，数据就会丢失！需求：数据可以持久化
-MySQL，容器删除了，删库跑路！需求：MySQL数据可以存储在本地！
-容器之间可以有一个数据共享的技术！Docker容器中产生的数据，同步到本地！
-这就是卷技术！目录的挂载，将我们容器内的目录，挂载到Linux上面！
-
-
-总结一句话：容器的持久化和同步操作...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Docker</span></div></article>
-</a><a class="post-card post " href="/2021/11/12/OAuth2-duijieweifuwu/">
-<article class="md-text"><h2 class="post-title">资源服务器授权以及OAuth2对接微服务</h2><div class="excerpt"><p>1. 资源服务器授权配置1.1 资源服务授权配置
-
-基本上所有微服务都是资源服务。
-1. 资源服务中配置公钥：
-
-认证服务生成令牌采用非对称加密算法，认证服务采用私钥加密生成令牌，对外向资源服务提供公钥，资源服务使用公钥来校验令牌的合法性。 将公钥拷贝到 public.key 文件中，将此文件拷贝到每一个需要的资源服务工程的classpath(resources目录)下，eg: 用户微服务:...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
-</a><a class="post-card post " href="/2021/11/12/Docker-rumen/">
-<article class="md-text"><h2 class="post-title">Docker学习笔记1</h2><div class="excerpt"><p>Docker 入门笔记整理来源 B站UP主狂神说Javahttps://space.bilibili.com/95256449/
-Docker概述Docker为什么出现？
-一款产品： 开发–上线 两套环境！应用环境，应用配置！
-开发 — 运维。 问题：我在我的电脑上可以允许！版本更新，导致服务不可用！对于运维来说考验十分大？
-环境配置是十分的麻烦，每一个及其都要部署环境(集群Redis、ES...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Docker</span></div></article>
-</a><a class="post-card post " href="/2021/11/12/nginx-rumen/">
-<article class="md-text"><h2 class="post-title">Nginx快速入门</h2><div class="excerpt"><p>Nginx 快速入门笔记(带jdk1.8、tomcat、以及相关环境配置介绍 )</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Nginx</span></div></article>
 </a><a class="post-card post " href="/2021/11/12/spring-1/">
 <article class="md-text"><h2 class="post-title">零基础spring学习笔记</h2><div class="excerpt"><p>Spring概述
 官网地址
@@ -158,18 +159,6 @@ GitHub : https://github.com/spring-projects
 
 1、Spring是一个开源免费的框架 , 容器 .
 2、Spr...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
-</a><a class="post-card post " href="/2021/11/12/SpringBoot-1/">
-<article class="md-text"><h2 class="post-title">springboot学习笔记</h2><div class="excerpt"><p>源码+笔记哔哩哔哩视频学习链接
-一、Spring Boot 入门1、Spring Boot 简介
-简化Spring应用开发的一个框架；
-整个Spring技术栈的一个大整合；
-J2EE开发的一站式解决方案；
-
-2、微服务2014，martin fowler
-微服务：架构风格（服务微化）
-一个应用应该是一组小型服务；可以通过HTTP的方式进行互通；
-单体应用：ALL IN ONE
-微服务：每一个...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T05:35:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
 </a><a class="post-card post " href="/2021/11/12/springcloudnote/">
 <article class="md-text"><h2 class="post-title">SpringCloud笔记</h2><div class="excerpt"><p>SpringCloud学习笔记整理</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2021-11-12T03:52:30.000Z">2021-11-12</time></span><span class="cap breadcrumb">Java</span></div></article>
 </a></div>

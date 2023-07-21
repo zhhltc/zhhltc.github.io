@@ -48,6 +48,36 @@
             cover: 'https://p3.music.126.net/bGlGKwzQ-khugm7a8x5byg==/109951165144456989.jpg'
         },
 		{
+            name: '遇见',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=34200629.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '可能',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1950343972.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '爱很简单',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1460226004.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '此生不换',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=25638340.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '明明就',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2015416433.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
             name: '无赖',
             artist: '郑中基',
             url: 'http://music.163.com/song/media/outer/url?id=1329722731.mp3',
