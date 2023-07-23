@@ -54,6 +54,216 @@
             cover: 'https://su3.cn/pic.jpg'
         },
 		{
+            name: '余香',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=487885426.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '余情未了',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2008514595.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '西界',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=26305536.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '只对你有感觉',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2037432229.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '专属天使',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2016309301.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '为你写诗',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1931262830.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '冬天的秘密',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=189545.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '小小',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1994352928.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '暗香',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2024871964.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '有没有人告诉你',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=25795016.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '不将就',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=31654343.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '错错错',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=5238772.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '很爱很爱你',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=5272886.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '后来',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1447048373.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '情深深雨蒙蒙',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1293910957.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: 'My Love',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2081191.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: 'Burning',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1950524895.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: 'Free_Loop',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2007610164.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: 'That Girl',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=574810340.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: 'DAY BY DAY',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=26089233.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: 'Sexy Love',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=28828593.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '爱你是我最初的梦想',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1826198748.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '凌晨两点半',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=2005956341.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '一眼万年',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1892668021.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '美人鱼',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=108673.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '寂寞在唱歌',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1404900072.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '是你',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1966162185.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '魔鬼中的天使',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1859109376.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '铁血丹心',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1347452811.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '我不想说',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1948780823.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '天下',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=191254.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '月光',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1903371032.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '千年之恋',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=1814617327.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '你的承诺',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=95438.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
+            name: '老人与海',
+            artist: '-',
+            url: 'http://music.163.com/song/media/outer/url?id=95475.mp3',
+            cover: 'https://su3.cn/pic.jpg'
+        },
+		{
             name: '可能',
             artist: '-',
             url: 'http://music.163.com/song/media/outer/url?id=1950343972.mp3',
