@@ -4,6 +4,98 @@
   
     
     <entry>
+      <title>SpringBoot拦截器中获取token中的用户信息并通过注解可以在任何一个Controller上获取到用户基本信息</title>
+      <link href="/2023/09/22/20230922java8/"/>
+      <url>/2023/09/22/20230922java8/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SpringBoot拦截器中获取token中的用户信息并通过注解可以在任何一个Controller上获取到用户基本信息</title>
+      <link href="/2023/09/22/20230922/"/>
+      <url>/2023/09/22/20230922/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>cenos8安装redis7.0.11</title>
+      <link href="/2023/09/21/20230921cenos8-redis/"/>
+      <url>/2023/09/21/20230921cenos8-redis/</url>
+      
+      
+      <categories>
+          
+          <category> 其他 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>cenos8安装mysql5.7</title>
+      <link href="/2023/09/19/20230919/"/>
+      <url>/2023/09/19/20230919/</url>
+      
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【SpringCloud】微服务笔记2</title>
       <link href="/2023/07/20/2023072003jsc/"/>
       <url>/2023/07/20/2023072003jsc/</url>
@@ -671,29 +763,6 @@
     
     
     <entry>
-      <title>Docker学习笔记1</title>
-      <link href="/2021/11/12/Docker-rumen/"/>
-      <url>/2021/11/12/Docker-rumen/</url>
-      
-      
-      <categories>
-          
-          <category> Docker </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Docker学习笔记2</title>
       <link href="/2021/11/12/Docker-jinjie/"/>
       <url>/2021/11/12/Docker-jinjie/</url>
@@ -717,9 +786,32 @@
     
     
     <entry>
-      <title>SpringBoot整合Thymleaf实现页面静态化</title>
-      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
-      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
+      <title>Docker学习笔记1</title>
+      <link href="/2021/11/12/Docker-rumen/"/>
+      <url>/2021/11/12/Docker-rumen/</url>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>资源服务器授权以及OAuth2对接微服务</title>
+      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
+      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
       
       
       <categories>
@@ -740,9 +832,9 @@
     
     
     <entry>
-      <title>资源服务器授权以及OAuth2对接微服务</title>
-      <link href="/2021/11/12/OAuth2-duijieweifuwu/"/>
-      <url>/2021/11/12/OAuth2-duijieweifuwu/</url>
+      <title>SpringBoot整合Thymleaf实现页面静态化</title>
+      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
+      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
       
       
       <categories>
@@ -1254,6 +1346,15 @@
     
     <entry>
       <title></title>
+      <link href="/about/index%20-%20bf.html"/>
+      <url>/about/index%20-%20bf.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
       
@@ -1263,17 +1364,8 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/about/index%20-%20bf.html"/>
-      <url>/about/index%20-%20bf.html</url>
+      <link href="/comments/index.html"/>
+      <url>/comments/index.html</url>
       
     </entry>
     
@@ -1290,8 +1382,26 @@
     
     <entry>
       <title></title>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/talk/index.html"/>
+      <url>/talk/index.html</url>
       
     </entry>
     
@@ -1308,26 +1418,17 @@
     
     <entry>
       <title></title>
-      <link href="/comments/index.html"/>
-      <url>/comments/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/talk/index.html"/>
-      <url>/talk/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/notes/index.html"/>
       <url>/notes/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>认识 Git</title>
+      <link href="/wiki/git/index.html"/>
+      <url>/wiki/git/index.html</url>
       
     </entry>
     
@@ -1361,6 +1462,15 @@
     
     
     <entry>
+      <title></title>
+      <link href="/notes/linuxnote/index.html"/>
+      <url>/notes/linuxnote/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Node.js 相关问题</title>
       <link href="/notes/nodejs/index.html"/>
       <url>/notes/nodejs/index.html</url>
@@ -1382,24 +1492,6 @@
       <title>服务器相关问题</title>
       <link href="/notes/server/index.html"/>
       <url>/notes/server/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/notes/linuxnote/index.html"/>
-      <url>/notes/linuxnote/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>认识 Git</title>
-      <link href="/wiki/git/index.html"/>
-      <url>/wiki/git/index.html</url>
       
     </entry>
     
