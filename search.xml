@@ -4,7 +4,30 @@
   
     
     <entry>
-      <title>SpringBoot拦截器中获取token中的用户信息并通过注解可以在任何一个Controller上获取到用户基本信息</title>
+      <title>全局错误码国际化。枚举中注入bean</title>
+      <link href="/2023/09/25/20230925e/"/>
+      <url>/2023/09/25/20230925e/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>cenos8安装java1.8</title>
       <link href="/2023/09/22/20230922java8/"/>
       <url>/2023/09/22/20230922java8/</url>
       
@@ -763,29 +786,6 @@
     
     
     <entry>
-      <title>Docker学习笔记1</title>
-      <link href="/2021/11/12/Docker-rumen/"/>
-      <url>/2021/11/12/Docker-rumen/</url>
-      
-      
-      <categories>
-          
-          <category> Docker </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Docker学习笔记2</title>
       <link href="/2021/11/12/Docker-jinjie/"/>
       <url>/2021/11/12/Docker-jinjie/</url>
@@ -809,14 +809,14 @@
     
     
     <entry>
-      <title>SpringBoot整合Thymleaf实现页面静态化</title>
-      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
-      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
+      <title>Docker学习笔记1</title>
+      <link href="/2021/11/12/Docker-rumen/"/>
+      <url>/2021/11/12/Docker-rumen/</url>
       
       
       <categories>
           
-          <category> Java </category>
+          <category> Docker </category>
           
       </categories>
       
@@ -855,9 +855,9 @@
     
     
     <entry>
-      <title>springboot学习笔记</title>
-      <link href="/2021/11/12/SpringBoot-1/"/>
-      <url>/2021/11/12/SpringBoot-1/</url>
+      <title>SpringBoot整合Thymleaf实现页面静态化</title>
+      <link href="/2021/11/12/SpringBoot-Thymleaf/"/>
+      <url>/2021/11/12/SpringBoot-Thymleaf/</url>
       
       
       <categories>
@@ -881,6 +881,29 @@
       <title>springboot整合富文本编辑器editor.md</title>
       <link href="/2021/11/12/SpringBoot-editor/"/>
       <url>/2021/11/12/SpringBoot-editor/</url>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>springboot学习笔记</title>
+      <link href="/2021/11/12/SpringBoot-1/"/>
+      <url>/2021/11/12/SpringBoot-1/</url>
       
       
       <categories>
@@ -970,29 +993,6 @@
     
     
     <entry>
-      <title>nginx限流案例</title>
-      <link href="/2021/11/12/nginx-xianliu/"/>
-      <url>/2021/11/12/nginx-xianliu/</url>
-      
-      
-      <categories>
-          
-          <category> Nginx </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 笔记 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Nginx快速入门</title>
       <link href="/2021/11/12/nginx-rumen/"/>
       <url>/2021/11/12/nginx-rumen/</url>
@@ -1016,9 +1016,32 @@
     
     
     <entry>
-      <title>springboot整合swagger入门</title>
-      <link href="/2021/11/12/swagger1/"/>
-      <url>/2021/11/12/swagger1/</url>
+      <title>nginx限流案例</title>
+      <link href="/2021/11/12/nginx-xianliu/"/>
+      <url>/2021/11/12/nginx-xianliu/</url>
+      
+      
+      <categories>
+          
+          <category> Nginx </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>零基础spring学习笔记</title>
+      <link href="/2021/11/12/spring-1/"/>
+      <url>/2021/11/12/spring-1/</url>
       
       
       <categories>
@@ -1039,9 +1062,9 @@
     
     
     <entry>
-      <title>零基础spring学习笔记</title>
-      <link href="/2021/11/12/spring-1/"/>
-      <url>/2021/11/12/spring-1/</url>
+      <title>springboot整合swagger入门</title>
+      <link href="/2021/11/12/swagger1/"/>
+      <url>/2021/11/12/swagger1/</url>
       
       
       <categories>
@@ -1345,6 +1368,24 @@
     
     
     <entry>
+      <title></title>
+      <link href="/comments/index.html"/>
+      <url>/comments/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>categories</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
@@ -1364,15 +1405,6 @@
     
     <entry>
       <title></title>
-      <link href="/friends/index.html"/>
-      <url>/friends/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
       
@@ -1382,8 +1414,8 @@
     
     <entry>
       <title></title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
       
     </entry>
     
@@ -1391,17 +1423,8 @@
     
     <entry>
       <title></title>
-      <link href="/comments/index.html"/>
-      <url>/comments/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <link href="/notes/index.html"/>
+      <url>/notes/index.html</url>
       
     </entry>
     
@@ -1418,8 +1441,17 @@
     
     <entry>
       <title></title>
-      <link href="/notes/gitnote/index.html"/>
-      <url>/notes/gitnote/index.html</url>
+      <link href="/notes/ios/index.html"/>
+      <url>/notes/ios/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
     </entry>
     
@@ -1444,27 +1476,9 @@
     
     
     <entry>
-      <title>Mac 相关问题</title>
-      <link href="/notes/mac/index.html"/>
-      <url>/notes/mac/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title></title>
-      <link href="/notes/ios/index.html"/>
-      <url>/notes/ios/index.html</url>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>服务器相关问题</title>
-      <link href="/notes/server/index.html"/>
-      <url>/notes/server/index.html</url>
+      <link href="/notes/gitnote/index.html"/>
+      <url>/notes/gitnote/index.html</url>
       
     </entry>
     
@@ -1489,9 +1503,18 @@
     
     
     <entry>
-      <title></title>
-      <link href="/notes/index.html"/>
-      <url>/notes/index.html</url>
+      <title>服务器相关问题</title>
+      <link href="/notes/server/index.html"/>
+      <url>/notes/server/index.html</url>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Mac 相关问题</title>
+      <link href="/notes/mac/index.html"/>
+      <url>/notes/mac/index.html</url>
       
     </entry>
     
