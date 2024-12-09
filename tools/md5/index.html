@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="keywords" content="MD5在线加密,MD5加密" />
+	<meta name="description" content="MD5在线加密" />
+    <title>MD5 加密工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e2e3e5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MD5 加密工具</h1>
+    <label for="inputString">输入字符串：</label>
+    <input type="text" id="inputString" placeholder="请输入要加密的字符串">
+    
+    <label for="hashType">选择加密方式：</label>
+    <select id="hashType">
+        <option value="md5_8l">8位小写 MD5</option>
+        <option value="md5_8u">8位大写 MD5</option>
+        <option value="md5_16l">16位小写 MD5</option>
+        <option value="md5_16u">16位大写 MD5</option>
+        <option value="md5_24l">24位小写 MD5</option>
+        <option value="md5_24u">24位大写 MD5</option>
+        <option value="md5_32l" selected>32位小写 MD5</option>
+        <option value="md5_32u">32位大写 MD5</option>
+    </select>
+    
+    <button onclick="generateHash()">加密</button>
+    
+    <div class="result" id="result" style="display: none;">
+        <h3>加密结果：</h3>
+        <p id="hashOutput"></p>
+    </div>
+</div>
+
+<script src="crypto-js.js"></script>
+<script>
+    function generateHash() {
+        const inputString = document.getElementById("inputString").value;
+        const hashType = document.getElementById("hashType").value;
+        let hashOutput = '';
+
+        // 计算 MD5 散列
+        const md5Hash = CryptoJS.MD5(inputString).toString();
+
+        switch (hashType) {
+            case 'md5_8l':
+                hashOutput = md5Hash.substr(0, 8).toLowerCase();
+                break;
+            case 'md5_8u':
+                hashOutput = md5Hash.substr(0, 8).toUpperCase();
+                break;
+            case 'md5_16l':
+                hashOutput = md5Hash.substr(8, 16).toLowerCase();
+                break;
+            case 'md5_16u':
+                hashOutput = md5Hash.substr(8, 16).toUpperCase();
+                break;
+            case 'md5_24l':
+                hashOutput = md5Hash.substr(8, 24).toLowerCase();
+                break;
+            case 'md5_24u':
+                hashOutput = md5Hash.substr(8, 24).toUpperCase();
+                break;
+            case 'md5_32l':
+                hashOutput = md5Hash.toLowerCase();
+                break;
+            case 'md5_32u':
+                hashOutput = md5Hash.toUpperCase();
+                break;
+        }
+
+        document.getElementById("hashOutput").textContent = hashOutput;
+        document.getElementById("result").style.display = "block";
+    }
+</script>
+</body>
+</html>
