@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>驼峰和下划线格式转换</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .result-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    textarea {
+      width: 300px;
+      height: 50px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>驼峰和下划线格式转换</h1>
+  <div class="container">
+    <textarea id="input-text" placeholder="输入文本"></textarea>
+    <button onclick="convertFormat()">转换格式</button>
+    <div class="result-container">
+      <textarea id="camel-text" readonly></textarea>
+      <button onclick="copyText('camel-text')">复制</button>
+      <textarea id="snake-text" readonly></textarea>
+      <button onclick="copyText('snake-text')">复制</button>
+    </div>
+  </div>
+
+  <script>
+    function convertFormat() {
+      // 获取输入文本
+      var inputText = document.getElementById("input-text").value;
+
+      // 转换驼峰格式到下划线格式
+      var camelToSnake = inputText.replace(/(?<!^)(?=[A-Z])/g, "_").toLowerCase();
+
+      // 转换下划线格式到驼峰格式
+      var snakeToCamel = inputText.replace(/(\_\w)/g, function(match) {
+        return match[1].toUpperCase();
+      });
+
+      // 输出转换结果
+      document.getElementById("camel-text").value = snakeToCamel;
+      document.getElementById("snake-text").value = camelToSnake;
+    }
+
+    function copyText(id) {
+      var textToCopy = document.getElementById(id).value;
+      navigator.clipboard.writeText(textToCopy);
+     // alert("已复制到剪贴板: " + textToCopy);
+    }
+  </script>
+</body>
+</html>
