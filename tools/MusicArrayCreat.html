@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MusicArrayCreat</title>
+</head>
+<body>
+  <h1>Music List</h1>
+  <label for="name-input">Name:</label>
+  <input type="text" id="name-input" placeholder="Enter name">
+  <label for="artist-input">Artist:</label>
+  <input type="text" id="artist-input" placeholder="Enter artist">
+  <label for="id-input">ID:</label>
+  <input type="text" id="id-input" placeholder="Enter ID">
+  <button onclick="addToList()">Add</button>
+  <button onclick="copyToClipboard()">Copy to Clipboard</button>
+  <pre id="music-list-output"></pre>
+
+  <script>
+    let musicList = [];
+
+    function addToList() {
+      const nameInput = document.getElementById("name-input");
+      const artistInput = document.getElementById("artist-input");
+      const idInput = document.getElementById("id-input");
+
+      const newItem = {
+        name: nameInput.value,
+        artist: artistInput.value,
+        url: `http://music.163.com/song/media/outer/url?id=${idInput.value}.mp3`,
+        cover: "https://su3.cn/pic.jpg"
+      };
+
+      musicList.push(newItem);
+
+      const musicListOutput = document.getElementById("music-list-output");
+      musicListOutput.textContent = JSON.stringify(musicList, null, 2);
+
+      nameInput.value = "";
+      artistInput.value = "";
+      idInput.value = "";
+    }
+
+    function copyToClipboard() {
+      const musicListOutput = document.getElementById("music-list-output");
+      const musicListText = musicListOutput.textContent;
+
+      navigator.clipboard.writeText(musicListText)
+        .then(() => {
+          console.log('Music list copied to clipboard');
+        })
+        .catch((error) => {
+          console.error('Failed to copy music list to clipboard:', error);
+        });
+    }
+  </script>
+</body>
+</html>
