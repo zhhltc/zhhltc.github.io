@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letter Case Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    textarea {
+      font-size: 24px;
+      padding: 10px;
+      width: 80%;
+      max-width: 600px;
+      height: 200px;
+      resize: none;
+    }
+    
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin-top: 20px;
+	  margin-bottom:20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Letter Case Converter</h1>
+  <textarea id="inputText" placeholder="Enter text here..."></textarea>
+  <br>
+  <button onclick="convertCase()">Convert Case</button>
+  <br>
+  <textarea id="outputText" readonly></textarea>
+
+  <script>
+    function convertCase() {
+      var inputText = document.getElementById("inputText").value;
+      var outputText = "";
+
+      for (var i = 0; i < inputText.length; i++) {
+        var char = inputText.charAt(i);
+        if (char >= 'a' && char <= 'z') {
+          outputText += char.toUpperCase();
+        } else if (char >= 'A' && char <= 'Z') {
+          outputText += char.toLowerCase();
+        } else {
+          outputText += char;
+        }
+      }
+
+      document.getElementById("outputText").value = outputText;
+    }
+  </script>
+</body>
+</html>
