@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Java-list,map常用操作 - 苏三博客</title>
+
+  
+    <meta name="description" content="stream">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-list,map常用操作">
+<meta property="og:url" content="https://su3.cn/2024/06/18/20240617hh/index.html">
+<meta property="og:site_name" content="苏三博客">
+<meta property="og:description" content="stream">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xen.cc/postimg/MybatisCodeHelp0.jpg">
+<meta property="article:published_time" content="2024-06-18T13:20:00.000Z">
+<meta property="article:modified_time" content="2024-08-15T11:30:00.000Z">
+<meta property="article:author" content="SuSan">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xen.cc/postimg/MybatisCodeHelp0.jpg">
+  
+  
+  
+  <meta name="keywords" content="笔记">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/lxgwwenkaiscreen.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar"  style="width:52px;height:52px;" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title" style="font-size: 1.12rem;">苏三博客</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:#CD853F;">- Su3.cn 无限制,有些线路较慢</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:green;">- Xen.cc 静态资源托管加速,限流</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/utils/">工具</a><a class="nav-item" href="/music/">歌单</a><a class="nav-item" href="/about/">更多</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">Java-list,map常用操作</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%8D%87%E5%BA%8F%E5%92%8C%E9%99%8D%E5%BA%8F"><span class="toc-text">简单升序和降序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List%E5%88%86%E9%A1%B5"><span class="toc-text">List分页</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%9B%86%E5%90%88"><span class="toc-text">返回其他类型的集合</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List%E7%94%A8%E5%B1%9E%E6%80%A7%E5%90%8D%E7%A7%B0%E5%8F%98%E9%87%8F%E6%8E%92%E5%BA%8F"><span class="toc-text">List用属性名称变量排序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81%EF%BC%8C%E5%8F%8C%E5%B1%82map"><span class="toc-text">流，双层map</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81map"><span class="toc-text">流map</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81%E5%8D%95map%EF%BC%8C%E5%8D%95%E5%80%BC%E8%BF%87%E6%BB%A4"><span class="toc-text">流单map，单值过滤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81%EF%BC%8Clist%E5%88%86%E7%BB%84"><span class="toc-text">流，list分组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81%EF%BC%8C%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB"><span class="toc-text">流，是否包含</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81%EF%BC%8C%E9%81%8D%E5%8E%86%E4%BF%AE%E6%94%B9list"><span class="toc-text">流，遍历修改list</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%B7%AE%E9%9B%86"><span class="toc-text">简单差集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E4%BA%A4%E9%9B%86"><span class="toc-text">简单交集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%B9%B6%E9%9B%86"><span class="toc-text">简单并集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E4%BA%A4%E9%9B%86%E5%B7%AE%E9%9B%86"><span class="toc-text">对象交集差集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%8E%BB%E9%87%8D"><span class="toc-text">简单去重</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%81%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%EF%BC%8Cmap"><span class="toc-text">流类型转换，map</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BD%AC%E6%95%B0%E7%BB%84"><span class="toc-text">转数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E8%BD%AClist"><span class="toc-text">数组转list</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List%EF%BC%8C%E5%80%92%E5%BA%8F"><span class="toc-text">List，倒序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List%EF%BC%8C%E5%8D%87%E5%BA%8F"><span class="toc-text">List，升序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List-%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">List 转字符串</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8E%BB%E9%99%A4%E5%8F%A6%E5%A4%961%E4%B8%AAlist%E4%B8%AD%E6%9C%89%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-text">去除另外1个list中有的元素</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Java/">Java</a></div><div id="post-meta">发布于&nbsp;<time datetime="2024-06-18T13:20:00.000Z">2024-06-18</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>Java-list,map常用操作</span></h1>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://xen.cc/postimg/MybatisCodeHelp0.jpg" fancybox="true"/></div></div>
+
+<h5 id="简单升序和降序"><a href="#简单升序和降序" class="headerlink" title="简单升序和降序"></a>简单升序和降序</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Long&gt; refactorReports = List.of(<span class="number">5L</span>, <span class="number">3L</span>, <span class="number">9L</span>, <span class="number">1L</span>, <span class="number">4L</span>);</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 升序排序</span></span><br><span class="line"> Collections.sort(refactorReports, Comparator.naturalOrder());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Long&gt; refactorReports = List.of(<span class="number">5L</span>, <span class="number">3L</span>, <span class="number">9L</span>, <span class="number">1L</span>, <span class="number">4L</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 降序排序</span></span><br><span class="line">Collections.sort(refactorReports, Comparator.reverseOrder());</span><br></pre></td></tr></table></figure>
+
+<h5 id="List分页"><a href="#List分页" class="headerlink" title="List分页"></a>List分页</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">voList=voList.stream().skip((<span class="keyword">long</span>) queryDTO.getPageSize() * (queryDTO.getPageNum() - <span class="number">1</span>))</span><br><span class="line">.limit(queryDTO.getPageSize()).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<h5 id="返回其他类型的集合"><a href="#返回其他类型的集合" class="headerlink" title="返回其他类型的集合"></a>返回其他类型的集合</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;ReportTemplateVO&gt; <span class="title">toReportTemplateVO</span><span class="params">(List&lt;RefactorReportTemplate&gt; templates, RefactorReportContentTemplateService contentTemplateService, Boolean isCopy)</span> </span>&#123;</span><br><span class="line">       Map&lt;Long, List&lt;RefactorReportContentTemplate&gt;&gt; contentTemplateMap = contentTemplateService.list().stream().collect(Collectors.groupingBy(RefactorReportContentTemplate::getTemplateBaseId));</span><br><span class="line">       <span class="keyword">return</span> templates.stream()</span><br><span class="line">               .map(template -&gt; &#123;</span><br><span class="line">                   <span class="comment">// 根据模板ID获取对应的内容模板列表，如果不存在则返回空列表</span></span><br><span class="line">                   List&lt;RefactorReportContentTemplate&gt; ct = contentTemplateMap.getOrDefault(template.getTemplateBaseId(), Collections.emptyList());</span><br><span class="line">                   <span class="keyword">return</span> toReportTemplateVO(template, ct, isCopy);</span><br><span class="line">               &#125;).collect(Collectors.toList());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="List用属性名称变量排序"><a href="#List用属性名称变量排序" class="headerlink" title="List用属性名称变量排序"></a>List用属性名称变量排序</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (queryDTO.getAsc()) &#123;</span><br><span class="line">voList.sort(Comparator.comparing(projectRefactorBugVo -&gt; &#123;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">Field field = projectRefactorBugVo.getClass().getSuperclass().getDeclaredField(queryDTO.getSortField());</span><br><span class="line">field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="keyword">return</span> (Comparable) field.get(projectRefactorBugVo);</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">&#125;&#125;, Comparator.naturalOrder()));</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">voList.sort(Comparator.comparing(projectRefactorBugVo -&gt; &#123;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">Field field = projectRefactorBugVo.getClass().getSuperclass().getDeclaredField(queryDTO.getSortField());</span><br><span class="line">field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line"><span class="keyword">return</span> (Comparable) field.get(projectRefactorBugVo);</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">&#125;&#125;, Comparator.reverseOrder()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="流，双层map"><a href="#流，双层map" class="headerlink" title="流，双层map"></a>流，双层map</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Map&lt;String, SysDictDataPlus&gt;&gt; dict = sysDictDataPlusService.list(queryWrapperSysDictDataPlus).stream().collect(Collectors.groupingBy(</span><br><span class="line">SysDictDataPlus::getDictType, <span class="comment">// 外层Map的键</span></span><br><span class="line">Collectors.toMap(SysDictDataPlus::getDictValue, e -&gt; e) <span class="comment">// 内层Map的键和值</span></span><br><span class="line">));</span><br></pre></td></tr></table></figure>
+
+<h5 id="流map"><a href="#流map" class="headerlink" title="流map"></a>流map</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Long, List&lt;RefactorReportInstance&gt;&gt; ins = instanceService.selectInstanceByInsIds(temIdList)</span><br><span class="line">               .stream().collect(Collectors.groupingBy(RefactorReportInstance::getTemplateBaseId));</span><br><span class="line"></span><br><span class="line">Map&lt;Long, SysUser&gt; usMap = userService.list().stream().collect(Collectors.toMap(SysUser::getUserId, t -&gt; t));</span><br></pre></td></tr></table></figure>
+
+<h5 id="流单map，单值过滤"><a href="#流单map，单值过滤" class="headerlink" title="流单map，单值过滤"></a>流单map，单值过滤</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> Map&lt;Long, RefactorReportInstance&gt; collect = instanceService.selectInstanceByInsIds(temIdList).stream().collect(Collectors.toMap(</span><br><span class="line">               RefactorReportInstance::getTemplateBaseId, <span class="comment">// 作为key</span></span><br><span class="line">               e -&gt; e, <span class="comment">// 作为value</span></span><br><span class="line">               (exiValue, newValue) -&gt; &#123; <span class="comment">// 当value冲突时</span></span><br><span class="line">                   <span class="comment">// 比较两个对象的sort字段，返回具有最大sort值的对象</span></span><br><span class="line">                   <span class="keyword">return</span> exiValue.getTemplateInstanceId() &gt;= newValue.getTemplateInstanceId() ? exiValue : newValue;</span><br><span class="line">               &#125;</span><br><span class="line">       ));</span><br><span class="line"></span><br><span class="line">Map&lt;Long, RefactorReportInstance&gt; temIns = instanceService.selectInstanceByInsIds(temIdList).stream().collect(Collectors.toMap(</span><br><span class="line">               RefactorReportInstance::getTemplateBaseId,e -&gt; e,(exiValue, newValue) -&gt; exiValue.getTemplateInstanceId() &gt;= newValue.getTemplateInstanceId() ? exiValue : newValue));</span><br></pre></td></tr></table></figure>
+
+<h5 id="流，list分组"><a href="#流，list分组" class="headerlink" title="流，list分组"></a>流，list分组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Long, List&lt;SysDept&gt;&gt; deptMapBytParentId = list.stream().collect(Collectors.groupingBy(SysDept::getParentId));</span><br></pre></td></tr></table></figure>
+
+<h5 id="流，是否包含"><a href="#流，是否包含" class="headerlink" title="流，是否包含"></a>流，是否包含</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> b = refactorReports.stream().anyMatch(person -&gt; person.getTemplateInstanceId().equals(ins.getTemplateInstanceId()));</span><br></pre></td></tr></table></figure>
+
+<h5 id="流，遍历修改list"><a href="#流，遍历修改list" class="headerlink" title="流，遍历修改list"></a>流，遍历修改list</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">List&lt;RefactorReportContentTemplate&gt; up = delRefactorReportContentTemplate.stream().peek(e -&gt; &#123;</span><br><span class="line">            e.setDelFlag(CommonConstant.DELETED_BYTE);</span><br><span class="line">            e.setUpdateTime(DateTimeUtil.getCurrentBeijingTime());</span><br><span class="line">            e.setUpdateBy(user.getUserName());</span><br><span class="line">        &#125;).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line">  delRefactorReportContentTemplate = delRefactorReportContentTemplate.stream().peek(e -&gt; &#123;</span><br><span class="line">            e.setDelFlag(CommonConstant.DELETED_BYTE);</span><br><span class="line">            e.setUpdateTime(DateTimeUtil.getCurrentBeijingTime());</span><br><span class="line">            e.setUpdateBy(user.getUserName());</span><br><span class="line">        &#125;).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<h5 id="简单差集"><a href="#简单差集" class="headerlink" title="简单差集"></a>简单差集</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Long&gt; diff = reportCountUserIdList.stream()</span><br><span class="line">               .filter(e -&gt; !subUserIdList.contains(e))</span><br><span class="line">               .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<h5 id="简单交集"><a href="#简单交集" class="headerlink" title="简单交集"></a>简单交集</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Long&gt; list1 = List.of(<span class="number">1L</span>, <span class="number">2L</span>, <span class="number">3L</span>);</span><br><span class="line">List&lt;Long&gt; list2 = List.of(<span class="number">2L</span>, <span class="number">3L</span>, <span class="number">4L</span>);</span><br><span class="line"></span><br><span class="line">List&lt;Long&gt; intersection = list1.stream()</span><br><span class="line">           .filter(list2::contains)</span><br><span class="line">           .distinct()</span><br><span class="line">           .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<h5 id="简单并集"><a href="#简单并集" class="headerlink" title="简单并集"></a>简单并集</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A.addAll(B);</span><br><span class="line">List&lt;String&gt; AuB = A.stream().distinct().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<h5 id="对象交集差集"><a href="#对象交集差集" class="headerlink" title="对象交集差集"></a>对象交集差集</h5><p>现在有两个类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassA</span> </span>&#123;</span><br><span class="line">    String id;</span><br><span class="line">    String realName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassA</span><span class="params">(String id, String realName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.realName = realName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;ClassA&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&#x27;&quot;</span> + id + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, realName=&#x27;&quot;</span> + realName + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRealName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> realName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClassB</span> </span>&#123;</span><br><span class="line">    String id;</span><br><span class="line">    String nickName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ClassB</span><span class="params">(String id, String nickName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">        <span class="keyword">this</span>.nickName = nickName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;ClassB&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;id=&#x27;&quot;</span> + id + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, nickName=&#x27;&quot;</span> + nickName + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getNickName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> nickName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>现在有两个集合，分别是ClassA对象的集合、ClassB对象的集合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">List&lt;ClassA&gt; aList = <span class="keyword">new</span> ArrayList&lt;&gt;(Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> ClassA(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;张三&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> ClassA(<span class="string">&quot;2&quot;</span>, <span class="string">&quot;李四&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> ClassA(<span class="string">&quot;3&quot;</span>, <span class="string">&quot;王五&quot;</span>)</span><br><span class="line">));</span><br><span class="line">List&lt;ClassB&gt; bList = <span class="keyword">new</span> ArrayList&lt;&gt;(Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> ClassB(<span class="string">&quot;2&quot;</span>, <span class="string">&quot;李某&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> ClassB(<span class="string">&quot;3&quot;</span>, <span class="string">&quot;王某&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> ClassB(<span class="string">&quot;4&quot;</span>, <span class="string">&quot;赵某&quot;</span>)</span><br><span class="line">));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>基本思想就是想遍历第一个集合，取出第一个集合中的每个元素的某个属性，并使用这个属性遍历第二个集合，看这个属性是否在第二个集合中存在。相当于是有两层循环。<br>Java 8中引入了Stream和Lambda表达式，使用它们无需自己编写for循环，只需一行代码就能实现上述功能。</p>
+<p>代码实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//aList与bList的交集</span></span><br><span class="line">List&lt;ClassA&gt; intersectA = aList</span><br><span class="line">        .stream() <span class="comment">//获取第一个集合的Stream1</span></span><br><span class="line">        .filter(  <span class="comment">//取出Stream1中符合条件的元素组成新的Stream2，lambda表达式1返回值为true时为符合条件</span></span><br><span class="line">                a -&gt;  <span class="comment">//lambda表达式1，a为lambda表达式1的参数，是Stream1中的每个元素</span></span><br><span class="line">                        bList.stream() <span class="comment">//获取第二个集合的Stream3</span></span><br><span class="line">                                .map(ClassB::getId) <span class="comment">//将第二个集合每个元素的id属性取出来，映射成新的一个Stream4</span></span><br><span class="line">                                .anyMatch( <span class="comment">//返回值（boolean）：Stream4中是否至少有一个元素使lambda表达式2返回值为true</span></span><br><span class="line">                                        id -&gt; <span class="comment">//lambda表达式2，id为lambda表达式2的参数，是Stream4中的每个元素</span></span><br><span class="line">                                                Objects.equals(a.getId(), id) <span class="comment">//判断id的值是否相等</span></span><br><span class="line">                                )</span><br><span class="line">        )</span><br><span class="line">        .collect(Collectors.toList()); <span class="comment">//将Stream2转换为List</span></span><br><span class="line">System.out.println(intersectA);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际交集示例</span></span><br><span class="line">List&lt;RefactorReportContentTemplate&gt; upDateRefactorReportContentTemplate = oldContentTemplates.stream()</span><br><span class="line">                .filter(a -&gt; newContentTemplates.stream().map(RefactorReportContentTemplate::getId)</span><br><span class="line">                        .anyMatch(id -&gt; Objects.equals(a.getId(), id))).collect(Collectors.toList());</span><br><span class="line"></span><br><span class="line"><span class="comment">//多条件扩展</span></span><br><span class="line">List&lt;RefactorReportContentTemplate&gt; upDateRefactorReportContentTemplate =</span><br><span class="line">                oldContentTemplates.stream()</span><br><span class="line">                        .filter(oldTemplate -&gt; newContentTemplates.stream()</span><br><span class="line">                                .filter(e -&gt; ObjectUtil.isNotEmpty(e.getId()))</span><br><span class="line">                                .anyMatch(newTemplate -&gt;</span><br><span class="line">                                        Objects.equals(oldTemplate.getId(), newTemplate.getId()) &amp;&amp; (</span><br><span class="line">                                                !oldTemplate.getName().equals(newTemplate.getName()) ||</span><br><span class="line">                                                        !oldTemplate.getStatus().equals(newTemplate.getStatus()) ||</span><br><span class="line">                                                        !oldTemplate.getContentType().equals(newTemplate.getContentType()) ||</span><br><span class="line">                                                        !oldTemplate.getPlaceholder().equals(newTemplate.getPlaceholder()) ||</span><br><span class="line">                                                        !oldTemplate.getCannotEdit().equals(newTemplate.getCannotEdit())</span><br><span class="line">                                        ))).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//bList与aList的差集</span></span><br><span class="line">List&lt;ClassB&gt; differenceB = bList.stream().filter(b -&gt; aList.stream().map(ClassA::getId).noneMatch(id -&gt; Objects.equals(b.getId(), id))).collect(Collectors.toList());</span><br><span class="line">System.out.println(differenceB);</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="简单去重"><a href="#简单去重" class="headerlink" title="简单去重"></a>简单去重</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> List&lt;Long&gt; makeDepts = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="comment">// 假设makeDepts被填充了一些可能包含重复的元素</span></span><br><span class="line"><span class="comment">// 使用Stream API去重</span></span><br><span class="line">makeDepts = makeDepts.stream().distinct().collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<h5 id="流类型转换，map"><a href="#流类型转换，map" class="headerlink" title="流类型转换，map"></a>流类型转换，map</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list(queryWrapperBing).stream().collect(Collectors.groupingBy(</span><br><span class="line">sysDataBindPlus -&gt; Long.valueOf(sysDataBindPlus.getMainId()),</span><br><span class="line">Collectors.toList()));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Long, List&lt;RefactorReport&gt;&gt; collect = reportList.stream().collect(Collectors.groupingBy(RefactorReport::getTemplateInstanceId, Collectors.toList()));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Long, User&gt; userMap = userList.stream()</span><br><span class="line">.collect(Collectors.toMap(User::getId, t -&gt; t));</span><br></pre></td></tr></table></figure>
+
+<h5 id="转数组"><a href="#转数组" class="headerlink" title="转数组"></a>转数组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span>[] pos = sysUserPosts1.stream().mapToLong(SysUserPost::getPostId).toArray();</span><br><span class="line">Long[] pos = sysUserPosts1.stream().map(SysUserPost::getPostId).toArray(Long[]::<span class="keyword">new</span>);</span><br></pre></td></tr></table></figure>
+
+<h5 id="数组转list"><a href="#数组转list" class="headerlink" title="数组转list"></a>数组转list</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Long&gt; longList = Arrays.asList(longArray);</span><br></pre></td></tr></table></figure>
+
+<h5 id="List，倒序"><a href="#List，倒序" class="headerlink" title="List，倒序"></a>List，倒序</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(voList, (s1, s2) -&gt; s2.getState().compareTo(s1.getState()));</span><br></pre></td></tr></table></figure>
+
+<h5 id="List，升序"><a href="#List，升序" class="headerlink" title="List，升序"></a>List，升序</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(voList, Comparator.comparing(ProjectRefactorBugVo::getState));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Strings.isNotBlank(queryDTO.getSortField())) &#123;</span><br><span class="line"><span class="keyword">if</span> (ObjectUtil.isEmpty(queryDTO.getAsc()))</span><br><span class="line">queryDTO.setAsc(<span class="keyword">false</span>);</span><br><span class="line">queryWrapper.last(<span class="string">&quot;order by &quot;</span> + StrUtil.toUnderlineCase(queryDTO.getSortField()) + <span class="string">&quot; &quot;</span> + ((queryDTO.getAsc()) ? <span class="string">&quot;asc&quot;</span> : <span class="string">&quot;desc&quot;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="List-转字符串"><a href="#List-转字符串" class="headerlink" title="List 转字符串"></a>List<String> 转字符串</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String join = String.join(<span class="string">&quot;, &quot;</span>, list);</span><br></pre></td></tr></table></figure>
+
+<h5 id="去除另外1个list中有的元素"><a href="#去除另外1个list中有的元素" class="headerlink" title="去除另外1个list中有的元素"></a>去除另外1个list中有的元素</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">newRole = newRole.stream()</span><br><span class="line">.filter(newRoleItem -&gt; oldRole.stream()</span><br><span class="line">.noneMatch(oldRoleItem -&gt; oldRoleItem.getRoleId().equals(newRoleItem.getRoleId())))</span><br><span class="line">.collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<p>本地懒得启动，就用远程调试。如果要一定要本地调试，就用 ktctl 引导 集群镜像一份流量 到 本地JVM</p>
+
+
+
+<div class="article-footer reveal fs14"><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://su3.cn/2024/06/18/20240617hh/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://su3.cn/2024/06/18/20240617hh/&title=Java-list,map常用操作 - 苏三博客&summary=stream"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=Java-list,map常用操作 - 苏三博客&amp;body=https://su3.cn/2024/06/18/20240617hh/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://su3.cn/2024/06/18/20240617hh/"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/06/18/2024061901/">MybatisPlus条件语句</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2023/09/25/20230925e/">全局错误码国际化。枚举中注入bean</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="zhhltc/blogcomments" data-repo-id="R_kgDOI35Puw" data-category="Announcements" data-category-id="DIC_kwDOI35Pu84CT54y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><div class="BeiAn-info" style="display: flex;text-align: center;margin:10px;justify-content: center; align-items: center;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/beian.png" title="备案管理系统" style="width:15px;height:15px;"> <a href="http://beian.miit.gov.cn/" style="text-decoration:none;" target=_blank title=备案号>赣ICP备17016237号-1</a></div><div  style="display: flex;text-align: center;justify-content: center; align-items: center;"><span id="timeDate">载入天数...</span>|<span id="times">载入时分秒...</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_uv" style="display:none">本站访客数<span id="busuanzi_value_site_uv"></span>人</span></div><script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script><script type="text/javascript" src="/js/dist/zoomify.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer>
+
+<!--添加网站运行时间 -->
+<!--<br/>-->
+
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/01/2021 12:00:00");
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()", 250);
+</script>
+<!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+ if (!window.location.href.includes("music")) {
+        window.onload = function () {
+          /*添加返回顶部按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,0);");
+          a.setAttribute("id", "All_url_totop")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+          /*添加返回底部的按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,document.body.scrollHeight);");
+          a.setAttribute("id", "All_url_totop2")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+        }
+      }
+</script>
+
+        
+        <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+      
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
