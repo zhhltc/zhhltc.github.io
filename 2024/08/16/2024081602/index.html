@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Java中JVM常用参数配置 - 苏三博客</title>
+
+  
+    <meta name="description" content="在实际开发和部署中一些场景需要对JVM的一些参数做合理配置，比如内存配置参数、GC策略配置参数、日志配置参数、异常信息参数等，本文会列出一些常用的JVM参数以及通过一些例子演示配置后的效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中JVM常用参数配置">
+<meta property="og:url" content="https://su3.cn/2024/08/16/2024081602/index.html">
+<meta property="og:site_name" content="苏三博客">
+<meta property="og:description" content="在实际开发和部署中一些场景需要对JVM的一些参数做合理配置，比如内存配置参数、GC策略配置参数、日志配置参数、异常信息参数等，本文会列出一些常用的JVM参数以及通过一些例子演示配置后的效果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xen.cc/postimg/d1e2d49c3a2c6dd38901a4600a9640e7.png">
+<meta property="og:image" content="https://xen.cc/postimg/cef74e62711217b1458dca7e710c155b.png">
+<meta property="og:image" content="https://xen.cc/postimg/8c4575fd40908641c015e050742a32ac.png">
+<meta property="og:image" content="https://xen.cc/postimg/08ac94928051cdd0888d122888a07cd1.png">
+<meta property="article:published_time" content="2024-08-16T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-16T11:00:00.000Z">
+<meta property="article:author" content="SuSan">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xen.cc/postimg/d1e2d49c3a2c6dd38901a4600a9640e7.png">
+  
+  
+  
+  <meta name="keywords" content="笔记">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/lxgwwenkaiscreen.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar"  style="width:52px;height:52px;" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title" style="font-size: 1.12rem;">苏三博客</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:#CD853F;">- Su3.cn 无限制,有些线路较慢</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:green;">- Xen.cc 静态资源托管加速,限流</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/utils/">工具</a><a class="nav-item" href="/music/">歌单</a><a class="nav-item" href="/about/">更多</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">Java中JVM常用参数配置</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%86%85%E5%AD%98%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">一、内存参数配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">二、垃圾收集器配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81GC-%E7%AD%96%E7%95%A5%E9%85%8D%E7%BD%AE"><span class="toc-text">三、GC 策略配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1%E3%80%81%E5%9F%BA%E7%A1%80%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">3.1、基础通用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2%E3%80%81Parallel-%E5%92%8C-Parallel-Old-%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">3.2、Parallel 和 Parallel Old 常用参数配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3%E3%80%81CMS-%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">3.3、CMS 常用参数配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4%E3%80%81G1-%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">3.4、G1 常用参数配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81GC-%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE"><span class="toc-text">四、GC 日志配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81dump-%E6%97%A5%E5%BF%97%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">五、dump 日志参数配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1%E3%80%81OutOfMemory-%E5%BC%82%E5%B8%B8%E6%97%B6%E7%94%9F%E6%88%90-dump-%E6%96%87%E4%BB%B6"><span class="toc-text">5.1、OutOfMemory 异常时生成 dump 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2%E3%80%81%E5%8F%91%E7%94%9F-Full-GC-%E6%97%B6%E7%94%9F%E6%88%90-dump-%E6%96%87%E4%BB%B6"><span class="toc-text">5.2、发生 Full GC 时生成 dump 文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%85%B6%E5%AE%83%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE"><span class="toc-text">六、其它参数配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="toc-text">七、配置示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-1%E3%80%81%E5%9C%A8-IDEA-%E4%B8%AD%E9%85%8D%E7%BD%AE-JVM-%E5%8F%82%E6%95%B0"><span class="toc-text">7.1、在 IDEA 中配置 JVM 参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2%E3%80%81%E9%80%9A%E8%BF%87-Java-jar-%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">7.2、通过 Java -jar 启动配置</span></a></li></ol></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Java/">Java</a></div><div id="post-meta">发布于&nbsp;<time datetime="2024-08-16T11:00:00.000Z">2024-08-16</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>Java中JVM常用参数配置</span></h1>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>      在实际开发和部署中一个合格的码农都会对 JVM 的一些参数做合理的配置，比如内存配置参数、GC 策略配置参数、日志配置参数、异常信息参数等，本文会列出一些常用的 JVM 参数以及通过一些例子演示配置后的效果。</p>
+<p>PS：本文使用 JDK1.8</p>
+<h3 id="一、内存参数配置"><a href="#一、内存参数配置" class="headerlink" title="一、内存参数配置"></a>一、内存参数配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// 设置JVM使Server模式，特点是启动速度较慢，但运行时性能和内存管理效率很高，适用于生产环境。在具有64位能力的JDK环境下默认启用该模式。</span><br><span class="line">-server </span><br><span class="line"></span><br><span class="line">// 设置元空间最大值， 默认是-1， 即不限制， 或者说只受限于本地内存大小,如果超过这个值会内存溢出。</span><br><span class="line">-XX:MaxMetaspaceSize=256m</span><br><span class="line">// 指定元空间触发Fullgc的初始阈值(元空间无固定初始大小)， 以字节为单位，默认是21M，达到该值就会触发full gc进行类型卸载， 同时收集器会对该值进行调整： 如果释放了大量的空间， 就适当降低该值； 如果释放了很少的空间， 那么在不超过-XX:MaxMetaspaceSize（如果设置了的话） 的情况下， 适当提高该值。这个跟早期jdk版本的-XX:PermSize参数意思不一样，-XX:PermSize代表永久代的初始容量。</span><br><span class="line">// 触发一次元空间Full GC后就会重新计算该值，建议设置成和最大内存一致</span><br><span class="line">-XX:MetaspaceSize=256m</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 设置最大堆内存，默认是物理内存的1/4，内存的单位可以是m g，并且不区分大小写</span><br><span class="line">-Xmx2g 或者 -XX:MaxHeapSize=2048m</span><br><span class="line">// 设置初始值堆内存，默认是物理内存的1/64，内存的单位可以是m g，并且不区分大小写</span><br><span class="line">-Xms2g 或者 -XX:InitialHeapSize=2048m</span><br><span class="line">// 设置年轻代内存大小，默认和老年代1\2，-XX:NewSize初始化年轻代大小 -XX:MaxNewSize最大年轻代大小</span><br><span class="line">-Xmn1g 或者 -XX:NewSize=1g -XX:MaxNewSize=1g</span><br><span class="line">// 设置每个线程的堆栈大小 默认是1024k，这个是最大内存并不是开启一个线程马上就会消耗这么多内存</span><br><span class="line">-Xss512k 或者 -XX:ThreadStackSize=512k</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 年轻代占用堆比例（如果有配置-Xmn，那么会以-Xmn配置为准）</span><br><span class="line">// 默认 -XX:NewRatio=2新生代占1,老年代占2,年轻代占整个堆的1/3</span><br><span class="line">// 假如 -XX:NewRatio=4新生代占1,老年代占4,年轻代占整个堆的1/5 NewRatio值就是设置老年代的占比,剩下的1给新生代</span><br><span class="line">-XX:NewRatio=2 </span><br><span class="line">// 用来设置新生代中eden空间和from/to空间的比例.含义:-设置为8代表 eden使用80%的新生代内存 from和to各用10%，默认为8</span><br><span class="line">-XX:SurvivorRatio=8</span><br><span class="line">// 禁用Survivor区自适应策略默认是开启的，如果不关闭这个配置新生代eden区和s0 s1区会在gc后自动调整大小，如果设置了-XX:SurvivorRatio也只有在没有GC之前有效只要GC后就会重新动态计算</span><br><span class="line">-XX:-UseAdaptiveSizePolicy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 扩张堆内存的时机</span><br><span class="line">// 堆内存使用率大于70时扩张堆内存，如果最大堆内存=初始堆内存时该参数无效，默认值70</span><br><span class="line">-XX:MaxHeapFreeRatio=70</span><br><span class="line">// 缩小堆内存的时机</span><br><span class="line">// 堆内存使用率小于40时缩减堆内存，如果最大堆内存=初始堆内存时该参数无效，默认值40</span><br><span class="line">-XX:MinHeapFreeRatio=40</span><br><span class="line"></span><br><span class="line">// 字符串常量池hash桶大小 类似于HashTable，最小值1009 默认60013 不可动态扩容</span><br><span class="line">-XX:StringTableSize=60013</span><br><span class="line"></span><br><span class="line">// 设置直接内存大小，NIO（Non-blocking I/O）中通过ByteBuffer等对象分配的堆外内存</span><br><span class="line">// 默认情况下，直接内存的大小可能会与Java堆的最大值 (-Xmx) 相同</span><br><span class="line">-XX:MaxDirectMemorySize=512m</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="二、垃圾收集器配置"><a href="#二、垃圾收集器配置" class="headerlink" title="二、垃圾收集器配置"></a>二、垃圾收集器配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 配置使用Serial单线程垃圾收集器，虚拟机运行在Client模式下的默认值</span><br><span class="line">// 新生代使用Serial  老年代则使用SerialOld</span><br><span class="line">-XX:+UseSerialGC</span><br><span class="line"></span><br><span class="line">// 配置使用ParNew垃圾收集器</span><br><span class="line">// 新生代使用ParNew 老年代则使用Serial Old</span><br><span class="line">-XX:+UseParNewGC</span><br><span class="line"></span><br><span class="line">// 配置使用Parallel Scavenge垃圾收集器，虚拟机运行在Server模式下的默认值</span><br><span class="line">// 新生代使用Parallel Scavenge 老年代使用Parallel Old收集器</span><br><span class="line">-XX:+UseParallelGC</span><br><span class="line"></span><br><span class="line">// 配置使用Parallel Old垃圾收集器</span><br><span class="line">// 新生代使用Parallel Scavenge 老年代使用Parallel Old收集器</span><br><span class="line">-XX:+UseParallelOldGC</span><br><span class="line"></span><br><span class="line">// 配置使用CMS垃圾收集器</span><br><span class="line">// 新生代使用ParNew 老年代使用CMS+Serial Old收集器</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br><span class="line"></span><br><span class="line">// 配置使用G1垃圾收集器</span><br><span class="line">-XX:+UseG1GC</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以通过<code>jinfo -flags 进程号</code>查看对应 Java 程序启动参数，我本地使用的 JDK1.8 默认使用的<code>ParallelGC</code>  </p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://xen.cc/postimg/d1e2d49c3a2c6dd38901a4600a9640e7.png" fancybox="true"/></div></div>
+
+<h3 id="三、GC-策略配置"><a href="#三、GC-策略配置" class="headerlink" title="三、GC 策略配置"></a>三、GC 策略配置</h3><h4 id="3-1、基础通用配置"><a href="#3-1、基础通用配置" class="headerlink" title="3.1、基础通用配置"></a>3.1、基础通用配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// GC停顿时间，垃圾收集器会尝试用各种手段达到这个时间，比如减小年轻代</span><br><span class="line">-XX:MaxGCPauseMillis </span><br><span class="line"></span><br><span class="line">// 新生代晋升老年代阈值 默认是15 不同回收算法不同</span><br><span class="line">-XX:MaxTenuringThreshold=15</span><br><span class="line"></span><br><span class="line">// 对象动态年龄判断默认50%  当一批对象大小&gt;=survivor区的50%时这批对象会直接放入老年代</span><br><span class="line">-XX:TargetSurvivorRatio=50</span><br><span class="line"></span><br><span class="line">// 默认值是0没有限制 大于这个值的参数直接在老年代分配</span><br><span class="line">// 这样做的目的是避免在Eden区和两个Survivor区之间发生大量的内存复制</span><br><span class="line">‐XX:PretenureSizeThreshold=1m</span><br><span class="line"></span><br><span class="line">// 忽略手动调用GC, System.gc()的调用就会变成一个空调用，完全不触发GC</span><br><span class="line">-XX:+DisableExplicitGC </span><br><span class="line"></span><br><span class="line">// 内存页的大小</span><br><span class="line">-XX:LargePageSizeInBytes=128m </span><br><span class="line"></span><br><span class="line">// 设定GMT区域，避免CentOS坑爹的时区设置</span><br><span class="line">-Duser.timezone=GMT+8</span><br><span class="line"></span><br><span class="line">// FullGC 前执行MinorGC  默认是开启的</span><br><span class="line">-XX:+ScavengeBeforeFullGC</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2、Parallel-和-Parallel-Old-常用参数配置"><a href="#3-2、Parallel-和-Parallel-Old-常用参数配置" class="headerlink" title="3.2、Parallel 和 Parallel Old 常用参数配置"></a>3.2、Parallel 和 Parallel Old 常用参数配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 调整垃圾回收的时间和总时间的占比 公式 1/(1+ratio)  ratio默认是99，100分钟运行时间默认不能超过1分钟的GC时间，ratio一般设置为19</span><br><span class="line">-XX:GCTimeRatio=99</span><br><span class="line"></span><br><span class="line">// GC最大暂停毫秒数 默认是200毫秒 和-XX:+GCTimeRatio有冲突，堆内存小回收速度才会快，而-XX:+GCTimeRatio需要保证一定时间内GC时间不能超过一个临界值需要增加内存才能减小GC时间比，需要找到一个两个参数的合理值</span><br><span class="line">-XX:MaxGCPauseMillis=200ms</span><br><span class="line"></span><br><span class="line">// 设置垃圾回收线程数量 默认是CUP内核数量</span><br><span class="line">-XX:ParallelGCThreads=4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3、CMS-常用参数配置"><a href="#3-3、CMS-常用参数配置" class="headerlink" title="3.3、CMS 常用参数配置"></a>3.3、CMS 常用参数配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// GC最大暂停毫秒数 默认是200毫秒</span><br><span class="line">-XX:MaxGCPauseMillis=200ms</span><br><span class="line"></span><br><span class="line">// 为了加快此阶段处理速度，减少停顿时间，可以开启初始标记并行化</span><br><span class="line">-XX:+CMSParallelInitialMarkEnabled</span><br><span class="line"></span><br><span class="line">// CMS并行线程数量，并行线程用于执行 CMS 垃圾回收器的并行阶段，如初始标记阶段和重新标记阶段</span><br><span class="line">// 默认值为系统的逻辑处理器数量减1，目的是为了保留一个处理器用于应用程序线程</span><br><span class="line">-XX:ParallelCMSThreads=3</span><br><span class="line"></span><br><span class="line">// CMS并发线程数量，并发线程用于执行 CMS 垃圾回收器的并发阶段，如初始标记阶段、并发标记阶段和并发清理阶段。</span><br><span class="line">// 默认值为系统的逻辑处理器数量减1，目的是为了保留一个处理器用于应用程序线程</span><br><span class="line">-XX:ConcGCThreads=3</span><br><span class="line"></span><br><span class="line">// 执行CMS的内存占比 percent=80 当我的老年代内存达到80%触发垃圾回收 默认是92% 应为CMS采用标记清除需要给浮动垃圾（在最后一步并发清除时其它没有被标记的垃圾遗留）预留空间 </span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=percent</span><br><span class="line"></span><br><span class="line">// 该参数需要配合XX:CMSInitiatingOccupancyFraction使用，只使用设定的回收阈值(-XX:CMSInitiatingOccupancyFraction设 定的值)，如果不指定，JVM仅在第一次使用设定值，后续则会自动调整</span><br><span class="line">-XX:+UseCMSInitiatingOccupancyOnly </span><br><span class="line"></span><br><span class="line">// 重新标记阶段前提前进行一次新生代GC，因为重新标记也会判断新生代对象是否引用老年代对象，有些时候新生代对象已经没有被GC root对象引用但是还没有GC时，重新标记会扫描到新生代对象并且保留新生代对象引用的老年代对象，默认关闭false</span><br><span class="line">-XX:CMSScavengeBeforeRemark=true</span><br><span class="line"></span><br><span class="line">// 执行完Full GC后对内存空间进行压缩整理 默认开启</span><br><span class="line">-XX:+UseCMSCompactAtFullGollection</span><br><span class="line"></span><br><span class="line">// 设置在执行多少次Full GC后对内存空间进行压缩整理 默认0次，只要触发Full GC就会进行内存压缩</span><br><span class="line">-XX:CMSFullGCsBeforeCompaction=0</span><br><span class="line"></span><br><span class="line">// 垃圾回收时是否同时卸载不用的class信息，默认关闭</span><br><span class="line">-XX:+CMSClassUnloadingEnabled</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-4、G1-常用参数配置"><a href="#3-4、G1-常用参数配置" class="headerlink" title="3.4、G1 常用参数配置"></a>3.4、G1 常用参数配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// 指定分区大小(1MB~32MB，且必须是2的N次幂)，不设置默认会根据堆大小分配</span><br><span class="line">// 堆内存为1G默认1024个1MB分区、堆内存为2G默认2048个1MB分区、堆内存为4G默认2048个2MB分区、堆内存为4G默认2048个2MB分区、堆内存为6G默认6144个1MB分区、堆内存为8G默认2048个4MB分区、以此类推</span><br><span class="line">-XX:G1HeapRegionSize=2m</span><br><span class="line"></span><br><span class="line">// 目标暂停时间(默认200ms) </span><br><span class="line">-XX:MaxGCPauseMillis=200ms</span><br><span class="line"></span><br><span class="line">// 新生代内存初始空间(默认整堆5%) </span><br><span class="line">// PS: 因为JDK版本问题，在启动时可能会出现 &quot;Error: VM option &#x27;G1NewSizePercent&#x27; is experimental and must be enabled via -XX:+UnlockExperimentalVMOptions.&quot;</span><br><span class="line">// 如果出现上述问题，在启动参数中添加-XX:+UnlockExperimentalVMOptions即可</span><br><span class="line">-XX:G1NewSizePercent=5</span><br><span class="line"></span><br><span class="line">// 新生代内存最大空间 (默认整堆60%) </span><br><span class="line">-XX:G1MaxNewSizePercent=60</span><br><span class="line"></span><br><span class="line">// Survivor区的填充容量(默认50%)，Survivor区域里的一批对象(年龄1+年龄2+年龄n的多个 年龄对象)总和超过了Survivor区域的50%，此时就会把年龄n(含)以上的对象都放入老年代 </span><br><span class="line">-XX:TargetSurvivorRatio=50</span><br><span class="line"></span><br><span class="line">// 最大年龄阈值(默认15) </span><br><span class="line">-XX:MaxTenuringThreshold=15</span><br><span class="line"></span><br><span class="line">// 老年代占用空间达到整堆内存阈值(默认45%)，则执行新生代和老年代的混合收集(MixedGC) </span><br><span class="line">-XX:InitiatingHeapOccupancyPercent=45</span><br><span class="line"></span><br><span class="line">// region中的存活对象低于这个值时才会回收该region，如果超过这个值，存活对象过多，回收的的意义不大(默认65%)。 </span><br><span class="line">-XX:G1MixedGCLiveThresholdPercent=65</span><br><span class="line"></span><br><span class="line">// 在一次回收过程中指定做几次筛选回收(默认8次)，在最后一个筛选回收阶段可以回收一会，然后暂停回收，恢复系统运行，一会再开始回收，这样可以让系统不至于单次停顿时间过长。 </span><br><span class="line">-XX:G1MixedGCCountTarget=8</span><br><span class="line"></span><br><span class="line">// gc过程中空出来的region是否充足阈值，在混合回收的时候，对Region回收都是基于复制算法进行的，都是把要回收的Region里的存活对象放入其他Region，然后这个Region中的垃圾对象全部清理掉，这样的话在回收过程就会不断空出来新的Region，一旦空闲出来的Region数量达到了堆内存的5%，此时就会立即停止混合回收，意味着本次混合回收就结束了(默认5%)。</span><br><span class="line">-XX:G1HeapWastePercent=5</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="四、GC-日志配置"><a href="#四、GC-日志配置" class="headerlink" title="四、GC 日志配置"></a>四、GC 日志配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// 设置日志目录和日志名称</span><br><span class="line">-Xloggc:/data/logs/gc-%t.log</span><br><span class="line"></span><br><span class="line">// 开启滚动生成日志 默认关闭</span><br><span class="line">-XX:+UseGCLogFileRotation</span><br><span class="line">// 滚动GC日志文件数，默认0不滚动，保留最多5个日志文件</span><br><span class="line">-XX:NumberOfGCLogFiles=5</span><br><span class="line">// GC文件滚动大小，需开启UseGCLogFileRotation，每个文件最大为20MB</span><br><span class="line">-XX:GCLogFileSize=20M </span><br><span class="line"></span><br><span class="line">// 在进行GC的前后打印出堆的信息</span><br><span class="line">-XX:+PrintHeapAtGC </span><br><span class="line">// 打印新生代晋升详情</span><br><span class="line">-XX:+PrintTenuringDistribution</span><br><span class="line">// 打印字符串常量池堆信息</span><br><span class="line">-XX:+PrintStringTableStatistics</span><br><span class="line">// 打印GC信息</span><br><span class="line">-verbose:gc </span><br><span class="line">// 打印GC详细信息 </span><br><span class="line">-XX:+PrintGCDetails</span><br><span class="line">// 输出GC的时间戳（以基准时间的形式）</span><br><span class="line">-XX:+PrintGCTimeStamps</span><br><span class="line">// 输出GC的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800）</span><br><span class="line">-XX:+PrintGCDateStamps </span><br><span class="line">// 打印当前JVM参数信息 建议在每个程序中都添加上</span><br><span class="line">-XX:+PrintCommandLineFlags</span><br><span class="line">// 产生GC的原因(默认开启)</span><br><span class="line">-XX:+PrintGCCause</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="五、dump-日志参数配置"><a href="#五、dump-日志参数配置" class="headerlink" title="五、dump 日志参数配置"></a>五、dump 日志参数配置</h3><h4 id="5-1、OutOfMemory-异常时生成-dump-文件"><a href="#5-1、OutOfMemory-异常时生成-dump-文件" class="headerlink" title="5.1、OutOfMemory 异常时生成 dump 文件"></a>5.1、OutOfMemory 异常时生成 dump 文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 默认关闭</span><br><span class="line">// 可以通过jinfo -flag [+|-]HeapDumpOnOutOfMemoryError &lt;pid&gt; 或 jinfo -flag HeapDumpOnOutOfMemoryError=&lt;value&gt; &lt;pid&gt; 来动态开启或设置值</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError</span><br><span class="line">// 设置文件存储路径</span><br><span class="line">// 当HeapDumpOnOutOfMemoryError开启的时候，dump文件的保存路径，默认为工作目录下的，可以通过配置指定保存路径</span><br><span class="line">-XX:HeapDumpPath=/data/dump/jvm.hprof</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-2、发生-Full-GC-时生成-dump-文件"><a href="#5-2、发生-Full-GC-时生成-dump-文件" class="headerlink" title="5.2、发生 Full GC 时生成 dump 文件"></a>5.2、发生 Full GC 时生成 dump 文件</h4><p>不推荐开启会增加整体停顿时间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 在Full GC前dump</span><br><span class="line">-XX:+HeapDumpBeforeFullGC</span><br><span class="line">// 在Full GC后dump</span><br><span class="line">-XX:+HeapDumpAfterFullGC</span><br><span class="line">// 设置Dump保存的路径</span><br><span class="line">-XX:HeapDumpPath=/data/dump/jvm.hprof</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="六、其它参数配置"><a href="#六、其它参数配置" class="headerlink" title="六、其它参数配置"></a>六、其它参数配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// JVM自身故障导致进程奔溃时，会有一个日志文件生成，它包含了导致crash的重要信息，通过分析文件来查找crash原因</span><br><span class="line">-XX:ErrorFile=/data/logs/error.log</span><br><span class="line"></span><br><span class="line">// JDK1.6开始，默认server模式下开启了这个参数，意为当jvm检测到程序在重复抛一个异常</span><br><span class="line">// 在执行若干次后会将异常吞掉，这里的若干次在jdk1.7测得是20707。即执行20707次后，stackTrace 长度会为0。有时这不利于我们排错，通过指定OmitStackTraceInFastThrow，可禁用这功能</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="七、配置示例"><a href="#七、配置示例" class="headerlink" title="七、配置示例"></a>七、配置示例</h3><p>需要配置的参数信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 配置新生代使用Parallel Scavenge 老年代将会使用Parallel Old收集器</span><br><span class="line">-XX:+UseParallelOldGC</span><br><span class="line">// 配置元空间最大内存和初始内存</span><br><span class="line">-XX:MaxMetaspaceSize=256m -XX:MetaspaceSize=256m</span><br><span class="line">// 配置最大堆内存、初始内存、新生代占用内存</span><br><span class="line">-Xmx512m -Xms512m -Xmn256m</span><br><span class="line">// 配置关闭动态调整新生代eden和from to大小比例</span><br><span class="line">-XX:-UseAdaptiveSizePolicy</span><br><span class="line">// 配置忽略手动调用GC和时区</span><br><span class="line">-XX:+DisableExplicitGC -Duser.timezone=GMT+8</span><br><span class="line">// 配置开启记录OOM Dump信息和存储地址</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./jvm.hprof</span><br><span class="line">// 配置打印当前JVM参数信息</span><br><span class="line">-XX:+PrintCommandLineFlags</span><br><span class="line">// 配置开启GC日志输出</span><br><span class="line">-verbose:gc -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCDateStamps -Xloggc:./gc-%t.log</span><br><span class="line">// 配置关闭重复多次抛同一个异常不输出</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">// 配置JVM自身故障导致宕机时日志输出目录</span><br><span class="line">-XX:ErrorFile=./error.log</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="7-1、在-IDEA-中配置-JVM-参数"><a href="#7-1、在-IDEA-中配置-JVM-参数" class="headerlink" title="7.1、在 IDEA 中配置 JVM 参数"></a>7.1、在 IDEA 中配置 JVM 参数</h4><ul>
+<li>  配置参数（注意文件的输出目录，我这里会直接输出在当前目录）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseParallelOldGC</span><br><span class="line">-XX:MaxMetaspaceSize=256m -XX:MetaspaceSize=256m</span><br><span class="line">-Xmx20m -Xms20m -Xmn10m</span><br><span class="line">-XX:-UseAdaptiveSizePolicy</span><br><span class="line">-XX:+DisableExplicitGC -Duser.timezone=GMT+8</span><br><span class="line">-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./jvm.hprof</span><br><span class="line">-XX:+PrintCommandLineFlags</span><br><span class="line">-verbose:gc -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCDateStamps -Xloggc:./gc-%t.log</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">-XX:ErrorFile=./error.log</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  配置流程  </li>
+</ul>
+   <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://xen.cc/postimg/cef74e62711217b1458dca7e710c155b.png" fancybox="true"/></div></div>
+   <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://xen.cc/postimg/8c4575fd40908641c015e050742a32ac.png" fancybox="true"/></div></div>
+   <div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://xen.cc/postimg/08ac94928051cdd0888d122888a07cd1.png" fancybox="true"/></div></div>
+
+<h4 id="7-2、通过-Java-jar-启动配置"><a href="#7-2、通过-Java-jar-启动配置" class="headerlink" title="7.2、通过 Java -jar 启动配置"></a>7.2、通过 Java -jar 启动配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 应用配置示例</span><br><span class="line">nohup java -XX:+UseParallelOldGC -XX:MaxMetaspaceSize=256m -XX:MetaspaceSize=256m -Xmx512m -Xms512m -Xmn256m -XX:-UseAdaptiveSizePolicy -XX:+DisableExplicitGC -Duser.timezone=GMT+8 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=./jvm.hprof -XX:+PrintCommandLineFlags -verbose:gc -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCDateStamps -Xloggc:./gc-%t.log -XX:-OmitStackTraceInFastThrow -XX:ErrorFile=./error.log -jar app.jar &gt; app.log 2&gt;&amp;1 &amp;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<div class="article-footer reveal fs14"><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://su3.cn/2024/08/16/2024081602/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://su3.cn/2024/08/16/2024081602/&title=Java中JVM常用参数配置 - 苏三博客&summary=在实际开发和部署中一些场景需要对JVM的一些参数做合理配置，比如内存配置参数、GC策略配置参数、日志配置参数、异常信息参数等，本文会列出一些常用的JVM参数以及通过一些例子演示配置后的效果。"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=Java中JVM常用参数配置 - 苏三博客&amp;body=https://su3.cn/2024/08/16/2024081602/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://su3.cn/2024/08/16/2024081602/"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/08/19/20240819/">一些注解</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/08/16/20240816/">java -jar 常用命令</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="zhhltc/blogcomments" data-repo-id="R_kgDOI35Puw" data-category="Announcements" data-category-id="DIC_kwDOI35Pu84CT54y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><div class="BeiAn-info" style="display: flex;text-align: center;margin:10px;justify-content: center; align-items: center;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/beian.png" title="备案管理系统" style="width:15px;height:15px;"> <a href="http://beian.miit.gov.cn/" style="text-decoration:none;" target=_blank title=备案号>赣ICP备17016237号-1</a></div><div  style="display: flex;text-align: center;justify-content: center; align-items: center;"><span id="timeDate">载入天数...</span>|<span id="times">载入时分秒...</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_uv" style="display:none">本站访客数<span id="busuanzi_value_site_uv"></span>人</span></div><script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script><script type="text/javascript" src="/js/dist/zoomify.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer>
+
+<!--添加网站运行时间 -->
+<!--<br/>-->
+
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/01/2021 12:00:00");
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()", 250);
+</script>
+<!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+ if (!window.location.href.includes("music")) {
+        window.onload = function () {
+          /*添加返回顶部按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,0);");
+          a.setAttribute("id", "All_url_totop")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+          /*添加返回底部的按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,document.body.scrollHeight);");
+          a.setAttribute("id", "All_url_totop2")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+        }
+      }
+</script>
+
+        
+        <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+      
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
