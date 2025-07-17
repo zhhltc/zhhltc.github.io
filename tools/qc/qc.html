@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            字符串在线去重
+        </title>
+        <meta name="keywords" content="JS代码美化换,JS代码格式化">
+        <meta name="description" content="JS代码美化、加密压缩。">
+        <link rel="stylesheet" type="text/css" href="css/tool.css">
+    </head>
+    
+    <body style="">
+        
+                    <!-- /工具开始 -->
+   <div style="width:50%;margin:0 auto;margin-top:5%;">
+<textarea id="list" class="toolarea">
+111
+222
+111
+111
+</textarea>
+<input type="button" onclick="process()" value="去重处理" class="bt-green">
+</div>
+<script type="text/javascript" data-filtered="filtered">
+function unique(ary) {
+    var i = 0,
+        gid='_'+(+new Date)+Math.random(),
+        objs = [],
+        hash = {
+            'string': {},
+            'boolean': {},
+            'number': {}
+        }, p, l = ary.length,
+        ret = [];
+    for (; i < l; i++) {
+        p = ary[i];
+        if (p == null) continue;
+        tp = typeof p;
+        if (tp in hash) {
+            if (!(p in hash[tp])) {
+                hash[tp][p] = 1;
+                ret.push(p);
+            }
+        } else {
+            if (p[gid]) continue;
+            p[gid]=1;
+            objs.push(p);
+            ret.push(p);
+        }
+    }
+    for(i=0,l=objs.length;i<l;i++) {
+        p=objs[i];
+        p[gid]=undefined;
+        delete p[gid];
+    }
+    return ret;
+}
+
+function process(){
+    list = document.getElementById('list');
+    arr = list.value.split('\n');
+    arr = unique(arr);
+    list.value = "";
+    for(key in arr){
+	    list.value += arr[key] + '\n';
+    }
+    alert("处理完成！");
+}
+</script>
+    
+    <!-- /工具结束 -->
+               
+    </body>
+
+</html>
