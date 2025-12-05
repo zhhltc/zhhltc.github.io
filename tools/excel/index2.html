@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>模板表格快速填充工具</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- SheetJS -->
+    <script src="xlsx.full.min.js"></script>
+    <style>
+        :root { --gap: 12px; --border: #e5e7eb; --muted: #6b7280; --accent: #2563eb; --bg: #fafafa; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; margin: 0; background: var(--bg); color: #111827; }
+        .container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+        h1 { font-size: 20px; margin: 0 0 16px; }
+        .card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+        .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        label { font-size: 13px; color: var(--muted); }
+        input[type="number"] { width: 90px; }
+        input[type="file"] { border: 1px dashed var(--border); padding: 10px; border-radius: 8px; background: #fcfcfd; }
+        select { padding: 8px; border: 1px solid var(--border); border-radius: 8px; min-width: 160px; background: #fff; }
+        button { padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: #111827; color: #fff; cursor: pointer; }
+        button.ghost { background: #fff; color: #111827; }
+        button.primary { background: var(--accent); border-color: var(--accent); }
+        button:disabled { opacity: .6; cursor: not-allowed; }
+        .mapping { width: 100%; border-collapse: collapse; }
+        .mapping th, .mapping td { border-bottom: 1px solid var(--border); padding: 8px; text-align: left; }
+        .muted { color: var(--muted); font-size: 12px; }
+        textarea { width: 96%; min-height: 140px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; background: #fff; }
+        .section-title { font-weight: 600; margin: 8px 0; }
+        .chip { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; background: #fff; }
+        .hr { height: 1px; background: var(--border); margin: 12px 0; }
+        .scroll { max-height: 280px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
+        .rules-btn { padding: 4px 8px; border-radius: 8px; border: 1px solid var(--border); background: #fff; color: #111827; cursor: pointer; font-size: 12px; }
+        .rules-wrap { margin-top: 8px; padding: 8px; border: 1px dashed var(--border); border-radius: 8px; background: #fafafa; }
+        .rules-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+        .rule-chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; background: #fff; }
+        .rule-chip button { border: none; background: transparent; cursor: pointer; color: #ef4444; font-size: 14px; }
+        .rules-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+        .rules-row input { padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; }
+        .rules-row .add { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--accent); color: #fff; cursor: pointer; font-size: 12px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>模板表格快速填充工具-Su3.cn</h1>
+
+    <div class="card" style="margin-bottom: 12px;">
+        <div class="grid">
+            <div>
+                <div class="section-title">模板表格</div>
+                <div class="row" style="margin-bottom:8px;">
+                    <input id="tplFile" type="file" accept=".xls,.xlsx" />
+                    <label>表头行：
+                        <input id="tplHeaderRow" type="number" min="1" value="1" />
+                    </label>
+                    <button id="tplParse" class="ghost">解析列名</button>
+                </div>
+                <div class="muted" id="tplInfo">未选择文件</div>
+            </div>
+            <div>
+                <div class="section-title">数据表格</div>
+                <div class="row" style="margin-bottom:8px;">
+                    <input id="dataFile" type="file" accept=".xls,.xlsx" />
+                    <label>表头行：
+                        <input id="dataHeaderRow" type="number" min="1" value="1" />
+                    </label>
+                    <button id="dataParse" class="ghost">解析列名</button>
+                </div>
+                <div class="muted" id="dataInfo">未选择文件</div>
+            </div>
+        </div>
+        <div class="hr"></div>
+        <div class="row" style="justify-content: space-between;">
+            <div class="muted">选择文件后会自动解析；修改“表头行”后点“解析列名”可重新解析。</div>
+            <div class="row">
+                <button id="fillBtn" class="primary" disabled>填充并下载</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 12px;">
+        <div class="section-title">列映射</div>
+        <div class="scroll">
+            <table class="mapping">
+                <thead>
+                <tr>
+                    <th>模板列</th>
+                    <th style="width: 42px;"></th>
+                    <th>数据列</th>
+                    <th style="width: 120px;">清洗规则</th>
+                </tr>
+                </thead>
+                <tbody id="mappingBody"></tbody>
+            </table>
+        </div>
+        <div class="muted" style="margin-top:8px;">勾选/选择将数据表格的列映射到模板表格对应列。</div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">配置（可复制粘贴快速配置）</div>
+        <textarea id="configBox" spellcheck="false"></textarea>
+        <div class="row" style="margin-top:8px; gap: 8px;">
+            <select id="exampleSelect"></select>
+            <button id="loadExample" class="ghost">加载示例</button>
+            <button id="applyConfig" class="ghost">应用配置</button>
+        </div>
+        <div class="muted" style="margin-top: 10px;">示例配置（数组，含标题与配置）见下方</div>
+        <pre class="muted" style="white-space: pre-wrap; margin-top:8px;" id="configExample"></pre>
+    </div>
+</div>
+
+<script>
+    // State
+    let templateBook = null;
+    let dataBook = null;
+    let templateSheet = null;
+    let dataSheet = null;
+    let templateHeaders = [];
+    let dataHeaders = [];
+    // header row indexes are 1-based for UX; convert to 0-based when parsing
+    let headerRowIndexTemplate = 1;
+    let headerRowIndexData = 1;
+
+    // DOM
+    const el = (id) => document.getElementById(id);
+    const tplFile = el('tplFile');
+    const dataFile = el('dataFile');
+    const tplHeaderRow = el('tplHeaderRow');
+    const dataHeaderRow = el('dataHeaderRow');
+    const tplInfo = el('tplInfo');
+    const dataInfo = el('dataInfo');
+    const tplParse = el('tplParse');
+    const dataParse = el('dataParse');
+    const mappingBody = el('mappingBody');
+    const fillBtn = el('fillBtn');
+    const configBox = el('configBox');
+    const applyConfigBtn = el('applyConfig');
+    const configExample = el('configExample');
+    const exampleSelect = el('exampleSelect');
+    const loadExampleBtn = el('loadExample');
+
+    const exampleConfigs = [
+      {
+        title: '万里-tk示例（含规则清洗）',
+        config: {
+  "template": {
+    "headerRow": 1
+  },
+  "data": {
+    "headerRow": 2
+  },
+  "mapping": [
+    {
+      "template": "Order ID",
+      "templateIndex": 1,
+      "data": "Platform unique order ID.",
+      "dataIndex": 1,
+      "rules": []
+    },
+    {
+      "template": "Paid Date",
+      "templateIndex": 2,
+      "data": "Order paid time.",
+      "dataIndex": 26,
+      "rules": []
+    },
+    {
+      "template": "Order Total",
+      "templateIndex": 3,
+      "data": "Order total amount paid by the buyer.",
+      "dataIndex": 23,
+      "rules": [
+        {
+          "pattern": "[，,]",
+          "replace": "."
+        },
+        {
+          "pattern": "[a-zA-Z\\s]",
+          "replace": ""
+        }
+      ]
+    },
+    {
+      "template": "Currency Code",
+      "templateIndex": 4,
+      "data": "Order total amount paid by the buyer.",
+      "dataIndex": 23,
+      "rules": [
+        {
+          "pattern": "[^a-zA-Z\\s]",
+          "replace": ""
+        },
+        {
+          "pattern": "\\s",
+          "replace": ""
+        }
+      ]
+    },
+    {
+      "template": "Product Title",
+      "templateIndex": 5,
+      "data": "Platform product name.",
+      "dataIndex": 9,
+      "rules": []
+    },
+    {
+      "template": "Product Quantity",
+      "templateIndex": 6,
+      "data": "SKU sold quantity in the order.",
+      "dataIndex": 11,
+      "rules": []
+    },
+    {
+      "template": "Buyer Name/Buyer ID",
+      "templateIndex": 7,
+      "dataIndex": 39,
+      "rules": []
+    },
+    {
+      "template": "Shipping Address",
+      "templateIndex": 8,
+      "dataIndex": 43,
+      "rules": []
+    }
+  ]
+}
+},
+         {
+        title: 'PingPong-tk示例（含规则清洗）',
+        config: {
+  "template": {
+    "headerRow": 2
+  },
+  "data": {
+    "headerRow": 2
+  },
+  "mapping": [
+    {
+      "template": "Order ID",
+      "templateIndex": 1,
+      "data": "Platform unique order ID.",
+      "dataIndex": 1,
+      "rules": []
+    },
+    {
+      "template": "Order Time",
+      "templateIndex": 2,
+      "data": "Order created time.",
+      "dataIndex": 25,
+      "rules": []
+    },
+    {
+      "template": "Order Type",
+      "templateIndex": 3,
+      "data": "Platform unique order ID.",
+      "dataIndex": 1,
+      "rules": [
+        {
+          "pattern": "^.*$",
+          "replace": "货物贸易"
+        }
+      ]
+    },
+    {
+      "template": "Currency",
+      "templateIndex": 4,
+      "data": "Order total amount paid by the buyer.",
+      "dataIndex": 23,
+      "rules": [
+        {
+          "pattern": "[^a-zA-Z\\s]",
+          "replace": ""
+        },
+        {
+          "pattern": "\\s",
+          "replace": ""
+        }
+      ]
+    },
+    {
+      "template": "Order Amount",
+      "templateIndex": 5,
+      "data": "Order total amount paid by the buyer.",
+      "dataIndex": 23,
+      "rules": [
+        {
+          "pattern": "[，,]",
+          "replace": "."
+        },
+        {
+          "pattern": "[a-zA-Z\\s]",
+          "replace": ""
+        }
+      ]
+    },
+    {
+      "template": "Unit Price",
+      "templateIndex": 6,
+      "data": "It equals SKU Subtotal Before Discount - SKU Platform Discount - SKU Seller Discount.",
+      "dataIndex": 17,
+      "rules": [
+        {
+          "pattern": "[，,]",
+          "replace": "."
+        },
+        {
+          "pattern": "[a-zA-Z\\s]",
+          "replace": ""
+        }
+      ]
+    },
+    {
+      "template": "Order Quantity",
+      "templateIndex": 7,
+      "data": "SKU sold quantity in the order.",
+      "dataIndex": 11,
+      "rules": []
+    },
+    {
+      "template": "Order Product Description",
+      "templateIndex": 8,
+      "data": "Platform product name.",
+      "dataIndex": 9,
+      "rules": []
+    },
+    {
+      "template": "Shipping Country",
+      "templateIndex": 9,
+      "dataIndex": 43,
+      "rules": []
+    },
+    {
+      "template": "Carrier",
+      "templateIndex": 10,
+      "data": "Platform unique order ID.",
+      "dataIndex": 1,
+      "rules": [
+        {
+          "pattern": "^.*$",
+          "replace": "hermes"
+        }
+      ]
+    },
+    {
+      "template": "Shipping Tracking Number",
+      "templateIndex": 11,
+      "data": "The order's tracking number.",
+      "dataIndex": 35,
+      "rules": []
+    }
+  ]
+}
+},
+      {
+        title: '最小示例',
+        config: {
+          "template": { "headerRow": 1 },
+          "data": { "headerRow": 1 },
+          "mapping": [
+            { "templateIndex": 1, "dataIndex": 1 },
+            { "templateIndex": 2, "dataIndex": 2 }
+          ]
+        }
+      }
+    ];
+
+    // 渲染示例数组到预览
+    configExample.textContent = JSON.stringify(exampleConfigs.map(e => ({ title: e.title, config: e.config })), null, 2);
+
+    // 填充下拉选项
+    function rebuildExampleOptions() {
+        exampleSelect.innerHTML = '';
+        exampleConfigs.forEach((ex, i) => {
+            const opt = document.createElement('option');
+            opt.value = String(i);
+            opt.textContent = ex.title;
+            exampleSelect.appendChild(opt);
+        });
+    }
+    rebuildExampleOptions();
+
+    // 加载示例到文本框
+    loadExampleBtn.addEventListener('click', () => {
+        const idx = Number(exampleSelect.value || 0);
+        const ex = exampleConfigs[idx] || exampleConfigs[0];
+        if (!ex) return;
+        configBox.value = JSON.stringify(ex.config, null, 2);
+    });
+
+    // Helpers
+    function readWorkbook(file, cb) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const data = new Uint8Array(e.target.result);
+            const wb = XLSX.read(data, { type: 'array' });
+            cb(wb);
+        };
+        reader.onerror = () => alert('读取文件失败');
+        reader.readAsArrayBuffer(file);
+    }
+
+    function getFirstSheet(workbook) {
+        const sheetName = workbook.SheetNames[0];
+        return workbook.Sheets[sheetName];
+    }
+
+    function parseHeaders(worksheet, headerRowIndex1Based) {
+        if (!worksheet) return [];
+        const range = XLSX.utils.decode_range(worksheet['!ref'] || 'A1:A1');
+        const rowIndex0 = Math.max(0, headerRowIndex1Based - 1);
+        const headers = [];
+        for (let c = range.s.c; c <= range.e.c; c++) {
+            const addr = XLSX.utils.encode_cell({ r: rowIndex0, c });
+            const cell = worksheet[addr];
+            const v = (cell && (cell.v != null)) ? String(cell.v).trim() : '';
+            headers.push(v);
+        }
+        // 去除尾部全空列
+        while (headers.length && !headers[headers.length - 1]) headers.pop();
+        return headers;
+    }
+
+    function getSheetDataRows(worksheet, headerRowIndex1Based) {
+        if (!worksheet) return [];
+        const opts = { header: 1, raw: false };
+        const rows = XLSX.utils.sheet_to_json(worksheet, opts);
+        const startIndex = Math.max(0, headerRowIndex1Based); // data starts after header row
+        const dataRows = rows.slice(startIndex);
+        return dataRows;
+    }
+
+    function rebuildMappingUI() {
+        mappingBody.innerHTML = '';
+        if (!templateHeaders.length || !dataHeaders.length) {
+            fillBtn.disabled = true;
+            syncConfigBox();
+            return;
+        }
+        fillBtn.disabled = false;
+
+        templateHeaders.forEach((tplHeader, idx) => {
+            const tr = document.createElement('tr');
+
+            const tdTpl = document.createElement('td');
+            tdTpl.textContent = tplHeader || `(列${idx + 1})`;
+            tr.appendChild(tdTpl);
+
+            const tdArrow = document.createElement('td');
+            tdArrow.innerHTML = '→';
+            tr.appendChild(tdArrow);
+
+            const tdData = document.createElement('td');
+            const sel = document.createElement('select');
+
+            const noneOption = document.createElement('option');
+            noneOption.value = '';
+            noneOption.textContent = '不填充';
+            sel.appendChild(noneOption);
+
+            dataHeaders.forEach((dh, di) => {
+                const opt = document.createElement('option');
+                opt.value = String(di); // 使用索引
+                opt.textContent = dh || `(列${di + 1})`;
+                sel.appendChild(opt);
+            });
+
+            sel.addEventListener('change', () => {
+                syncConfigBox();
+            });
+
+            tdData.appendChild(sel);
+            tr.appendChild(tdData);
+
+            const tdRules = document.createElement('td');
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'rules-btn';
+            btn.textContent = '+ 规则';
+
+            const wrap = document.createElement('div');
+            wrap.className = 'rules-wrap';
+            wrap.style.display = 'none';
+
+            const list = document.createElement('div');
+            list.className = 'rules-list';
+
+            const editor = document.createElement('div');
+            editor.className = 'rules-row';
+            const iptPattern = document.createElement('input');
+            iptPattern.type = 'text';
+            iptPattern.placeholder = '正则表达式，例如 \\d+';
+            iptPattern.style.minWidth = '180px';
+            const iptReplace = document.createElement('input');
+            iptReplace.type = 'text';
+            iptReplace.placeholder = '替换内容（可留空）';
+            iptReplace.style.minWidth = '160px';
+            const addBtn = document.createElement('button');
+            addBtn.type = 'button';
+            addBtn.className = 'add';
+            addBtn.textContent = '添加规则';
+
+            editor.appendChild(iptPattern);
+            editor.appendChild(iptReplace);
+            editor.appendChild(addBtn);
+
+            wrap.appendChild(list);
+            wrap.appendChild(editor);
+
+            btn.addEventListener('click', () => {
+                wrap.style.display = wrap.style.display === 'none' ? '' : 'none';
+            });
+
+            // 存储到行元素上，键为模板列索引
+            tr.__rules = tr.__rules || [];
+            tr.__renderRulesChips = function renderRulesChips() {
+                list.innerHTML = '';
+                tr.__rules.forEach((r, i) => {
+                    const chip = document.createElement('span');
+                    chip.className = 'rule-chip';
+                    chip.textContent = `/${r.pattern}/ → ${r.replace ?? ''}`;
+                    const del = document.createElement('button');
+                    del.textContent = '×';
+                    del.title = '删除';
+                    del.addEventListener('click', () => {
+                        tr.__rules.splice(i, 1);
+                        tr.__renderRulesChips();
+                        syncConfigBox();
+                    });
+                    chip.appendChild(del);
+                    list.appendChild(chip);
+                });
+                // 更新按钮计数
+                const count = tr.__rules.length;
+                btn.textContent = count > 0 ? `+ 规则 (${count})` : '+ 规则';
+            };
+
+            addBtn.addEventListener('click', () => {
+                const p = (iptPattern.value || '').trim();
+                const rep = iptReplace.value ?? '';
+                if (!p) { alert('请输入正则表达式'); return; }
+                // 校验正则
+                try { new RegExp(p); } catch { alert('正则表达式不合法'); return; }
+                tr.__rules.push({ pattern: p, replace: rep });
+                iptPattern.value = '';
+                iptReplace.value = '';
+                tr.__renderRulesChips();
+                syncConfigBox();
+            });
+
+            tr.__renderRulesChips();
+
+            tdRules.appendChild(btn);
+            tdRules.appendChild(wrap);
+            tr.appendChild(tdRules);
+            mappingBody.appendChild(tr);
+        });
+
+        syncConfigBox();
+    }
+
+    function getCurrentMapping() {
+        const rows = mappingBody.querySelectorAll('tr');
+        const mapping = [];
+        rows.forEach((tr, i) => {
+            const tplName = templateHeaders[i] || '';
+            const sel = tr.querySelector('select');
+            if (!sel || sel.value === '') return;
+
+            const dataIdx0 = Number(sel.value); // 0-based
+            const dataName = dataHeaders[dataIdx0] || '';
+
+            mapping.push({
+                template: tplName || undefined,
+                templateIndex: i + 1,
+                data: dataName || undefined,
+                dataIndex: dataIdx0 + 1,
+                rules: Array.isArray(tr.__rules) ? tr.__rules.map(r => ({ pattern: r.pattern, replace: r.replace })) : undefined
+            });
+        });
+        return mapping;
+    }
+
+    function setMappingFromPairs(pairs) {
+        const rows = mappingBody.querySelectorAll('tr');
+        let allMatched = true;
+
+        pairs.forEach(pair => {
+            // 找模板列：优先 templateIndex，其次 template 名称
+            let tplIndex = -1;
+            if (Number.isInteger(pair.templateIndex) && pair.templateIndex >= 1) {
+                const idx0 = pair.templateIndex - 1;
+                if (idx0 >= 0 && idx0 < templateHeaders.length) tplIndex = idx0;
+            }
+            if (tplIndex === -1 && typeof pair.template === 'string') {
+                tplIndex = templateHeaders.findIndex(h => h === pair.template);
+            }
+            if (tplIndex === -1) { allMatched = false; return; }
+
+            // 找数据列：优先 dataIndex，其次 data 名称
+            let dataIdx0 = -1;
+            if (Number.isInteger(pair.dataIndex) && pair.dataIndex >= 1) {
+                const idx0 = pair.dataIndex - 1;
+                if (idx0 >= 0 && idx0 < dataHeaders.length) dataIdx0 = idx0;
+            }
+            if (dataIdx0 === -1 && typeof pair.data === 'string') {
+                dataIdx0 = dataHeaders.findIndex(h => h === pair.data);
+            }
+            // 允许数据列不匹配时，仍然恢复规则
+
+            const tr = rows[tplIndex];
+            const sel = tr.querySelector('select');
+            if (sel && dataIdx0 !== -1) sel.value = String(dataIdx0);
+
+            // 应用清洗规则到 UI 行状态
+            tr.__rules = [];
+            if (Array.isArray(pair.rules)) {
+                pair.rules.forEach(r => {
+                    if (!r || typeof r.pattern !== 'string') return;
+                    const pat = r.pattern.trim();
+                    try { new RegExp(pat); } catch { return; }
+                    tr.__rules.push({ pattern: pat, replace: (r.replace ?? '') });
+                });
+            }
+            // 重新渲染 chips（如果面板是打开的）
+            const list = tr.querySelector('.rules-list');
+            if (list && typeof tr.__renderRulesChips === 'function') {
+                tr.__renderRulesChips();
+            }
+        });
+
+        if (!allMatched) {
+            alert('部分映射在当前模板列中找不到，请检查配置与表头行是否正确。');
+        }
+        syncConfigBox();
+    }
+
+    function syncConfigBox() {
+        const cfg = {
+            template: { headerRow: Number(tplHeaderRow.value || 1) },
+            data: { headerRow: Number(dataHeaderRow.value || 1) },
+            mapping: getCurrentMapping()
+        };
+        configBox.value = JSON.stringify(cfg, null, 2);
+    }
+
+    function applyConfigFromBox() {
+        let cfg;
+        try { cfg = JSON.parse(configBox.value); }
+        catch { alert('配置不是有效的 JSON'); return; }
+
+        if (!cfg || typeof cfg !== 'object' || !cfg.template || !cfg.data) {
+            alert('配置需要包含 template 和 data'); return;
+        }
+
+        const tplRow = Number(cfg.template.headerRow || 1);
+        const dataRow = Number(cfg.data.headerRow || 1);
+        if (!Number.isInteger(tplRow) || tplRow < 1 || !Number.isInteger(dataRow) || dataRow < 1) {
+            alert('表头行必须是 >=1 的整数'); return;
+        }
+
+        tplHeaderRow.value = String(tplRow);
+        dataHeaderRow.value = String(dataRow);
+
+        if (templateSheet) templateHeaders = parseHeaders(templateSheet, tplRow);
+        if (dataSheet) dataHeaders = parseHeaders(dataSheet, dataRow);
+
+        rebuildMappingUI();
+
+        if (Array.isArray(cfg.mapping)) {
+            setMappingFromPairs(cfg.mapping);
+        }
+    }
+
+    function doFillAndDownload() {
+        if (!templateSheet || !dataSheet) {
+            alert('请先选择并解析两个表格');
+            return;
+        }
+
+        const tplHeaders = templateHeaders;
+        let dataRows = getSheetDataRows(dataSheet, Number(dataHeaderRow.value || 1));
+
+        const mappingPairs = getCurrentMapping(); // 现在含有 templateIndex/dataIndex
+        const tplIndexToDataIndex0 = new Map();
+        mappingPairs.forEach(m => {
+            if (Number.isInteger(m.templateIndex) && Number.isInteger(m.dataIndex)) {
+                tplIndexToDataIndex0.set(m.templateIndex - 1, m.dataIndex - 1);
+            }
+        });
+
+        const startRow1Based = Number(tplHeaderRow.value || 1) + 1;
+
+        const filename = '填充结果.xlsx';
+        const bookType = 'xlsx';
+
+        dataRows.forEach((row, ridx) => {
+            const r = startRow1Based - 1 + ridx; // 0-based
+            tplHeaders.forEach((_, ci) => {
+                if (!tplIndexToDataIndex0.has(ci)) return;
+                const di = tplIndexToDataIndex0.get(ci);
+                let value = row[di] != null ? row[di] : '';
+                // 应用清洗规则（按顺序）
+                const tr = mappingBody.querySelectorAll('tr')[ci];
+                const rules = (tr && Array.isArray(tr.__rules)) ? tr.__rules : [];
+                if (rules.length) {
+                    try {
+                        rules.forEach(rule => {
+                            const reg = new RegExp(rule.pattern, 'g');
+                            const rep = rule.replace != null ? String(rule.replace) : '';
+                            value = String(value).replace(reg, rep);
+                        });
+                    } catch (e) { /* ignore invalid at runtime */ }
+                }
+                const addr = XLSX.utils.encode_cell({ r, c: ci });
+                const cell = templateSheet[addr] || {};
+                cell.v = value;
+                templateSheet[addr] = cell;
+            });
+        });
+
+        // 计算结尾索引：最后数据行索引为 startRow1Based-1 + (dataRows.length-1)
+        const endRowIdx = (startRow1Based - 1) + Math.max(0, dataRows.length - 1);
+        const maxCol = Math.max(0, tplHeaders.length - 1);
+
+        const endColIdx = maxCol;
+
+        templateSheet['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: endRowIdx, c: endColIdx } });
+
+        XLSX.writeFile(templateBook, filename, { bookType });
+    }
+
+    // Events
+    tplFile.addEventListener('change', () => {
+        const f = tplFile.files && tplFile.files[0];
+        if (!f) return;
+        tplInfo.textContent = `已选择：${f.name}`;
+        readWorkbook(f, (wb) => {
+            templateBook = wb;
+            templateSheet = getFirstSheet(wb);
+            headerRowIndexTemplate = Number(tplHeaderRow.value || 1);
+            templateHeaders = parseHeaders(templateSheet, headerRowIndexTemplate);
+            rebuildMappingUI();
+        });
+    });
+
+    dataFile.addEventListener('change', () => {
+        const f = dataFile.files && dataFile.files[0];
+        if (!f) return;
+        dataInfo.textContent = `已选择：${f.name}`;
+        readWorkbook(f, (wb) => {
+            dataBook = wb;
+            dataSheet = getFirstSheet(wb);
+            headerRowIndexData = Number(dataHeaderRow.value || 1);
+            dataHeaders = parseHeaders(dataSheet, headerRowIndexData);
+            rebuildMappingUI();
+        });
+    });
+
+    tplParse.addEventListener('click', () => {
+        if (!templateSheet) {
+            alert('请先选择模板文件');
+            return;
+        }
+        headerRowIndexTemplate = Number(tplHeaderRow.value || 1);
+        templateHeaders = parseHeaders(templateSheet, headerRowIndexTemplate);
+        rebuildMappingUI();
+    });
+
+    dataParse.addEventListener('click', () => {
+        if (!dataSheet) {
+            alert('请先选择数据文件');
+            return;
+        }
+        headerRowIndexData = Number(dataHeaderRow.value || 1);
+        dataHeaders = parseHeaders(dataSheet, headerRowIndexData);
+        rebuildMappingUI();
+    });
+
+    fillBtn.addEventListener('click', doFillAndDownload);
+    applyConfigBtn.addEventListener('click', applyConfigFromBox);
+
+    // Live sync from inputs to config
+    tplHeaderRow.addEventListener('change', syncConfigBox);
+    dataHeaderRow.addEventListener('change', syncConfigBox);
+
+    // Keep config in sync when user types mapping via selects is already handled
+    // Also keep config textarea editable by the user; we don't auto-apply while typing
+
+    // Initialize config box
+    syncConfigBox();
+</script>
+</body>
+
+</html>
+
+
+
+

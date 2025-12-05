@@ -1,0 +1,2861 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API调试工具 - HTTP/SSE/WebSocket</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f7f9fc;
+            border-bottom: 2px solid #e1e8ed;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #657786;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab:hover {
+            background: #eef2f7;
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #14171a;
+            font-size: 14px;
+        }
+
+        .url-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .method-select {
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #14171a;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .method-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            resize: vertical;
+        }
+
+        .button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .button-secondary {
+            background: #f44336;
+            color: white;
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.6);
+        }
+
+        .button-add {
+            background: #4caf50;
+            color: white;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .button-add:hover {
+            background: #45a049;
+        }
+
+        .button-clear {
+            background: #ff9800;
+            color: white;
+            padding: 8px 16px;
+            font-size: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .button-clear:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .headers-container {
+            margin-bottom: 20px;
+        }
+
+        .header-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .header-row input {
+            flex: 1;
+        }
+
+        .button-remove {
+            background: #ff5252;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .button-remove:hover {
+            background: #ff1744;
+        }
+
+        .response-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f7f9fc;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+        }
+
+        .response-container h3 {
+            margin-bottom: 15px;
+            color: #14171a;
+            font-size: 18px;
+        }
+
+        .response-content {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .response-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .response-meta-item {
+            font-size: 13px;
+        }
+
+        .response-meta-label {
+            font-weight: 600;
+            color: #657786;
+            margin-right: 5px;
+        }
+
+        .response-meta-value {
+            color: #14171a;
+            font-weight: 700;
+        }
+
+        .status-success {
+            color: #4caf50;
+        }
+
+        .status-error {
+            color: #f44336;
+        }
+
+        .event-log {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .event-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-time {
+            color: #858585;
+            font-size: 11px;
+            margin-right: 10px;
+        }
+
+        .event-type {
+            color: #4fc3f7;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .event-data {
+            color: #a5d6a7;
+        }
+
+        .ws-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .ws-status.connected {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .ws-status.disconnected {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .message-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .message-input-group input {
+            flex: 1;
+        }
+
+        .collapsible-section {
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            cursor: pointer;
+            padding: 12px;
+            background: #f7f9fc;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: #eef2f7;
+        }
+
+        .section-header h4 {
+            color: #14171a;
+            font-size: 15px;
+        }
+
+        .section-toggle {
+            color: #657786;
+            font-size: 18px;
+        }
+
+        .section-content {
+            padding: 15px 0;
+        }
+
+        .section-content.collapsed {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .response-container {
+            animation: fadeIn 0.5s ease;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #657786;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        #curlImportSection,
+        #sseCurlImportSection,
+        #wsCurlImportSection {
+            background: #f7f9fc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px dashed #667eea;
+            animation: fadeIn 0.3s ease;
+        }
+
+        #curlImportSection textarea,
+        #sseCurlImportSection textarea,
+        #wsCurlImportSection textarea {
+            min-height: 150px;
+            background: white;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Loading 状态样式 */
+        .button-loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .button-loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 API调试工具</h1>
+            <p>支持 HTTP API / Server-Sent Events / WebSocket 调试</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('http')">HTTP 请求</div>
+            <div class="tab" onclick="switchTab('sse')">SSE 调试</div>
+            <div class="tab" onclick="switchTab('websocket')">WebSocket 调试</div>
+        </div>
+
+        <!-- HTTP Tab -->
+        <div id="http" class="tab-content active">
+            <div class="url-input-group">
+                <select id="httpMethod" class="method-select">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="OPTIONS">OPTIONS</option>
+                </select>
+                <input type="url" id="httpUrl" placeholder="输入请求URL，例如：https://api.example.com/endpoint" value="https://jsonplaceholder.typicode.com/posts/1">
+                <button id="httpSendBtn" class="button button-primary" onclick="sendHttpRequest()">发送请求</button>
+                <button class="button button-add" onclick="previewRequest()">🔍 预览请求</button>
+            </div>
+
+            <div class="button-group" style="margin-bottom: 20px;">
+                <button class="button button-add" onclick="copyCurl()">📋 复制为 cURL</button>
+                <button class="button button-add" onclick="toggleCurlImport()">📥 导入 cURL</button>
+                <button class="button button-clear" onclick="clearHttpForm()">🗑️ 一键清空</button>
+            </div>
+
+            <div id="requestPreview" style="display: none; margin-bottom: 20px;">
+                <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 20px; border-radius: 8px;">
+                    <h4 style="margin-bottom: 15px; color: #856404; display: flex; align-items: center; justify-content: space-between;">
+                        <span>🔍 即将发送的请求详情</span>
+                        <button class="button-remove" onclick="document.getElementById('requestPreview').style.display='none'">关闭</button>
+                    </h4>
+                    <div style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: Monaco, monospace; font-size: 13px; max-height: 400px; overflow-y: auto;">
+                        <pre id="requestPreviewContent" style="margin: 0; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div id="curlImportSection" style="display: none; margin-bottom: 20px;">
+                <div class="form-group">
+                    <label>粘贴 cURL 命令</label>
+                    <textarea id="curlInput" placeholder="粘贴cURL命令，例如：&#10;curl -X POST 'https://api.example.com/endpoint' \&#10;  -H 'Content-Type: application/json' \&#10;  -d '{&quot;key&quot;:&quot;value&quot;}'"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="button button-primary" onclick="importCurl()">导入并填充</button>
+                    <button class="button button-add" onclick="previewCurl()">🔍 预览解析结果</button>
+                    <button class="button button-secondary" onclick="toggleCurlImport()">取消</button>
+                </div>
+                
+                <div id="curlPreview" style="display: none; margin-top: 15px;">
+                    <div style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: Monaco, monospace; font-size: 13px; max-height: 300px; overflow-y: auto;">
+                        <pre id="curlPreviewContent" style="margin: 0; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h4>📋 请求头 (Headers)</h4>
+                    <span class="section-toggle">▼</span>
+                </div>
+                <div class="section-content">
+                    <div id="httpHeaders" class="headers-container">
+                        <div class="header-row">
+                            <input type="text" placeholder="Header Name" value="Content-Type">
+                            <input type="text" placeholder="Header Value" value="application/json">
+                            <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                        </div>
+                    </div>
+                    <button class="button button-add" onclick="addHttpHeader()">+ 添加请求头</button>
+                </div>
+            </div>
+
+            <div class="collapsible-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h4>📝 请求体 (Body)</h4>
+                    <span class="section-toggle">▼</span>
+                </div>
+                <div class="section-content">
+                    <div class="form-group">
+                        <select id="bodyType" class="method-select" onchange="updateBodyPlaceholder()">
+                            <option value="json">JSON</option>
+                            <option value="text">Plain Text</option>
+                            <option value="form">Form Data</option>
+                        </select>
+                    </div>
+                    <textarea id="httpBody" placeholder='{"key": "value"}'></textarea>
+                </div>
+            </div>
+
+            <div id="httpResponse" class="response-container" style="display: none;">
+                <h3>📥 响应结果</h3>
+                <div class="response-meta">
+                    <div class="response-meta-item">
+                        <span class="response-meta-label">状态码:</span>
+                        <span class="response-meta-value" id="httpStatus"></span>
+                    </div>
+                    <div class="response-meta-item">
+                        <span class="response-meta-label">响应时间:</span>
+                        <span class="response-meta-value" id="httpTime"></span>
+                    </div>
+                    <div class="response-meta-item">
+                        <span class="response-meta-label">大小:</span>
+                        <span class="response-meta-value" id="httpSize"></span>
+                    </div>
+                </div>
+                <div class="response-content" id="httpResponseContent"></div>
+                <button class="button button-add" onclick="copyResponseDetails()" style="margin-top: 15px;">📋 复制完整日志</button>
+            </div>
+        </div>
+
+        <!-- SSE Tab -->
+        <div id="sse" class="tab-content">
+            <div class="url-input-group">
+                <input type="url" id="sseUrl" placeholder="输入SSE URL，例如：https://example.com/events" style="flex: 1;">
+                <button id="sseConnectBtn" class="button button-primary" onclick="connectSSE()">连接</button>
+                <button id="sseDisconnectBtn" class="button button-secondary" onclick="disconnectSSE()" disabled>断开</button>
+            </div>
+
+            <div class="button-group" style="margin-bottom: 20px; margin-top: 10px;">
+                <button class="button button-add" onclick="copySSECurl()">📋 复制为 cURL</button>
+                <button class="button button-add" onclick="toggleSSECurlImport()">📥 导入 cURL</button>
+                <button class="button button-clear" onclick="clearSSEForm()">🗑️ 一键清空</button>
+            </div>
+
+            <div id="sseCurlImportSection" style="display: none; margin-bottom: 20px;">
+                <div class="form-group">
+                    <label>粘贴 cURL 命令</label>
+                    <textarea id="sseCurlInput" placeholder="粘贴SSE相关的cURL命令，例如：&#10;curl 'https://example.com/events' \&#10;  -H 'Authorization: Bearer token' \&#10;  -H 'Accept: text/event-stream'"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="button button-primary" onclick="importSSECurl()">导入并填充</button>
+                    <button class="button button-add" onclick="previewSSECurl()">🔍 预览解析结果</button>
+                    <button class="button button-secondary" onclick="toggleSSECurlImport()">取消</button>
+                </div>
+                
+                <div id="sseCurlPreview" style="display: none; margin-top: 15px;">
+                    <div style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: Monaco, monospace; font-size: 13px; max-height: 300px; overflow-y: auto;">
+                        <pre id="sseCurlPreviewContent" style="margin: 0; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h4>📋 请求头 (Headers)</h4>
+                    <span class="section-toggle">▼</span>
+                </div>
+                <div class="section-content">
+                    <div id="sseHeaders" class="headers-container">
+                        <div class="header-row">
+                            <input type="text" placeholder="Header Name" value="Authorization">
+                            <input type="text" placeholder="Header Value" value="Bearer token">
+                            <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                        </div>
+                    </div>
+                    <button class="button button-add" onclick="addSseHeader()">+ 添加请求头</button>
+                    <p style="margin-top: 10px; color: #657786; font-size: 13px;">
+                        ⚠️ 注意：浏览器的EventSource API不支持自定义请求头。如需自定义请求头，请使用fetch with streaming或服务端代理。
+                    </p>
+                </div>
+            </div>
+
+            <div class="response-container">
+                <h3>📡 事件日志
+                    <span class="ws-status disconnected" id="sseStatus">未连接</span>
+                </h3>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 13px; color: #657786;">
+                        <input type="checkbox" id="sseDebugMode" onchange="toggleSSEDebugMode()">
+                        显示原始数据流（调试模式）
+                    </label>
+                </div>
+                <div class="event-log" id="sseLog">
+                    <div class="empty-state">
+                        <div style="font-size: 40px; margin-bottom: 10px;">📡</div>
+                        <p>点击"连接"按钮开始接收服务器推送事件</p>
+                    </div>
+                </div>
+                <button class="button button-add" onclick="clearSSELog()" style="margin-top: 15px;">清空日志</button>
+            </div>
+        </div>
+
+        <!-- WebSocket Tab -->
+        <div id="websocket" class="tab-content">
+            <div class="url-input-group">
+                <input type="text" id="wsUrl" placeholder="输入WebSocket URL，例如：ws://localhost:8080 或 wss://example.com/ws" value="wss://echo.websocket.org/">
+                <button id="wsConnectBtn" class="button button-primary" onclick="connectWebSocket()">连接</button>
+                <button id="wsDisconnectBtn" class="button button-secondary" onclick="disconnectWebSocket()" disabled>断开</button>
+            </div>
+
+            <div class="button-group" style="margin-bottom: 20px; margin-top: 10px;">
+                <button class="button button-add" onclick="copyWSInfo()">📋 复制连接信息</button>
+                <button class="button button-add" onclick="toggleWSCurlImport()">📥 从 URL 导入</button>
+                <button class="button button-clear" onclick="clearWSForm()">🗑️ 一键清空</button>
+            </div>
+
+            <div id="wsCurlImportSection" style="display: none; margin-bottom: 20px;">
+                <div class="form-group">
+                    <label>粘贴 WebSocket URL 或 cURL 命令</label>
+                    <textarea id="wsCurlInput" placeholder="支持多种格式：&#10;1. 直接WebSocket URL: wss://example.com/ws?token=xxx&#10;2. HTTP URL (自动转换): https://example.com/ws&#10;3. cURL命令: curl 'https://example.com/ws' -H 'Authorization: Bearer token'&#10;&#10;注意：WebSocket连接本身不支持自定义请求头，请求头通常需要通过URL参数传递。"></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="button button-primary" onclick="importWSCurl()">导入并填充</button>
+                    <button class="button button-add" onclick="previewWSCurl()">🔍 预览解析结果</button>
+                    <button class="button button-secondary" onclick="toggleWSCurlImport()">取消</button>
+                </div>
+                
+                <div id="wsCurlPreview" style="display: none; margin-top: 15px;">
+                    <div style="background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: Monaco, monospace; font-size: 13px; max-height: 300px; overflow-y: auto;">
+                        <pre id="wsCurlPreviewContent" style="margin: 0; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h4>📋 自定义请求头 (Headers)</h4>
+                    <span class="section-toggle">▼</span>
+                </div>
+                <div class="section-content collapsed">
+                    <div id="wsHeaders" class="headers-container">
+                        <div class="header-row">
+                            <input type="text" placeholder="Header Name" value="Authorization">
+                            <input type="text" placeholder="Header Value" value="Bearer token">
+                            <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                        </div>
+                    </div>
+                    <button class="button button-add" onclick="addWSHeader()">+ 添加请求头</button>
+                    <p style="margin-top: 10px; color: #657786; font-size: 13px;">
+                        ⚠️ 注意：浏览器WebSocket不支持自定义握手头。这些头将在连接成功后通过首条消息发送。
+                    </p>
+                </div>
+            </div>
+
+            <div class="collapsible-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h4>🔌 连接协议 (Protocols)</h4>
+                    <span class="section-toggle">▼</span>
+                </div>
+                <div class="section-content collapsed">
+                    <input type="text" id="wsProtocols" placeholder="子协议，多个用逗号分隔，例如：chat, superchat">
+                </div>
+            </div>
+
+            <div class="collapsible-section">
+                <div class="section-header" onclick="toggleSection(this)">
+                    <h4>💓 心跳检测 (Heartbeat)</h4>
+                    <span class="section-toggle">▼</span>
+                </div>
+                <div class="section-content collapsed">
+                    <div style="margin-bottom: 15px;">
+                        <label style="font-size: 14px; color: #14171a; display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="wsHeartbeatEnabled" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                            启用心跳检测
+                        </label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>心跳间隔 (秒)</label>
+                        <input type="number" id="wsHeartbeatInterval" value="30" min="5" max="300" placeholder="心跳间隔（秒）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>心跳消息内容</label>
+                        <input type="text" id="wsHeartbeatMessage" value="ping" placeholder="心跳消息，例如：ping 或 {&quot;type&quot;:&quot;ping&quot;}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>超时时间 (秒)</label>
+                        <input type="number" id="wsHeartbeatTimeout" value="10" min="3" max="60" placeholder="超时时间（秒）">
+                    </div>
+                    
+                    <div style="margin-top: 10px;">
+                        <label style="font-size: 14px; color: #14171a; display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="wsAutoReconnect" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                            超时后自动重连
+                        </label>
+                    </div>
+                    
+                    <p style="margin-top: 10px; color: #657786; font-size: 13px;">
+                        💡 心跳机制：定时发送心跳消息，若超过指定时间未收到任何消息，则判定连接异常。
+                    </p>
+                </div>
+            </div>
+
+            <div class="response-container">
+                <h3>💬 消息记录
+                    <span class="ws-status disconnected" id="wsStatus">未连接</span>
+                </h3>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 13px; color: #657786;">
+                        <input type="checkbox" id="wsDebugMode" onchange="toggleWSDebugMode()">
+                        显示详细调试信息
+                    </label>
+                </div>
+                <div class="event-log" id="wsLog">
+                    <div class="empty-state">
+                        <div style="font-size: 40px; margin-bottom: 10px;">💬</div>
+                        <p>点击"连接"按钮开始WebSocket通信</p>
+                    </div>
+                </div>
+                <button class="button button-add" onclick="clearWSLog()" style="margin-top: 15px;">清空日志</button>
+            </div>
+
+            <div class="form-group">
+                <label>📤 发送消息</label>
+                <div class="message-input-group">
+                    <input type="text" id="wsMessage" placeholder="输入要发送的消息" onkeypress="if(event.key === 'Enter') sendWebSocketMessage()">
+                    <button class="button button-primary" onclick="sendWebSocketMessage()">发送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'http';
+        let sseConnection = null;
+        let wsConnection = null;
+        let sseDebugMode = false;
+        let wsDebugMode = false;
+        let wsHeartbeatTimer = null;
+        let wsHeartbeatTimeoutTimer = null;
+        let wsLastMessageTime = null;
+
+        // Tab切换
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`.tab:nth-child(${tabName === 'http' ? 1 : tabName === 'sse' ? 2 : 3})`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            currentTab = tabName;
+        }
+
+        // 折叠/展开
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.section-toggle');
+            content.classList.toggle('collapsed');
+            toggle.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
+        }
+
+        // HTTP请求头管理
+        function addHttpHeader() {
+            const container = document.getElementById('httpHeaders');
+            const row = document.createElement('div');
+            row.className = 'header-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Header Name">
+                <input type="text" placeholder="Header Value">
+                <button class="button-remove" onclick="removeHeader(this)">删除</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function addSseHeader() {
+            const container = document.getElementById('sseHeaders');
+            const row = document.createElement('div');
+            row.className = 'header-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Header Name">
+                <input type="text" placeholder="Header Value">
+                <button class="button-remove" onclick="removeHeader(this)">删除</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function addWSHeader() {
+            const container = document.getElementById('wsHeaders');
+            const row = document.createElement('div');
+            row.className = 'header-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Header Name">
+                <input type="text" placeholder="Header Value">
+                <button class="button-remove" onclick="removeHeader(this)">删除</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function removeHeader(button) {
+            button.parentElement.remove();
+        }
+
+        function updateBodyPlaceholder() {
+            const bodyType = document.getElementById('bodyType').value;
+            const textarea = document.getElementById('httpBody');
+            
+            switch(bodyType) {
+                case 'json':
+                    textarea.placeholder = '{"key": "value"}';
+                    break;
+                case 'text':
+                    textarea.placeholder = 'Plain text content...';
+                    break;
+                case 'form':
+                    textarea.placeholder = 'key1=value1&key2=value2';
+                    break;
+            }
+        }
+
+        // 预览请求详情
+        function previewRequest() {
+            const method = document.getElementById('httpMethod').value;
+            const url = document.getElementById('httpUrl').value;
+            const body = document.getElementById('httpBody').value;
+            const bodyType = document.getElementById('bodyType').value;
+
+            if (!url) {
+                alert('请先输入URL');
+                return;
+            }
+
+            // 收集请求头
+            const headers = {};
+            const headerRows = document.querySelectorAll('#httpHeaders .header-row');
+            headerRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const name = inputs[0].value.trim();
+                const value = inputs[1].value.trim();
+                if (name) {
+                    headers[name] = value;
+                }
+            });
+
+            // 构建预览内容
+            let preview = '🔍 请求详情预览\n';
+            preview += '='.repeat(70) + '\n\n';
+            
+            preview += `📮 请求方法: ${method}\n\n`;
+            preview += `📍 请求URL:\n${url}\n\n`;
+            
+            // 解析 URL 参数
+            try {
+                const urlObj = new URL(url);
+                if (urlObj.search) {
+                    preview += `🔗 URL参数 (Query Parameters):\n`;
+                    urlObj.searchParams.forEach((value, key) => {
+                        preview += `  • ${key} = ${value}\n`;
+                    });
+                    preview += '\n';
+                }
+            } catch (e) {
+                preview += `⚠️ URL格式可能不完整或不正确\n\n`;
+            }
+
+            preview += `📋 请求头 (Headers) [共${Object.keys(headers).length}个]:\n`;
+            if (Object.keys(headers).length > 0) {
+                for (const [key, value] of Object.entries(headers)) {
+                    preview += `  • ${key}: ${value}\n`;
+                }
+            } else {
+                preview += `  (无)\n`;
+            }
+            preview += '\n';
+
+            if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+                preview += `📝 请求体 (Body):\n`;
+                preview += `  类型: ${bodyType}\n`;
+                preview += `  大小: ${body.length} 字符 (${new Blob([body]).size} bytes)\n\n`;
+                preview += `  内容:\n`;
+                preview += `${'─'.repeat(66)}\n`;
+                
+                // 如果是JSON，尝试验证格式
+                if (bodyType === 'json') {
+                    try {
+                        const parsed = JSON.parse(body);
+                        preview += JSON.stringify(parsed, null, 2);
+                        preview += '\n✅ JSON 格式有效\n';
+                    } catch (e) {
+                        preview += body;
+                        preview += `\n\n❌ JSON 格式错误: ${e.message}\n`;
+                    }
+                } else {
+                    preview += body;
+                }
+                preview += `\n${'─'.repeat(66)}\n\n`;
+            } else {
+                preview += `📝 请求体: (无)\n\n`;
+            }
+
+            // 生成等效的 cURL 命令
+            preview += `💡 等效 cURL 命令:\n`;
+            preview += `${'─'.repeat(66)}\n`;
+            let curlCmd = `curl -X ${method} '${url}'`;
+            for (const [key, value] of Object.entries(headers)) {
+                curlCmd += ` \\\n  -H '${key}: ${value}'`;
+            }
+            if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+                const escapedBody = body.replace(/'/g, "'\\''");
+                curlCmd += ` \\\n  -d '${escapedBody}'`;
+            }
+            preview += curlCmd;
+            preview += `\n${'─'.repeat(66)}\n`;
+
+            preview += '\n' + '='.repeat(70);
+
+            document.getElementById('requestPreviewContent').textContent = preview;
+            document.getElementById('requestPreview').style.display = 'block';
+            
+            // 滚动到预览区域
+            document.getElementById('requestPreview').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // HTTP请求
+        async function sendHttpRequest() {
+            const method = document.getElementById('httpMethod').value;
+            const url = document.getElementById('httpUrl').value;
+            const body = document.getElementById('httpBody').value;
+            const bodyType = document.getElementById('bodyType').value;
+
+            if (!url) {
+                alert('请输入URL');
+                return;
+            }
+
+            // 收集请求头
+            const headers = {};
+            const headerRows = document.querySelectorAll('#httpHeaders .header-row');
+            headerRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const name = inputs[0].value.trim();
+                const value = inputs[1].value.trim();
+                if (name) {
+                    headers[name] = value;
+                }
+            });
+
+            // 设置按钮为loading状态
+            const sendBtn = document.getElementById('httpSendBtn');
+            const originalText = sendBtn.textContent;
+            sendBtn.classList.add('button-loading');
+            sendBtn.textContent = '请求中...';
+            sendBtn.disabled = true;
+
+            const startTime = Date.now();
+
+            try {
+                const options = {
+                    method: method,
+                    headers: headers
+                };
+
+                if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+                    options.body = body;
+                    
+                    if (bodyType === 'json' && !headers['Content-Type']) {
+                        options.headers['Content-Type'] = 'application/json';
+                    } else if (bodyType === 'form' && !headers['Content-Type']) {
+                        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                    }
+                }
+
+                const response = await fetch(url, options);
+                const endTime = Date.now();
+                const duration = endTime - startTime;
+
+                const contentType = response.headers.get('content-type');
+                let responseText;
+                
+                if (contentType && contentType.includes('application/json')) {
+                    const json = await response.json();
+                    responseText = JSON.stringify(json, null, 2);
+                } else {
+                    responseText = await response.text();
+                }
+
+                // 显示响应
+                document.getElementById('httpResponse').style.display = 'block';
+                document.getElementById('httpStatus').textContent = response.status;
+                document.getElementById('httpStatus').className = 'response-meta-value ' + (response.ok ? 'status-success' : 'status-error');
+                document.getElementById('httpTime').textContent = duration + ' ms';
+                document.getElementById('httpSize').textContent = new Blob([responseText]).size + ' bytes';
+                
+                // 格式化请求信息
+                let requestInfo = '// ========== 请求信息 ==========\n';
+                requestInfo += `// 方法: ${method}\n`;
+                requestInfo += `// URL: ${url}\n`;
+                requestInfo += '// 请求头:\n';
+                for (const [key, value] of Object.entries(headers)) {
+                    requestInfo += `//   ${key}: ${value}\n`;
+                }
+                if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+                    requestInfo += `// 请求体 (${body.length} 字符):\n`;
+                    requestInfo += `//   ${body.substring(0, 100)}${body.length > 100 ? '...' : ''}\n`;
+                }
+                requestInfo += '\n';
+
+                // 格式化响应头
+                let headersText = '// ========== 响应信息 ==========\n';
+                headersText += '// Response Headers:\n';
+                response.headers.forEach((value, key) => {
+                    headersText += `// ${key}: ${value}\n`;
+                });
+                headersText += '// Response Body:\n';
+                
+                document.getElementById('httpResponseContent').textContent = requestInfo + headersText + responseText;
+
+            } catch (error) {
+                // 格式化请求信息（即使失败也要显示）
+                let requestInfo = '// ========== 请求信息 ==========\n';
+                requestInfo += `// 方法: ${method}\n`;
+                requestInfo += `// URL: ${url}\n`;
+                requestInfo += '// 请求头:\n';
+                for (const [key, value] of Object.entries(headers)) {
+                    requestInfo += `//   ${key}: ${value}\n`;
+                }
+                if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+                    requestInfo += `// 请求体:\n${body}\n`;
+                }
+                requestInfo += '\n// ========== 错误信息 ==========\n';
+                
+                document.getElementById('httpResponse').style.display = 'block';
+                document.getElementById('httpStatus').textContent = 'ERROR';
+                document.getElementById('httpStatus').className = 'response-meta-value status-error';
+                document.getElementById('httpTime').textContent = '-';
+                document.getElementById('httpSize').textContent = '-';
+                document.getElementById('httpResponseContent').textContent = requestInfo + '❌ 错误: ' + error.message + '\n\n可能的原因：\n1. 网络连接问题\n2. URL 不正确\n3. CORS 跨域限制\n4. 服务器未响应';
+            } finally {
+                // 恢复按钮状态
+                sendBtn.classList.remove('button-loading');
+                sendBtn.textContent = originalText;
+                sendBtn.disabled = false;
+            }
+        }
+
+        // SSE 调试模式切换
+        function toggleSSEDebugMode() {
+            sseDebugMode = document.getElementById('sseDebugMode').checked;
+            if (sseDebugMode) {
+                logSSEEvent('info', '🔍 调试模式已启用 - 将显示原始数据流');
+            } else {
+                logSSEEvent('info', '🔍 调试模式已关闭');
+            }
+        }
+
+        // SSE 导出为 cURL
+        function copySSECurl() {
+            const url = document.getElementById('sseUrl').value;
+
+            if (!url) {
+                alert('请先输入SSE URL');
+                return;
+            }
+
+            // 收集请求头
+            const headers = {};
+            const headerRows = document.querySelectorAll('#sseHeaders .header-row');
+            headerRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const name = inputs[0].value.trim();
+                const value = inputs[1].value.trim();
+                if (name) {
+                    headers[name] = value;
+                }
+            });
+
+            // 构建curl命令
+            let curlCommand = `curl '${url}'`;
+
+            // 添加Accept头（SSE标准）
+            if (!headers['Accept']) {
+                curlCommand += ` \\\n  -H 'Accept: text/event-stream'`;
+            }
+
+            // 添加其他请求头
+            for (const [key, value] of Object.entries(headers)) {
+                curlCommand += ` \\\n  -H '${key}: ${value}'`;
+            }
+
+            // 添加 --no-buffer 参数以实时输出
+            curlCommand += ` \\\n  --no-buffer`;
+
+            // 复制到剪贴板
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ 已复制';
+                btn.style.background = '#4caf50';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('复制失败：' + err.message + '\n\n命令已生成：\n' + curlCommand);
+            });
+        }
+
+        // SSE cURL 导入功能
+        function toggleSSECurlImport() {
+            const section = document.getElementById('sseCurlImportSection');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            if (section.style.display === 'block') {
+                document.getElementById('sseCurlInput').focus();
+            }
+        }
+
+        function previewSSECurl() {
+            const curlInput = document.getElementById('sseCurlInput').value.trim();
+
+            if (!curlInput) {
+                alert('请先粘贴cURL命令或URL');
+                return;
+            }
+
+            try {
+                const parsed = parseCurlCommand(curlInput);
+                
+                let preview = '🔍 SSE cURL 解析预览\n';
+                preview += '='.repeat(50) + '\n\n';
+                preview += `📍 URL:\n${parsed.url || '❌ 未识别'}\n\n`;
+                
+                if (parsed.headers.length > 0) {
+                    preview += `📋 请求头 (${parsed.headers.length}):\n`;
+                    parsed.headers.forEach(h => {
+                        preview += `  • ${h.name}: ${h.value}\n`;
+                    });
+                    preview += '\n';
+                } else {
+                    preview += '📋 请求头: 无\n\n';
+                }
+
+                preview += '⚠️ 注意：浏览器的 EventSource API 不支持自定义请求头。\n';
+                preview += '如需自定义请求头，请考虑：\n';
+                preview += '1. 将认证信息放在 URL 参数中\n';
+                preview += '2. 使用 Fetch API with ReadableStream\n';
+                preview += '3. 使用服务端代理\n';
+                preview += '='.repeat(50);
+
+                document.getElementById('sseCurlPreviewContent').textContent = preview;
+                document.getElementById('sseCurlPreview').style.display = 'block';
+
+            } catch (error) {
+                alert('❌ 解析失败：' + error.message);
+                console.error('预览错误：', error);
+            }
+        }
+
+        function importSSECurl() {
+            const curlInput = document.getElementById('sseCurlInput').value.trim();
+
+            if (!curlInput) {
+                alert('请粘贴cURL命令或URL');
+                return;
+            }
+
+            try {
+                const parsed = parseCurlCommand(curlInput);
+
+                if (parsed.url) {
+                    document.getElementById('sseUrl').value = parsed.url;
+                } else {
+                    alert('⚠️ 无法提取URL，请检查格式');
+                    return;
+                }
+
+                // 填充请求头（虽然EventSource不支持，但保留以便用户了解）
+                const headerContainer = document.getElementById('sseHeaders');
+                if (parsed.headers.length > 0) {
+                    headerContainer.innerHTML = '';
+                    parsed.headers.forEach(header => {
+                        const row = document.createElement('div');
+                        row.className = 'header-row';
+                        row.innerHTML = `
+                            <input type="text" placeholder="Header Name" value="${escapeHtml(header.name)}">
+                            <input type="text" placeholder="Header Value" value="${escapeHtml(header.value)}">
+                            <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                        `;
+                        headerContainer.appendChild(row);
+                    });
+                }
+
+                // 关闭导入面板
+                toggleSSECurlImport();
+                document.getElementById('sseCurlInput').value = '';
+                document.getElementById('sseCurlPreview').style.display = 'none';
+
+                let importDetails = '✅ SSE URL 导入成功！\n\n';
+                importDetails += `📍 URL: ${parsed.url}\n`;
+                importDetails += `📋 请求头: ${parsed.headers.length} 个\n\n`;
+                
+                if (parsed.headers.length > 0) {
+                    importDetails += '⚠️ 注意：EventSource API 不支持自定义请求头。\n';
+                    importDetails += '建议将认证信息等通过 URL 参数传递。';
+                }
+                
+                alert(importDetails);
+
+            } catch (error) {
+                alert('❌ 解析失败：' + error.message);
+                console.error('SSE cURL解析错误：', error);
+            }
+        }
+
+        // WebSocket URL/cURL 导入功能
+        function toggleWSCurlImport() {
+            const section = document.getElementById('wsCurlImportSection');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            if (section.style.display === 'block') {
+                document.getElementById('wsCurlInput').focus();
+            }
+        }
+
+        function previewWSCurl() {
+            const input = document.getElementById('wsCurlInput').value.trim();
+
+            if (!input) {
+                alert('请先粘贴URL或cURL命令');
+                return;
+            }
+
+            try {
+                let wsUrl = '';
+                let allHeaders = [];
+                let standardHeaders = [];
+                let customHeaders = [];
+                
+                // WebSocket标准握手头
+                const standardWSHeaderNames = [
+                    'upgrade',
+                    'connection',
+                    'sec-websocket-key',
+                    'sec-websocket-version',
+                    'sec-websocket-extensions',
+                    'sec-websocket-protocol',
+                    'host',
+                    'origin',
+                    'user-agent',
+                    'accept-encoding',
+                    'accept-language',
+                    'cache-control',
+                    'pragma'
+                ];
+
+                // 判断是直接URL还是cURL命令
+                if (input.startsWith('ws://') || input.startsWith('wss://')) {
+                    wsUrl = input;
+                } else if (input.includes('curl')) {
+                    const parsed = parseCurlCommand(input);
+                    if (parsed.url) {
+                        wsUrl = parsed.url.replace(/^http:/, 'ws:').replace(/^https:/, 'wss:');
+                        allHeaders = parsed.headers;
+                        
+                        // 分类请求头
+                        allHeaders.forEach(h => {
+                            const headerName = h.name.toLowerCase();
+                            if (standardWSHeaderNames.includes(headerName)) {
+                                standardHeaders.push(h);
+                            } else {
+                                customHeaders.push(h);
+                            }
+                        });
+                    }
+                } else {
+                    wsUrl = input.replace(/^http:/, 'ws:').replace(/^https:/, 'wss:');
+                }
+
+                let preview = '🔍 WebSocket URL 解析预览\n';
+                preview += '='.repeat(50) + '\n\n';
+                preview += `📍 WebSocket URL:\n${wsUrl}\n\n`;
+
+                try {
+                    const urlObj = new URL(wsUrl);
+                    if (urlObj.search) {
+                        preview += `🔗 当前URL参数 (${urlObj.searchParams.size}):\n`;
+                        urlObj.searchParams.forEach((value, key) => {
+                            preview += `  • ${key} = ${value}\n`;
+                        });
+                        preview += '\n';
+                    }
+                    preview += `🌐 协议: ${urlObj.protocol}\n`;
+                    preview += `🏠 主机: ${urlObj.host}\n`;
+                    preview += `📂 路径: ${urlObj.pathname}\n\n`;
+                } catch (e) {
+                    preview += '⚠️ URL格式可能不正确\n\n';
+                }
+
+                // 显示标准请求头
+                if (standardHeaders.length > 0) {
+                    preview += `✓ 标准WebSocket握手头 (${standardHeaders.length}个，将自动过滤):\n`;
+                    standardHeaders.forEach(h => {
+                        preview += `  • ${h.name}: ${h.value.substring(0, 50)}${h.value.length > 50 ? '...' : ''}\n`;
+                    });
+                    preview += '\n';
+                }
+
+                // 显示自定义请求头
+                if (customHeaders.length > 0) {
+                    preview += `⚠️ 自定义请求头 (${customHeaders.length}个，需要特殊处理):\n`;
+                    customHeaders.forEach(h => {
+                        preview += `  • ${h.name}: ${h.value}\n`;
+                    });
+                    preview += '\n💡 这些头无法通过WebSocket握手发送，建议：\n';
+                    preview += '  1. 作为URL参数传递（导入时会询问）\n';
+                    preview += '  2. 连接成功后通过消息发送\n';
+                    preview += '  3. 使用子协议（Sec-WebSocket-Protocol）\n\n';
+                } else if (allHeaders.length > 0) {
+                    preview += '✓ 所有请求头都是标准握手头，将自动处理\n\n';
+                }
+
+                preview += '📝 总结:\n';
+                preview += `  • 标准头: ${standardHeaders.length} 个（自动过滤）\n`;
+                preview += `  • 自定义头: ${customHeaders.length} 个（需要处理）\n`;
+                preview += `  • 最终URL: ${wsUrl}\n\n`;
+
+                preview += '⚠️ 重要提示：\n';
+                preview += '1. WebSocket握手由浏览器自动处理标准头\n';
+                preview += '2. 无法在握手时发送自定义HTTP头（浏览器限制）\n';
+                preview += '3. 认证信息建议通过URL参数或连接后的消息传递\n';
+                preview += '='.repeat(50);
+
+                document.getElementById('wsCurlPreviewContent').textContent = preview;
+                document.getElementById('wsCurlPreview').style.display = 'block';
+
+            } catch (error) {
+                alert('❌ 解析失败：' + error.message);
+                console.error('预览错误：', error);
+            }
+        }
+
+        function importWSCurl() {
+            const input = document.getElementById('wsCurlInput').value.trim();
+
+            if (!input) {
+                alert('请粘贴URL或cURL命令');
+                return;
+            }
+
+            try {
+                let wsUrl = '';
+                let customHeaders = [];
+                
+                // WebSocket标准握手头（浏览器自动处理，不应作为URL参数）
+                const standardWSHeaders = [
+                    'upgrade',
+                    'connection',
+                    'sec-websocket-key',
+                    'sec-websocket-version',
+                    'sec-websocket-extensions',
+                    'sec-websocket-protocol',
+                    'host',
+                    'origin', // Origin通常由浏览器自动设置
+                    'user-agent',
+                    'accept-encoding',
+                    'accept-language',
+                    'cache-control',
+                    'pragma'
+                ];
+
+                // 判断是直接URL还是cURL命令
+                if (input.startsWith('ws://') || input.startsWith('wss://')) {
+                    wsUrl = input;
+                } else if (input.includes('curl')) {
+                    const parsed = parseCurlCommand(input);
+                    if (parsed.url) {
+                        wsUrl = parsed.url.replace(/^http:/, 'ws:').replace(/^https:/, 'wss:');
+                        
+                        // 过滤出非标准的自定义请求头
+                        if (parsed.headers.length > 0) {
+                            parsed.headers.forEach(h => {
+                                const headerName = h.name.toLowerCase();
+                                if (!standardWSHeaders.includes(headerName)) {
+                                    customHeaders.push(h);
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    wsUrl = input.replace(/^http:/, 'ws:').replace(/^https:/, 'wss:');
+                }
+
+                if (!wsUrl) {
+                    alert('❌ 无法提取有效的 URL');
+                    return;
+                }
+
+                // 如果有自定义请求头，询问是否添加到URL
+                if (customHeaders.length > 0) {
+                    let confirmMessage = '检测到自定义请求头，WebSocket握手不支持这些头。\n\n';
+                    confirmMessage += '是否将它们作为URL参数添加？\n\n';
+                    confirmMessage += '自定义请求头：\n';
+                    customHeaders.forEach(h => {
+                        confirmMessage += `  • ${h.name}: ${h.value}\n`;
+                    });
+                    confirmMessage += '\n注意：已自动过滤掉标准WebSocket握手头。';
+                    
+                    const addParams = confirm(confirmMessage);
+                    
+                    if (addParams) {
+                        const params = customHeaders.map(h => 
+                            `${encodeURIComponent(h.name)}=${encodeURIComponent(h.value)}`
+                        );
+                        const separator = wsUrl.includes('?') ? '&' : '?';
+                        wsUrl += separator + params.join('&');
+                    }
+                }
+
+                document.getElementById('wsUrl').value = wsUrl;
+
+                // 关闭导入面板
+                toggleWSCurlImport();
+                document.getElementById('wsCurlInput').value = '';
+                document.getElementById('wsCurlPreview').style.display = 'none';
+
+                let resultMessage = '✅ WebSocket URL 导入成功！\n\n';
+                resultMessage += `📍 URL: ${wsUrl}\n\n`;
+                
+                if (customHeaders.length === 0) {
+                    resultMessage += '✓ 已过滤所有标准WebSocket握手头\n';
+                    resultMessage += '✓ URL中只保留原有的查询参数';
+                } else {
+                    resultMessage += `✓ 已过滤标准握手头\n`;
+                    resultMessage += `✓ 检测到 ${customHeaders.length} 个自定义请求头`;
+                }
+
+                alert(resultMessage);
+
+            } catch (error) {
+                alert('❌ 导入失败：' + error.message);
+                console.error('WebSocket导入错误：', error);
+            }
+        }
+
+        // SSE连接
+        async function connectSSE() {
+            const url = document.getElementById('sseUrl').value;
+
+            if (!url) {
+                alert('请输入SSE URL');
+                return;
+            }
+
+            if (sseConnection) {
+                if (sseConnection.close) {
+                    sseConnection.close();
+                }
+                if (sseConnection.abort) {
+                    sseConnection.abort();
+                }
+            }
+
+            // 设置按钮状态
+            const connectBtn = document.getElementById('sseConnectBtn');
+            const disconnectBtn = document.getElementById('sseDisconnectBtn');
+            connectBtn.classList.add('button-loading');
+            connectBtn.textContent = '连接中...';
+            connectBtn.disabled = true;
+
+            // 收集请求头
+            const headers = {};
+            const headerRows = document.querySelectorAll('#sseHeaders .header-row');
+            headerRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const name = inputs[0].value.trim();
+                const value = inputs[1].value.trim();
+                if (name) {
+                    headers[name] = value;
+                }
+            });
+
+            logSSEEvent('info', '正在连接到 ' + url);
+
+            // 检查是否有自定义请求头
+            const hasCustomHeaders = Object.keys(headers).length > 0;
+
+            if (hasCustomHeaders) {
+                // 使用 Fetch API with ReadableStream 支持自定义请求头
+                try {
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: headers
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    // 检查是否是SSE响应
+                    const contentType = response.headers.get('content-type');
+                    if (!contentType || !contentType.includes('text/event-stream')) {
+                        logSSEEvent('warning', '⚠️ 警告: Content-Type 不是 text/event-stream，可能不是有效的SSE端点');
+                    }
+
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    
+                    // 保存reader用于断开连接
+                    sseConnection = { reader, abort: () => reader.cancel() };
+
+                    // 更新状态
+                    document.getElementById('sseStatus').textContent = '已连接';
+                    document.getElementById('sseStatus').className = 'ws-status connected';
+                    connectBtn.classList.remove('button-loading');
+                    connectBtn.textContent = '连接';
+                    connectBtn.disabled = true;
+                    disconnectBtn.disabled = false;
+                    
+                    logSSEEvent('success', '✅ 连接成功（使用 Fetch API + ReadableStream）');
+
+                    // 读取流数据
+                    let buffer = '';
+                    let currentEvent = {
+                        data: [],
+                        event: '',
+                        id: '',
+                        retry: null
+                    };
+                    
+                    async function readStream() {
+                        try {
+                            while (true) {
+                                const { done, value } = await reader.read();
+                                
+                                if (done) {
+                                    logSSEEvent('info', '🔌 流已结束');
+                                    disconnectSSE();
+                                    break;
+                                }
+
+                                const chunk = decoder.decode(value, { stream: true });
+                                buffer += chunk;
+                                
+                                // 调试模式：显示原始数据块
+                                if (sseDebugMode && chunk.trim()) {
+                                    logSSEEvent('info', '🔍 [RAW] ' + chunk.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
+                                }
+                                
+                                const lines = buffer.split('\n');
+                                buffer = lines.pop() || '';
+
+                                for (const line of lines) {
+                                    // 处理回车符
+                                    const cleanLine = line.replace(/\r$/, '');
+                                    
+                                    // 调试模式：显示解析的每一行
+                                    if (sseDebugMode && line) {
+                                        logSSEEvent('info', `🔍 [LINE] "${cleanLine}"`);
+                                    }
+                                    
+                                    if (cleanLine === '') {
+                                        // 空行表示消息结束，触发事件
+                                        if (currentEvent.data.length > 0) {
+                                            const messageData = currentEvent.data.join('\n');
+                                            const eventType = currentEvent.event || 'message';
+                                            
+                                            // 调试模式：显示完整事件对象
+                                            if (sseDebugMode) {
+                                                logSSEEvent('info', '🔍 [EVENT] ' + JSON.stringify({
+                                                    type: eventType,
+                                                    data: messageData,
+                                                    id: currentEvent.id || null
+                                                }));
+                                            }
+                                            
+                                            if (eventType === 'message') {
+                                                logSSEEvent('message', '📨 收到消息: ' + messageData);
+                                            } else {
+                                                logSSEEvent('custom', `📡 [${eventType}] ` + messageData);
+                                            }
+                                            
+                                            if (currentEvent.id && !sseDebugMode) {
+                                                logSSEEvent('info', '  └─ ID: ' + currentEvent.id);
+                                            }
+                                        }
+                                        
+                                        // 重置当前事件（保留retry）
+                                        const retry = currentEvent.retry;
+                                        currentEvent = {
+                                            data: [],
+                                            event: '',
+                                            id: '',
+                                            retry: retry
+                                        };
+                                    } else if (cleanLine.startsWith('data:')) {
+                                        // data: 后面可能有空格，也可能没有
+                                        const data = cleanLine.substring(5);
+                                        currentEvent.data.push(data.startsWith(' ') ? data.substring(1) : data);
+                                    } else if (cleanLine.startsWith('event:')) {
+                                        const event = cleanLine.substring(6);
+                                        currentEvent.event = event.startsWith(' ') ? event.substring(1) : event;
+                                    } else if (cleanLine.startsWith('id:')) {
+                                        const id = cleanLine.substring(3);
+                                        currentEvent.id = id.startsWith(' ') ? id.substring(1) : id;
+                                    } else if (cleanLine.startsWith('retry:')) {
+                                        const retry = cleanLine.substring(6);
+                                        const retryValue = parseInt(retry.startsWith(' ') ? retry.substring(1) : retry);
+                                        if (!isNaN(retryValue)) {
+                                            currentEvent.retry = retryValue;
+                                            logSSEEvent('info', '⏱️ 重试间隔: ' + retryValue + 'ms');
+                                        }
+                                    } else if (cleanLine.startsWith(':')) {
+                                        // 注释行，忽略（用于保持连接）
+                                        // logSSEEvent('info', '💬 注释: ' + cleanLine.substring(1));
+                                    } else {
+                                        // 未知格式的行，记录以便调试
+                                        if (cleanLine.trim()) {
+                                            logSSEEvent('info', '⚠️ 未知格式: ' + cleanLine);
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (error) {
+                            if (error.name !== 'AbortError') {
+                                logSSEEvent('error', '❌ 读取错误: ' + error.message);
+                                disconnectSSE();
+                            }
+                        }
+                    }
+
+                    readStream();
+
+                } catch (error) {
+                    logSSEEvent('error', '❌ 连接失败: ' + error.message);
+                    document.getElementById('sseStatus').textContent = '未连接';
+                    document.getElementById('sseStatus').className = 'ws-status disconnected';
+                    connectBtn.classList.remove('button-loading');
+                    connectBtn.textContent = '连接';
+                    connectBtn.disabled = false;
+                    disconnectBtn.disabled = true;
+                }
+            } else {
+                // 使用标准 EventSource API（不支持自定义请求头）
+                try {
+                    sseConnection = new EventSource(url);
+                    
+                    sseConnection.onopen = function() {
+                        logSSEEvent('success', '✅ 连接成功（使用 EventSource API）');
+                        document.getElementById('sseStatus').textContent = '已连接';
+                        document.getElementById('sseStatus').className = 'ws-status connected';
+                        connectBtn.classList.remove('button-loading');
+                        connectBtn.textContent = '连接';
+                        connectBtn.disabled = true;
+                        disconnectBtn.disabled = false;
+                    };
+
+                    sseConnection.onmessage = function(event) {
+                        logSSEEvent('message', '📨 收到消息: ' + event.data);
+                    };
+
+                    sseConnection.onerror = function(error) {
+                        logSSEEvent('error', '❌ 连接错误');
+                        document.getElementById('sseStatus').textContent = '连接错误';
+                        document.getElementById('sseStatus').className = 'ws-status disconnected';
+                        connectBtn.classList.remove('button-loading');
+                        connectBtn.textContent = '连接';
+                        connectBtn.disabled = false;
+                        disconnectBtn.disabled = true;
+                    };
+
+                    // 监听自定义事件类型
+                    sseConnection.addEventListener('custom', function(event) {
+                        logSSEEvent('custom', '📡 自定义事件: ' + event.data);
+                    });
+
+                } catch (error) {
+                    logSSEEvent('error', '❌ 连接失败: ' + error.message);
+                    document.getElementById('sseStatus').textContent = '未连接';
+                    document.getElementById('sseStatus').className = 'ws-status disconnected';
+                    connectBtn.classList.remove('button-loading');
+                    connectBtn.textContent = '连接';
+                    connectBtn.disabled = false;
+                    disconnectBtn.disabled = true;
+                }
+            }
+        }
+
+        function disconnectSSE() {
+            if (sseConnection) {
+                if (sseConnection.close) {
+                    sseConnection.close();
+                }
+                if (sseConnection.abort) {
+                    sseConnection.abort();
+                }
+                sseConnection = null;
+                document.getElementById('sseStatus').textContent = '未连接';
+                document.getElementById('sseStatus').className = 'ws-status disconnected';
+                
+                // 更新按钮状态
+                const connectBtn = document.getElementById('sseConnectBtn');
+                const disconnectBtn = document.getElementById('sseDisconnectBtn');
+                connectBtn.disabled = false;
+                disconnectBtn.disabled = true;
+                
+                logSSEEvent('info', '🔌 连接已断开');
+            }
+        }
+
+        function logSSEEvent(type, message) {
+            const log = document.getElementById('sseLog');
+            
+            // 清除空状态
+            if (log.querySelector('.empty-state')) {
+                log.innerHTML = '';
+            }
+
+            const time = new Date().toLocaleTimeString();
+            const item = document.createElement('div');
+            item.className = 'event-item';
+            item.innerHTML = `<span class="event-time">[${time}]</span><span class="event-type">[${type.toUpperCase()}]</span><span class="event-data">${message}</span>`;
+            log.appendChild(item);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function clearSSELog() {
+            const log = document.getElementById('sseLog');
+            log.innerHTML = '<div class="empty-state"><div style="font-size: 40px; margin-bottom: 10px;">📡</div><p>日志已清空</p></div>';
+        }
+
+        // WebSocket 调试模式切换
+        function toggleWSDebugMode() {
+            wsDebugMode = document.getElementById('wsDebugMode').checked;
+            if (wsDebugMode) {
+                logWSEvent('info', '🔍 调试模式已启用 - 将显示详细连接信息');
+            } else {
+                logWSEvent('info', '🔍 调试模式已关闭');
+            }
+        }
+
+        // WebSocket 复制连接信息
+        function copyWSInfo() {
+            const url = document.getElementById('wsUrl').value;
+            const protocols = document.getElementById('wsProtocols').value;
+
+            if (!url) {
+                alert('请先输入WebSocket URL');
+                return;
+            }
+
+            // 构建多种格式的连接信息
+            let info = '# WebSocket 连接信息\n';
+            info += '═'.repeat(60) + '\n\n';
+            
+            info += `📍 WebSocket URL:\n${url}\n\n`;
+            
+            if (protocols) {
+                info += `🔌 子协议:\n${protocols}\n\n`;
+            }
+
+            // 提取URL信息
+            try {
+                const urlObj = new URL(url);
+                info += `🌐 协议: ${urlObj.protocol}\n`;
+                info += `🏠 主机: ${urlObj.host}\n`;
+                info += `📂 路径: ${urlObj.pathname}\n`;
+                if (urlObj.search) {
+                    info += `🔗 查询参数: ${urlObj.search}\n`;
+                }
+                info += '\n';
+            } catch (e) {
+                // URL 格式错误，忽略
+            }
+
+            info += '─'.repeat(60) + '\n\n';
+
+            // wscat 命令（Node.js工具）
+            info += '💡 使用 wscat (Node.js):\n';
+            let wscatCmd = `wscat -c "${url}"`;
+            if (protocols) {
+                wscatCmd += ` --subprotocol "${protocols}"`;
+            }
+            info += wscatCmd + '\n\n';
+
+            // websocat 命令（Rust工具）
+            info += '💡 使用 websocat (Rust):\n';
+            let websocatCmd = `websocat "${url}"`;
+            info += websocatCmd + '\n\n';
+
+            // curl 命令（仅用于测试握手，不支持完整WebSocket）
+            info += '💡 使用 curl 测试握手:\n';
+            const httpUrl = url.replace(/^wss?:/, url.startsWith('wss:') ? 'https:' : 'http:');
+            let curlCmd = `curl -i -N \\\n  -H "Connection: Upgrade" \\\n  -H "Upgrade: websocket" \\\n  -H "Sec-WebSocket-Version: 13" \\\n  -H "Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==" \\\n  "${httpUrl}"`;
+            info += curlCmd + '\n\n';
+
+            // JavaScript 代码
+            info += '💡 JavaScript 代码:\n';
+            let jsCode = protocols 
+                ? `const ws = new WebSocket("${url}", "${protocols}");` 
+                : `const ws = new WebSocket("${url}");`;
+            jsCode += '\nws.onopen = () => console.log("Connected");';
+            jsCode += '\nws.onmessage = (e) => console.log("Message:", e.data);';
+            jsCode += '\nws.onerror = (e) => console.error("Error:", e);';
+            jsCode += '\nws.onclose = (e) => console.log("Closed:", e.code);';
+            info += jsCode + '\n\n';
+
+            // Python 代码
+            info += '💡 Python 代码 (websockets):\n';
+            let pythonCode = 'import asyncio\nimport websockets\n\n';
+            pythonCode += 'async def connect():\n';
+            if (protocols) {
+                pythonCode += `    async with websockets.connect("${url}", subprotocols=["${protocols}"]) as ws:\n`;
+            } else {
+                pythonCode += `    async with websockets.connect("${url}") as ws:\n`;
+            }
+            pythonCode += '        await ws.send("Hello")\n';
+            pythonCode += '        response = await ws.recv()\n';
+            pythonCode += '        print(response)\n\n';
+            pythonCode += 'asyncio.run(connect())';
+            info += pythonCode + '\n\n';
+
+            info += '═'.repeat(60) + '\n';
+            info += '\n注意：WebSocket 是双向通信协议，curl 不完全支持。\n';
+            info += '推荐使用 wscat、websocat 或编程语言的 WebSocket 库。';
+
+            // 复制到剪贴板
+            navigator.clipboard.writeText(info).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ 已复制';
+                btn.style.background = '#4caf50';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('复制失败：' + err.message + '\n\n信息已生成，请手动复制：\n\n' + info);
+            });
+        }
+
+        // WebSocket心跳相关函数
+        function startHeartbeat() {
+            const enabled = document.getElementById('wsHeartbeatEnabled').checked;
+            if (!enabled || !wsConnection || wsConnection.readyState !== WebSocket.OPEN) {
+                return;
+            }
+
+            stopHeartbeat();
+
+            const interval = parseInt(document.getElementById('wsHeartbeatInterval').value) * 1000;
+            const message = document.getElementById('wsHeartbeatMessage').value;
+            const timeout = parseInt(document.getElementById('wsHeartbeatTimeout').value) * 1000;
+            const autoReconnect = document.getElementById('wsAutoReconnect').checked;
+
+            wsLastMessageTime = Date.now();
+
+            // 心跳定时器
+            wsHeartbeatTimer = setInterval(() => {
+                if (wsConnection && wsConnection.readyState === WebSocket.OPEN) {
+                    try {
+                        wsConnection.send(message);
+                        if (wsDebugMode) {
+                            logWSEvent('info', `💓 [HEARTBEAT] 发送心跳: ${message}`);
+                        }
+                    } catch (error) {
+                        logWSEvent('error', '💓 [HEARTBEAT] 发送心跳失败: ' + error.message);
+                    }
+                } else {
+                    stopHeartbeat();
+                }
+            }, interval);
+
+            // 超时检测定时器
+            wsHeartbeatTimeoutTimer = setInterval(() => {
+                const timeSinceLastMessage = Date.now() - wsLastMessageTime;
+                
+                if (timeSinceLastMessage > timeout) {
+                    logWSEvent('error', '💓 [HEARTBEAT] 连接超时！超过 ' + (timeout/1000) + ' 秒未收到消息');
+                    
+                    if (autoReconnect) {
+                        logWSEvent('info', '💓 [HEARTBEAT] 尝试自动重连...');
+                        const url = document.getElementById('wsUrl').value;
+                        setTimeout(() => {
+                            if (wsConnection) {
+                                wsConnection.close();
+                            }
+                            connectWebSocket();
+                        }, 1000);
+                    } else {
+                        if (wsConnection) {
+                            wsConnection.close();
+                        }
+                    }
+                    
+                    stopHeartbeat();
+                }
+            }, 1000); // 每秒检查一次
+
+            logWSEvent('info', `💓 [HEARTBEAT] 已启动心跳检测 (间隔: ${interval/1000}秒, 超时: ${timeout/1000}秒)`);
+        }
+
+        function stopHeartbeat() {
+            if (wsHeartbeatTimer) {
+                clearInterval(wsHeartbeatTimer);
+                wsHeartbeatTimer = null;
+            }
+            if (wsHeartbeatTimeoutTimer) {
+                clearInterval(wsHeartbeatTimeoutTimer);
+                wsHeartbeatTimeoutTimer = null;
+            }
+        }
+
+        function updateLastMessageTime() {
+            wsLastMessageTime = Date.now();
+        }
+
+        // WebSocket连接
+        function connectWebSocket() {
+            const url = document.getElementById('wsUrl').value;
+            const protocols = document.getElementById('wsProtocols').value.split(',').map(p => p.trim()).filter(p => p);
+
+            if (!url) {
+                alert('请输入WebSocket URL');
+                return;
+            }
+
+            if (wsConnection) {
+                wsConnection.close();
+            }
+
+            // 设置按钮状态
+            const connectBtn = document.getElementById('wsConnectBtn');
+            const disconnectBtn = document.getElementById('wsDisconnectBtn');
+            connectBtn.classList.add('button-loading');
+            connectBtn.textContent = '连接中...';
+            connectBtn.disabled = true;
+
+            // 调试信息：连接参数
+            logWSEvent('info', '正在连接到 ' + url);
+            
+            if (wsDebugMode) {
+                try {
+                    const urlObj = new URL(url);
+                    logWSEvent('info', '🔍 [DEBUG] 协议: ' + urlObj.protocol);
+                    logWSEvent('info', '🔍 [DEBUG] 主机: ' + urlObj.host);
+                    logWSEvent('info', '🔍 [DEBUG] 路径: ' + urlObj.pathname);
+                    if (urlObj.search) {
+                        logWSEvent('info', '🔍 [DEBUG] 查询参数: ' + urlObj.search);
+                    }
+                    if (protocols.length > 0) {
+                        logWSEvent('info', '🔍 [DEBUG] 子协议: ' + protocols.join(', '));
+                    }
+                } catch (e) {
+                    logWSEvent('error', '🔍 [DEBUG] URL解析失败: ' + e.message);
+                }
+            }
+
+            try {
+                const startTime = Date.now();
+                wsConnection = protocols.length > 0 ? new WebSocket(url, protocols) : new WebSocket(url);
+                
+                // 记录readyState
+                if (wsDebugMode) {
+                    logWSEvent('info', '🔍 [DEBUG] 初始状态: CONNECTING (' + wsConnection.readyState + ')');
+                }
+
+                wsConnection.onopen = function(event) {
+                    const connectTime = Date.now() - startTime;
+                    logWSEvent('success', '✅ WebSocket连接成功 (' + connectTime + 'ms)');
+                    document.getElementById('wsStatus').textContent = '已连接';
+                    document.getElementById('wsStatus').className = 'ws-status connected';
+                    
+                    if (wsDebugMode) {
+                        logWSEvent('info', '🔍 [DEBUG] readyState: OPEN (' + wsConnection.readyState + ')');
+                        logWSEvent('info', '🔍 [DEBUG] 协议: ' + (wsConnection.protocol || '(无)'));
+                        logWSEvent('info', '🔍 [DEBUG] 扩展: ' + (wsConnection.extensions || '(无)'));
+                        logWSEvent('info', '🔍 [DEBUG] bufferedAmount: ' + wsConnection.bufferedAmount);
+                    }
+                    
+                    // 发送自定义请求头（作为首条消息）
+                    const headers = {};
+                    const headerRows = document.querySelectorAll('#wsHeaders .header-row');
+                    headerRows.forEach(row => {
+                        const inputs = row.querySelectorAll('input');
+                        const name = inputs[0].value.trim();
+                        const value = inputs[1].value.trim();
+                        if (name) {
+                            headers[name] = value;
+                        }
+                    });
+                    
+                    if (Object.keys(headers).length > 0) {
+                        const headerMessage = JSON.stringify({
+                            type: '__headers__',
+                            headers: headers
+                        });
+                        try {
+                            wsConnection.send(headerMessage);
+                            logWSEvent('info', '📋 [HEADERS] 已发送自定义请求头: ' + JSON.stringify(headers, null, 2));
+                        } catch (error) {
+                            logWSEvent('error', '📋 [HEADERS] 发送失败: ' + error.message);
+                        }
+                    }
+                    
+                    // 启动心跳检测
+                    startHeartbeat();
+                    
+                    // 更新按钮状态
+                    connectBtn.classList.remove('button-loading');
+                    connectBtn.textContent = '连接';
+                    connectBtn.disabled = true;
+                    disconnectBtn.disabled = false;
+                };
+
+                wsConnection.onmessage = function(event) {
+                    // 更新最后消息时间（用于心跳检测）
+                    updateLastMessageTime();
+                    
+                    if (wsDebugMode) {
+                        const dataType = typeof event.data;
+                        const dataSize = event.data.length || event.data.size || 0;
+                        logWSEvent('info', `🔍 [DEBUG] 消息类型: ${dataType}, 大小: ${dataSize} bytes`);
+                    }
+                    logWSEvent('message', '📨 收到消息: ' + event.data);
+                };
+
+                wsConnection.onerror = function(error) {
+                    // 停止心跳
+                    stopHeartbeat();
+                    
+                    logWSEvent('error', '❌ WebSocket错误');
+                    
+                    if (wsDebugMode) {
+                        logWSEvent('error', '🔍 [DEBUG] readyState: ' + wsConnection.readyState);
+                        logWSEvent('error', '🔍 [DEBUG] Error对象: ' + JSON.stringify(error, Object.getOwnPropertyNames(error)));
+                    }
+                    
+                    // 常见错误提示
+                    logWSEvent('info', '💡 常见错误原因:');
+                    logWSEvent('info', '  1. 服务器拒绝连接（检查URL和认证）');
+                    logWSEvent('info', '  2. 网络问题或CORS限制');
+                    logWSEvent('info', '  3. 服务器不支持WebSocket协议');
+                    logWSEvent('info', '  4. SSL/TLS证书问题（wss://）');
+                    
+                    document.getElementById('wsStatus').textContent = '连接错误';
+                    document.getElementById('wsStatus').className = 'ws-status disconnected';
+                    
+                    // 恢复按钮状态
+                    connectBtn.classList.remove('button-loading');
+                    connectBtn.textContent = '连接';
+                    connectBtn.disabled = false;
+                    disconnectBtn.disabled = true;
+                };
+
+                wsConnection.onclose = function(event) {
+                    // 停止心跳
+                    stopHeartbeat();
+                    
+                    const closeInfo = getWebSocketCloseInfo(event.code);
+                    
+                    logWSEvent('info', '🔌 WebSocket连接关闭');
+                    logWSEvent('info', `  └─ 关闭码: ${event.code} (${closeInfo.name})`);
+                    logWSEvent('info', `  └─ 原因: ${event.reason || '(无)'}`);
+                    logWSEvent('info', `  └─ 干净关闭: ${event.wasClean ? '是' : '否'}`);
+                    
+                    if (wsDebugMode) {
+                        logWSEvent('info', '🔍 [DEBUG] 完整关闭事件: ' + JSON.stringify({
+                            code: event.code,
+                            reason: event.reason,
+                            wasClean: event.wasClean,
+                            description: closeInfo.description
+                        }, null, 2));
+                    }
+                    
+                    // 特殊错误码的详细说明
+                    if (event.code === 1006) {
+                        logWSEvent('error', '⚠️ 错误 1006: 连接异常关闭（未完成握手）');
+                        logWSEvent('info', '💡 可能的原因:');
+                        logWSEvent('info', '  1. 服务器未响应或拒绝连接');
+                        logWSEvent('info', '  2. URL错误或服务器不存在');
+                        logWSEvent('info', '  3. 网络中断或防火墙阻止');
+                        logWSEvent('info', '  4. 需要认证但未提供（检查URL参数）');
+                        logWSEvent('info', '💡 建议:');
+                        logWSEvent('info', '  • 在浏览器开发者工具的Network标签查看握手请求');
+                        logWSEvent('info', '  • 检查是否需要认证token作为URL参数');
+                        logWSEvent('info', '  • 确认服务器WebSocket端点是否正确');
+                    } else if (event.code === 1000) {
+                        logWSEvent('success', '✅ 正常关闭连接');
+                    } else if (event.code >= 4000) {
+                        logWSEvent('info', '💡 这是应用自定义的关闭码，请查看服务器文档');
+                    }
+                    
+                    document.getElementById('wsStatus').textContent = '未连接';
+                    document.getElementById('wsStatus').className = 'ws-status disconnected';
+                    
+                    // 恢复按钮状态
+                    connectBtn.classList.remove('button-loading');
+                    connectBtn.textContent = '连接';
+                    connectBtn.disabled = false;
+                    disconnectBtn.disabled = true;
+                };
+
+            } catch (error) {
+                logWSEvent('error', '❌ 连接失败: ' + error.message);
+                
+                if (wsDebugMode) {
+                    logWSEvent('error', '🔍 [DEBUG] 异常堆栈: ' + error.stack);
+                }
+                
+                document.getElementById('wsStatus').textContent = '未连接';
+                document.getElementById('wsStatus').className = 'ws-status disconnected';
+                
+                // 恢复按钮状态
+                connectBtn.classList.remove('button-loading');
+                connectBtn.textContent = '连接';
+                connectBtn.disabled = false;
+                disconnectBtn.disabled = true;
+            }
+        }
+
+        // WebSocket关闭码信息
+        function getWebSocketCloseInfo(code) {
+            const closeCodes = {
+                1000: { name: 'CLOSE_NORMAL', description: '正常关闭连接' },
+                1001: { name: 'CLOSE_GOING_AWAY', description: '端点离开（如页面关闭）' },
+                1002: { name: 'CLOSE_PROTOCOL_ERROR', description: '协议错误' },
+                1003: { name: 'CLOSE_UNSUPPORTED', description: '不支持的数据类型' },
+                1004: { name: 'CLOSE_RESERVED', description: '保留' },
+                1005: { name: 'CLOSED_NO_STATUS', description: '没有收到状态码' },
+                1006: { name: 'CLOSE_ABNORMAL', description: '异常关闭（未完成握手）' },
+                1007: { name: 'UNSUPPORTED_DATA', description: '数据格式错误' },
+                1008: { name: 'POLICY_VIOLATION', description: '违反策略' },
+                1009: { name: 'CLOSE_TOO_LARGE', description: '消息过大' },
+                1010: { name: 'MISSING_EXTENSION', description: '缺少扩展' },
+                1011: { name: 'INTERNAL_ERROR', description: '服务器内部错误' },
+                1012: { name: 'SERVICE_RESTART', description: '服务重启' },
+                1013: { name: 'TRY_AGAIN_LATER', description: '稍后重试' },
+                1014: { name: 'BAD_GATEWAY', description: '网关错误' },
+                1015: { name: 'TLS_HANDSHAKE_FAIL', description: 'TLS握手失败' }
+            };
+            
+            if (code >= 4000 && code <= 4999) {
+                return { name: 'APP_CUSTOM', description: '应用自定义关闭码' };
+            }
+            
+            return closeCodes[code] || { name: 'UNKNOWN', description: '未知关闭码' };
+        }
+
+        function disconnectWebSocket() {
+            // 停止心跳
+            stopHeartbeat();
+            
+            if (wsConnection) {
+                wsConnection.close();
+                wsConnection = null;
+                
+                // 更新按钮状态
+                const connectBtn = document.getElementById('wsConnectBtn');
+                const disconnectBtn = document.getElementById('wsDisconnectBtn');
+                connectBtn.disabled = false;
+                disconnectBtn.disabled = true;
+            }
+        }
+
+        function sendWebSocketMessage() {
+            const message = document.getElementById('wsMessage').value;
+
+            if (!message) {
+                alert('请输入消息内容');
+                return;
+            }
+
+            if (!wsConnection || wsConnection.readyState !== WebSocket.OPEN) {
+                alert('WebSocket未连接');
+                return;
+            }
+
+            try {
+                wsConnection.send(message);
+                logWSEvent('send', '📤 发送消息: ' + message);
+                document.getElementById('wsMessage').value = '';
+            } catch (error) {
+                logWSEvent('error', '❌ 发送失败: ' + error.message);
+            }
+        }
+
+        function logWSEvent(type, message) {
+            const log = document.getElementById('wsLog');
+            
+            // 清除空状态
+            if (log.querySelector('.empty-state')) {
+                log.innerHTML = '';
+            }
+
+            const time = new Date().toLocaleTimeString();
+            const item = document.createElement('div');
+            item.className = 'event-item';
+            item.innerHTML = `<span class="event-time">[${time}]</span><span class="event-type">[${type.toUpperCase()}]</span><span class="event-data">${message}</span>`;
+            log.appendChild(item);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function clearWSLog() {
+            const log = document.getElementById('wsLog');
+            log.innerHTML = '<div class="empty-state"><div style="font-size: 40px; margin-bottom: 10px;">💬</div><p>日志已清空</p></div>';
+        }
+
+        // cURL 导入导出功能
+        function toggleCurlImport() {
+            const section = document.getElementById('curlImportSection');
+            section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            if (section.style.display === 'block') {
+                document.getElementById('curlInput').focus();
+            }
+        }
+
+        function copyCurl() {
+            const method = document.getElementById('httpMethod').value;
+            const url = document.getElementById('httpUrl').value;
+            const body = document.getElementById('httpBody').value;
+
+            if (!url) {
+                alert('请先输入URL');
+                return;
+            }
+
+            // 构建curl命令
+            let curlCommand = `curl -X ${method} '${url}'`;
+
+            // 添加请求头
+            const headerRows = document.querySelectorAll('#httpHeaders .header-row');
+            headerRows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const name = inputs[0].value.trim();
+                const value = inputs[1].value.trim();
+                if (name) {
+                    curlCommand += ` \\\n  -H '${name}: ${value}'`;
+                }
+            });
+
+            // 添加请求体
+            if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+                const escapedBody = body.replace(/'/g, "'\\''");
+                curlCommand += ` \\\n  -d '${escapedBody}'`;
+            }
+
+            // 复制到剪贴板
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                // 显示复制成功提示
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ 已复制';
+                btn.style.background = '#4caf50';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('复制失败：' + err.message + '\n\n命令已生成：\n' + curlCommand);
+            });
+        }
+
+        function previewCurl() {
+            const curlInput = document.getElementById('curlInput').value.trim();
+
+            if (!curlInput) {
+                alert('请先粘贴cURL命令');
+                return;
+            }
+
+            try {
+                const parsed = parseCurlCommand(curlInput);
+                
+                let preview = '🔍 cURL 解析预览\n';
+                preview += '='.repeat(50) + '\n\n';
+                preview += `📍 URL:\n${parsed.url || '❌ 未识别'}\n\n`;
+                preview += `📮 方法:\n${parsed.method}\n\n`;
+                
+                if (parsed.headers.length > 0) {
+                    preview += `📋 请求头 (${parsed.headers.length}):\n`;
+                    parsed.headers.forEach(h => {
+                        preview += `  • ${h.name}: ${h.value}\n`;
+                    });
+                    preview += '\n';
+                } else {
+                    preview += '📋 请求头: 无\n\n';
+                }
+                
+                if (parsed.body) {
+                    preview += `📝 请求体 (${parsed.body.length} 字符):\n`;
+                    preview += `${parsed.body}\n\n`;
+                } else {
+                    preview += '📝 请求体: 无\n\n';
+                }
+
+                preview += `💡 Body类型: ${parsed.bodyType}\n`;
+                preview += '='.repeat(50);
+
+                document.getElementById('curlPreviewContent').textContent = preview;
+                document.getElementById('curlPreview').style.display = 'block';
+
+            } catch (error) {
+                alert('❌ 解析失败：' + error.message);
+                console.error('预览错误：', error);
+            }
+        }
+
+        function parseCurlCommand(curlInput) {
+            // 清理命令
+            let curl = curlInput.replace(/\\\s*\n\s*/g, ' ').trim();
+
+            const result = {
+                url: '',
+                method: 'GET',
+                headers: [],
+                body: '',
+                bodyType: 'json'
+            };
+
+            // 提取URL
+            const urlPatterns = [
+                /curl\s+(?:-X\s+\w+\s+)?['"]([^'"]+)['"]/,
+                /curl\s+(?:-X\s+\w+\s+)?(\S+)/,
+                /curl\s+['"]([^'"]+)['"]/,
+                /curl\s+(\S+)/,
+            ];
+            
+            for (const pattern of urlPatterns) {
+                const match = curl.match(pattern);
+                if (match && match[1] && !match[1].startsWith('-')) {
+                    result.url = match[1];
+                    break;
+                }
+            }
+
+            // 提取方法
+            const methodMatch = curl.match(/-X\s+(\w+)/i) || curl.match(/--request\s+(\w+)/i);
+            if (methodMatch) {
+                result.method = methodMatch[1].toUpperCase();
+            } else if (curl.includes('-d ') || curl.includes('--data')) {
+                result.method = 'POST';
+            }
+
+            // 提取请求头 - 改进的解析逻辑
+            const headerRegex = /(-H|--header)\s+/g;
+            let match;
+            
+            while ((match = headerRegex.exec(curl)) !== null) {
+                const startIndex = match.index + match[0].length;
+                const remaining = curl.substring(startIndex);
+                
+                let headerContent = '';
+                
+                // 检查是否以引号开始
+                if (remaining[0] === '"' || remaining[0] === "'") {
+                    const quoteChar = remaining[0];
+                    let endIndex = 1;
+                    let escaped = false;
+                    
+                    // 查找匹配的结束引号（考虑转义）
+                    while (endIndex < remaining.length) {
+                        if (escaped) {
+                            escaped = false;
+                        } else if (remaining[endIndex] === '\\') {
+                            escaped = true;
+                        } else if (remaining[endIndex] === quoteChar) {
+                            break;
+                        }
+                        endIndex++;
+                    }
+                    
+                    headerContent = remaining.substring(1, endIndex);
+                } else {
+                    // 不带引号，提取到空格或行尾
+                    const headerMatch = remaining.match(/^(\S+)/);
+                    if (headerMatch) {
+                        headerContent = headerMatch[1];
+                    }
+                }
+                
+                // 解析 header name 和 value
+                if (headerContent) {
+                    const colonIndex = headerContent.indexOf(':');
+                    if (colonIndex > 0) {
+                        const name = headerContent.substring(0, colonIndex).trim();
+                        const value = headerContent.substring(colonIndex + 1).trim();
+                        result.headers.push({ name, value });
+                    }
+                }
+            }
+
+            // 提取请求体 - 改进的解析逻辑
+            let bodyData = '';
+            
+            // 尝试匹配 -d 或 --data 或 --data-raw 等参数
+            const dataParamMatch = curl.match(/(-d|--data|--data-raw|--data-binary|--data-urlencode)\s+/);
+            
+            if (dataParamMatch) {
+                const startIndex = dataParamMatch.index + dataParamMatch[0].length;
+                const remaining = curl.substring(startIndex);
+                
+                // 检查是否以引号开始
+                if (remaining[0] === '"' || remaining[0] === "'") {
+                    const quoteChar = remaining[0];
+                    let endIndex = 1;
+                    let escaped = false;
+                    
+                    // 查找匹配的结束引号（考虑转义）
+                    while (endIndex < remaining.length) {
+                        if (escaped) {
+                            escaped = false;
+                        } else if (remaining[endIndex] === '\\') {
+                            escaped = true;
+                        } else if (remaining[endIndex] === quoteChar) {
+                            break;
+                        }
+                        endIndex++;
+                    }
+                    
+                    bodyData = remaining.substring(1, endIndex);
+                } else {
+                    // 不带引号，提取到空格或行尾
+                    const match = remaining.match(/^(\S+)/);
+                    if (match) {
+                        bodyData = match[1];
+                    }
+                }
+                
+                // 处理转义字符
+                if (bodyData) {
+                    result.body = bodyData.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+                }
+            }
+
+            if (result.body) {
+                try {
+                    JSON.parse(result.body);
+                    result.bodyType = 'json';
+                } catch (e) {
+                    if (result.body.includes('=') && result.body.includes('&')) {
+                        result.bodyType = 'form';
+                    } else {
+                        result.bodyType = 'text';
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        function importCurl() {
+            const curlInput = document.getElementById('curlInput').value.trim();
+
+            if (!curlInput) {
+                alert('请粘贴cURL命令');
+                return;
+            }
+
+            try {
+                const parsed = parseCurlCommand(curlInput);
+
+                // 填充URL
+                if (parsed.url) {
+                    document.getElementById('httpUrl').value = parsed.url;
+                } else {
+                    alert('⚠️ 无法提取URL，请检查cURL命令格式');
+                    return;
+                }
+
+                // 填充方法
+                document.getElementById('httpMethod').value = parsed.method;
+
+                // 填充请求头
+                const headerContainer = document.getElementById('httpHeaders');
+                if (parsed.headers.length > 0) {
+                    headerContainer.innerHTML = '';
+                    parsed.headers.forEach(header => {
+                        const row = document.createElement('div');
+                        row.className = 'header-row';
+                        row.innerHTML = `
+                            <input type="text" placeholder="Header Name" value="${escapeHtml(header.name)}">
+                            <input type="text" placeholder="Header Value" value="${escapeHtml(header.value)}">
+                            <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                        `;
+                        headerContainer.appendChild(row);
+                    });
+                } else {
+                    // 如果没有请求头，保留默认的
+                    headerContainer.innerHTML = `
+                        <div class="header-row">
+                            <input type="text" placeholder="Header Name" value="Content-Type">
+                            <input type="text" placeholder="Header Value" value="application/json">
+                            <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                        </div>
+                    `;
+                }
+
+                // 填充请求体
+                if (parsed.body) {
+                    // 尝试格式化JSON
+                    let bodyData = parsed.body;
+                    try {
+                        const jsonParsed = JSON.parse(bodyData);
+                        bodyData = JSON.stringify(jsonParsed, null, 2);
+                    } catch (e) {
+                        // 不是JSON，保持原样
+                    }
+                    document.getElementById('httpBody').value = bodyData;
+                    document.getElementById('bodyType').value = parsed.bodyType;
+                } else {
+                    document.getElementById('httpBody').value = '';
+                }
+
+                updateBodyPlaceholder();
+
+                // 关闭导入面板
+                toggleCurlImport();
+                document.getElementById('curlInput').value = '';
+                document.getElementById('curlPreview').style.display = 'none';
+
+                // 显示详细的导入结果
+                let importDetails = '✅ cURL命令导入成功！\n\n导入内容：\n';
+                importDetails += `📍 URL: ${parsed.url}\n`;
+                importDetails += `📮 方法: ${parsed.method}\n`;
+                importDetails += `📋 请求头: ${parsed.headers.length} 个\n`;
+                importDetails += `📝 请求体: ${parsed.body ? parsed.body.length + ' 字符' : '无'}\n`;
+                
+                alert(importDetails);
+
+            } catch (error) {
+                alert('❌ 解析cURL命令失败：' + error.message + '\n\n请确保cURL命令格式正确。\n\n提示：\n1. 先点击"🔍 预览解析结果"检查解析是否正确\n2. 支持格式：curl -X POST "url" -H "header" -d "data"');
+                console.error('cURL解析错误：', error);
+                console.log('原始命令：', curlInput);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 复制响应详情
+        function copyResponseDetails() {
+            const content = document.getElementById('httpResponseContent').textContent;
+            const status = document.getElementById('httpStatus').textContent;
+            const time = document.getElementById('httpTime').textContent;
+            const size = document.getElementById('httpSize').textContent;
+
+            const fullLog = `API调试日志
+${'='.repeat(70)}
+状态码: ${status}
+响应时间: ${time}
+响应大小: ${size}
+生成时间: ${new Date().toLocaleString()}
+
+${content}
+${'='.repeat(70)}`;
+
+            navigator.clipboard.writeText(fullLog).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ 已复制';
+                btn.style.background = '#4caf50';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                alert('复制失败：' + err.message);
+            });
+        }
+
+        // 一键清空HTTP表单
+        function clearHttpForm() {
+            if (!confirm('确定要清空所有字段吗？此操作不可撤销。')) {
+                return;
+            }
+
+            // 清空URL和重置方法
+            document.getElementById('httpUrl').value = '';
+            document.getElementById('httpMethod').value = 'GET';
+
+            // 清空请求体和重置类型
+            document.getElementById('httpBody').value = '';
+            document.getElementById('bodyType').value = 'json';
+            updateBodyPlaceholder();
+
+            // 重置请求头（保留一个默认的Content-Type）
+            const headerContainer = document.getElementById('httpHeaders');
+            headerContainer.innerHTML = `
+                <div class="header-row">
+                    <input type="text" placeholder="Header Name" value="Content-Type">
+                    <input type="text" placeholder="Header Value" value="application/json">
+                    <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                </div>
+            `;
+
+            // 隐藏响应区域
+            document.getElementById('httpResponse').style.display = 'none';
+
+            // 隐藏cURL导入区域
+            document.getElementById('curlImportSection').style.display = 'none';
+            document.getElementById('curlInput').value = '';
+
+            // 显示清空成功提示
+            const statusEl = document.getElementById('httpStatus');
+            const responseContent = document.getElementById('httpResponseContent');
+            if (statusEl) {
+                statusEl.textContent = '已清空';
+                statusEl.className = 'response-meta-value';
+            }
+            if (responseContent) {
+                responseContent.textContent = '表单已清空，可以开始新的测试';
+            }
+
+            // 可选：短暂显示成功动画
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ 已清空';
+            btn.style.background = '#4caf50';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 1500);
+        }
+
+        // 一键清空SSE表单
+        function clearSSEForm() {
+            if (!confirm('确定要清空SSE配置并断开连接吗？')) {
+                return;
+            }
+
+            // 断开连接
+            if (sseConnection) {
+                sseConnection.close();
+                sseConnection = null;
+            }
+
+            // 清空URL
+            document.getElementById('sseUrl').value = '';
+
+            // 重置请求头
+            const headerContainer = document.getElementById('sseHeaders');
+            headerContainer.innerHTML = `
+                <div class="header-row">
+                    <input type="text" placeholder="Header Name" value="Authorization">
+                    <input type="text" placeholder="Header Value" value="Bearer token">
+                    <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                </div>
+            `;
+
+            // 清空日志
+            const log = document.getElementById('sseLog');
+            log.innerHTML = '<div class="empty-state"><div style="font-size: 40px; margin-bottom: 10px;">📡</div><p>表单已清空，可以开始新的测试</p></div>';
+
+            // 重置状态
+            document.getElementById('sseStatus').textContent = '未连接';
+            document.getElementById('sseStatus').className = 'ws-status disconnected';
+
+            // 清空并隐藏curl导入区域
+            document.getElementById('sseCurlImportSection').style.display = 'none';
+            document.getElementById('sseCurlInput').value = '';
+            document.getElementById('sseCurlPreview').style.display = 'none';
+
+            // 重置调试模式
+            document.getElementById('sseDebugMode').checked = false;
+            sseDebugMode = false;
+
+            // 重置按钮状态
+            const connectBtn = document.getElementById('sseConnectBtn');
+            const disconnectBtn = document.getElementById('sseDisconnectBtn');
+            connectBtn.disabled = false;
+            connectBtn.classList.remove('button-loading');
+            connectBtn.textContent = '连接';
+            disconnectBtn.disabled = true;
+
+            // 显示清空成功提示
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ 已清空';
+            btn.style.background = '#4caf50';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 1500);
+        }
+
+        // 一键清空WebSocket表单
+        function clearWSForm() {
+            if (!confirm('确定要清空WebSocket配置并断开连接吗？')) {
+                return;
+            }
+
+            // 停止心跳并断开连接
+            stopHeartbeat();
+            if (wsConnection) {
+                wsConnection.close();
+                wsConnection = null;
+            }
+
+            // 清空URL和协议
+            document.getElementById('wsUrl').value = '';
+            document.getElementById('wsProtocols').value = '';
+
+            // 清空消息输入框
+            document.getElementById('wsMessage').value = '';
+
+            // 重置请求头
+            const headerContainer = document.getElementById('wsHeaders');
+            headerContainer.innerHTML = `
+                <div class="header-row">
+                    <input type="text" placeholder="Header Name" value="Authorization">
+                    <input type="text" placeholder="Header Value" value="Bearer token">
+                    <button class="button-remove" onclick="removeHeader(this)">删除</button>
+                </div>
+            `;
+
+            // 重置心跳设置
+            document.getElementById('wsHeartbeatEnabled').checked = false;
+            document.getElementById('wsHeartbeatInterval').value = '30';
+            document.getElementById('wsHeartbeatMessage').value = 'ping';
+            document.getElementById('wsHeartbeatTimeout').value = '10';
+            document.getElementById('wsAutoReconnect').checked = false;
+
+            // 清空日志
+            const log = document.getElementById('wsLog');
+            log.innerHTML = '<div class="empty-state"><div style="font-size: 40px; margin-bottom: 10px;">💬</div><p>表单已清空，可以开始新的测试</p></div>';
+
+            // 重置状态
+            document.getElementById('wsStatus').textContent = '未连接';
+            document.getElementById('wsStatus').className = 'ws-status disconnected';
+
+            // 清空并隐藏curl导入区域
+            document.getElementById('wsCurlImportSection').style.display = 'none';
+            document.getElementById('wsCurlInput').value = '';
+            document.getElementById('wsCurlPreview').style.display = 'none';
+
+            // 重置调试模式
+            document.getElementById('wsDebugMode').checked = false;
+            wsDebugMode = false;
+
+            // 重置按钮状态
+            const connectBtn = document.getElementById('wsConnectBtn');
+            const disconnectBtn = document.getElementById('wsDisconnectBtn');
+            connectBtn.disabled = false;
+            connectBtn.classList.remove('button-loading');
+            connectBtn.textContent = '连接';
+            disconnectBtn.disabled = true;
+
+            // 显示清空成功提示
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ 已清空';
+            btn.style.background = '#4caf50';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 1500);
+        }
+
+        // 页面卸载时清理连接
+        window.addEventListener('beforeunload', function() {
+            if (sseConnection) sseConnection.close();
+            if (wsConnection) wsConnection.close();
+        });
+    </script>
+</body>
+</html>
