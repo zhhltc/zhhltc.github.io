@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>MybatisPlus条件语句 - 苏三博客</title>
+
+  
+    <meta name="description" content="MybatisPlus">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MybatisPlus条件语句">
+<meta property="og:url" content="https://su3.cn/2024/06/18/2024061901/index.html">
+<meta property="og:site_name" content="苏三博客">
+<meta property="og:description" content="MybatisPlus">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-18T18:09:00.000Z">
+<meta property="article:modified_time" content="2025-12-16T09:08:08.835Z">
+<meta property="article:author" content="SuSan">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  <meta name="keywords" content="笔记">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/lxgwwenkaiscreen.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar"  style="width:52px;height:52px;" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title" style="font-size: 1.12rem;">苏三博客</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:#CD853F;">- Su3.cn 无限制,有些线路较慢</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:green;">- Xen.cc 静态资源托管加速,限流</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/utils/">工具</a><a class="nav-item" href="/music/">歌单</a><a class="nav-item" href="/about/">更多</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">MybatisPlus条件语句</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-text">说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AbstractWrapper"><span class="toc-text">AbstractWrapper</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#allEq"><span class="toc-text">allEq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#eq"><span class="toc-text">eq</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ne"><span class="toc-text">ne</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#gt"><span class="toc-text">gt</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ge"><span class="toc-text">ge</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt"><span class="toc-text">lt</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#le"><span class="toc-text">le</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#between"><span class="toc-text">between</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#notBetween"><span class="toc-text">notBetween</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#like"><span class="toc-text">like</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#notLike"><span class="toc-text">notLike</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#likeLeft"><span class="toc-text">likeLeft</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#likeRight"><span class="toc-text">likeRight</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#isNull"><span class="toc-text">isNull</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#isNotNull"><span class="toc-text">isNotNull</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#in"><span class="toc-text">in</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#notIn"><span class="toc-text">notIn</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#inSql"><span class="toc-text">inSql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#notInSql"><span class="toc-text">notInSql</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#groupBy"><span class="toc-text">groupBy</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#orderByAsc"><span class="toc-text">orderByAsc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#orderByDesc"><span class="toc-text">orderByDesc</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#orderBy"><span class="toc-text">orderBy</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#having"><span class="toc-text">having</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#or"><span class="toc-text">or</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#and"><span class="toc-text">and</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#nested"><span class="toc-text">nested</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#apply"><span class="toc-text">apply</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#last"><span class="toc-text">last</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#exists"><span class="toc-text">exists</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#notExists"><span class="toc-text">notExists</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#QueryWrapper"><span class="toc-text">QueryWrapper</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select"><span class="toc-text">select</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UpdateWrapper"><span class="toc-text">UpdateWrapper</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#setSql"><span class="toc-text">setSql</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Wrapper%E8%87%AA%E5%AE%9A%E4%B9%89SQL"><span class="toc-text">使用Wrapper自定义SQL</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F"><span class="toc-text">注解方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#XML%E5%BD%A2%E5%BC%8F"><span class="toc-text">XML形式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8%E5%BA%94%E7%94%A8"><span class="toc-text">构造器应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97"><span class="toc-text">比较运算</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#between-1"><span class="toc-text">between</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#like-1"><span class="toc-text">like</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#in-1"><span class="toc-text">in</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%BB%84"><span class="toc-text">分组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-text">排序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#or-1"><span class="toc-text">or</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#and-1"><span class="toc-text">and</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AE%9E%E7%8E%B0and%E7%9A%84%E5%B5%8C%E5%A5%97"><span class="toc-text">利用lambda表达式实现and的嵌套</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#select%E8%AE%BE%E7%BD%AE%E6%9F%A5%E8%AF%A2%E5%AD%97%E6%AE%B5"><span class="toc-text">select设置查询字段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#LambdaQueryWrapper"><span class="toc-text">LambdaQueryWrapper</span></a></li></ol></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Java/">Java</a></div><div id="post-meta">发布于&nbsp;<time datetime="2024-06-18T18:09:00.000Z">2024-06-18</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>MybatisPlus条件语句</span></h1>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>MybatisPlus通过Wrapper（条件构造器）或者来让用户自由的构建查询条件，简单便捷，没有额外的负担，能够有效提高开发效率<br>如果第一个参数为：boolean condition表示该条件是否加入最后生成的sql中<br>以下出现的泛型Param均为Wrapper的子类实例(均具有AbstractWrapper的所有方法)<br>方法参数中出现的R为泛型，在普通wrapper中是String<br>方法参数中的R column均表示数据库字段，当R为String时则为数据库字段名称(字段名是数据库关键字的自己用转义符包裹!)，而不是实体类的属性名称</p>
+<h4 id="AbstractWrapper"><a href="#AbstractWrapper" class="headerlink" title="AbstractWrapper"></a>AbstractWrapper</h4><p>QueryWrapper和UpdateWrapper的父类，用于生成sql的where条件</p>
+<h5 id="allEq"><a href="#allEq" class="headerlink" title="allEq"></a>allEq</h5><p>全部eq(或个别isNull)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">allEq(Map&lt;R, V&gt; params)</span><br><span class="line">allEq(Map&lt;R, V&gt; params, <span class="keyword">boolean</span> null2IsNull)</span><br><span class="line">allEq(<span class="keyword">boolean</span> condition, Map&lt;R, V&gt; params, <span class="keyword">boolean</span> null2IsNull)</span><br></pre></td></tr></table></figure>
+
+<p>例1: allEq({id:1,name:“张三”,age:null})—&gt;id = 1 and name = ‘张三’ and age is null<br>例2: allEq({id:1,name:“张三”,age:null}, false)—&gt;id = 1 and name = ‘张三’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">allEq(BiPredicate&lt;R, V&gt; filter, Map&lt;R, V&gt; params)</span><br><span class="line">allEq(BiPredicate&lt;R, V&gt; filter, Map&lt;R, V&gt; params, <span class="keyword">boolean</span> null2IsNull)</span><br><span class="line">allEq(<span class="keyword">boolean</span> condition, BiPredicate&lt;R, V&gt; filter, Map&lt;R, V&gt; params, <span class="keyword">boolean</span> null2IsNull)</span><br></pre></td></tr></table></figure>
+
+<p>例1: allEq((k,v) -&gt; k.indexOf(“a”) &gt; 0, {id:1,name:“张三”,age:null})—&gt;name = ‘张三’ and age is null<br>例2: allEq((k,v) -&gt; k.indexOf(“a”) &gt; 0, {id:1,name:“张三”,age:null}, false)—&gt;name = ‘张三’</p>
+<p>个别参数说明:</p>
+<p>params : key为数据库字段名,value为字段值<br>null2IsNull : 为true则在map的value为null时调用 isNull 方法,为false时则忽略value为null的<br>filter : 过滤函数,是否允许字段传入比对条件中</p>
+<h5 id="eq"><a href="#eq" class="headerlink" title="eq"></a>eq</h5><p>等于 =</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eq(R column, Object val)</span><br><span class="line">eq(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: eq(“name”, “张三”)—&gt;name = ‘张三’</p>
+<h5 id="ne"><a href="#ne" class="headerlink" title="ne"></a>ne</h5><p>不等于 &lt;&gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ne(R column, Object val)</span><br><span class="line">ne(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: ne(“name”, “张三”)—&gt;name &lt;&gt; ‘张三’</p>
+<h5 id="gt"><a href="#gt" class="headerlink" title="gt"></a>gt</h5><p>大于 &gt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gt(R column, Object val)</span><br><span class="line">gt(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: gt(“age”, 18)—&gt;age &gt; 18</p>
+<h5 id="ge"><a href="#ge" class="headerlink" title="ge"></a>ge</h5><p>大于等于 &gt;=</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ge(R column, Object val)</span><br><span class="line">ge(<span class="keyword">boolean</span> condition, R column, Object val)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例: ge(“age”, 18)—&gt;age &gt;= 18</p>
+<h5 id="lt"><a href="#lt" class="headerlink" title="lt"></a>lt</h5><p>小于 &lt;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lt(R column, Object val)</span><br><span class="line">lt(<span class="keyword">boolean</span> condition, R column, Object val)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例: lt(“age”, 18)—&gt;age &lt; 18</p>
+<h5 id="le"><a href="#le" class="headerlink" title="le"></a>le</h5><p>小于等于 &lt;=</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">le(R column, Object val)</span><br><span class="line">le(<span class="keyword">boolean</span> condition, R column, Object val)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例: le(“age”, 18)—&gt;age &lt;= 18</p>
+<h5 id="between"><a href="#between" class="headerlink" title="between"></a>between</h5><p>BETWEEN 值1 AND 值2</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">between(R column, Object val1, Object val2)</span><br><span class="line">between(<span class="keyword">boolean</span> condition, R column, Object val1, Object val2)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例: between(“age”, 18, 30)—&gt;age between 18 and 30</p>
+<h5 id="notBetween"><a href="#notBetween" class="headerlink" title="notBetween"></a>notBetween</h5><p>NOT BETWEEN 值1 AND 值2</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">notBetween(R column, Object val1, Object val2)</span><br><span class="line">notBetween(<span class="keyword">boolean</span> condition, R column, Object val1, Object val2)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>例: notBetween(“age”, 18, 30)—&gt;age not between 18 and 30</p>
+<h5 id="like"><a href="#like" class="headerlink" title="like"></a>like</h5><p>LIKE ‘%值%’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">like(R column, Object val)</span><br><span class="line">like(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: like(“name”, “王”)—&gt;name like ‘%王%’</p>
+<h5 id="notLike"><a href="#notLike" class="headerlink" title="notLike"></a>notLike</h5><p>NOT LIKE ‘%值%’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notLike(R column, Object val)</span><br><span class="line">notLike(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: notLike(“name”, “王”)—&gt;name not like ‘%王%’</p>
+<h5 id="likeLeft"><a href="#likeLeft" class="headerlink" title="likeLeft"></a>likeLeft</h5><p>LIKE ‘%值’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">likeLeft(R column, Object val)</span><br><span class="line">likeLeft(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: likeLeft(“name”, “王”)—&gt;name like ‘%王’</p>
+<h5 id="likeRight"><a href="#likeRight" class="headerlink" title="likeRight"></a>likeRight</h5><p>LIKE ‘值%’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">likeRight(R column, Object val)</span><br><span class="line">likeRight(<span class="keyword">boolean</span> condition, R column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: likeRight(“name”, “王”)—&gt;name like ‘王%’</p>
+<h5 id="isNull"><a href="#isNull" class="headerlink" title="isNull"></a>isNull</h5><p>字段 IS NULL</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">isNull(R column)</span><br><span class="line">isNull(<span class="keyword">boolean</span> condition, R column)</span><br></pre></td></tr></table></figure>
+
+<p>例: isNull(“name”)—&gt;name is null</p>
+<h5 id="isNotNull"><a href="#isNotNull" class="headerlink" title="isNotNull"></a>isNotNull</h5><p>字段 IS NOT NULL</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">isNotNull(R column)</span><br><span class="line">isNotNull(<span class="keyword">boolean</span> condition, R column)</span><br></pre></td></tr></table></figure>
+
+<p>例: isNotNull(“name”)—&gt;name is not null</p>
+<h5 id="in"><a href="#in" class="headerlink" title="in"></a>in</h5><p>字段 IN (value.get(0), value.get(1), …)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">in(R column, Collection&lt;?&gt; value)</span><br><span class="line">in(bo```olean condition, R column, Collection&lt;?&gt; value)</span><br></pre></td></tr></table></figure>
+
+<p>例: in(“age”,{1,2,3})—&gt;age in (1,2,3)</p>
+<p>字段 IN (v0, v1, …)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">in(R column, Object... values)</span><br><span class="line">in(<span class="keyword">boolean</span> condition, R column, Object... values)</span><br></pre></td></tr></table></figure>
+
+<p>例: in(“age”, 1, 2, 3)—&gt;age in (1,2,3)</p>
+<h5 id="notIn"><a href="#notIn" class="headerlink" title="notIn"></a>notIn</h5><p>字段 IN (value.get(0), value.get(1), …)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notIn(R column, Collection&lt;?&gt; value)</span><br><span class="line">notIn(<span class="keyword">boolean</span> condition, R column, Collection&lt;?&gt; value)</span><br></pre></td></tr></table></figure>
+
+<p>例: notIn(“age”,{1,2,3})—&gt;age not in (1,2,3)</p>
+<p>字段 NOT IN (v0, v1, …)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notIn(R column, Object... values)</span><br><span class="line">notIn(<span class="keyword">boolean</span> condition, R column, Object... values)</span><br></pre></td></tr></table></figure>
+
+<p>例: notIn(“age”, 1, 2, 3)—&gt;age not in (1,2,3)</p>
+<h5 id="inSql"><a href="#inSql" class="headerlink" title="inSql"></a>inSql</h5><p>字段 IN ( sql语句 )</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inSql(R column, String inValue)</span><br><span class="line">inSql(<span class="keyword">boolean</span> condition, R column, String inValue)</span><br></pre></td></tr></table></figure>
+
+<p>例: inSql(“age”, “1,2,3,4,5,6”)—&gt;age in (1,2,3,4,5,6)<br>例: inSql(“id”, “select id from table where id &lt; 3”)—&gt;id in (select id from table where id &lt; 3)</p>
+<h5 id="notInSql"><a href="#notInSql" class="headerlink" title="notInSql"></a>notInSql</h5><p>字段 NOT IN ( sql语句 )</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notInSql(R column, String inValue)</span><br><span class="line">notInSql(<span class="keyword">boolean</span> condition, R column, String inValue)</span><br></pre></td></tr></table></figure>
+
+<p>例: notInSql(“age”, “1,2,3,4,5,6”)—&gt;age not in (1,2,3,4,5,6)<br>例: notInSql(“id”, “select id from table where id &lt; 3”)—&gt;age not in (select id from table where id &lt; 3)</p>
+<h5 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h5><p>分组：GROUP BY 字段, …</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">groupBy(R... columns)</span><br><span class="line">groupBy(<span class="keyword">boolean</span> condition, R... columns)</span><br></pre></td></tr></table></figure>
+
+<p>例: groupBy(“id”, “name”)—&gt;group by id,name</p>
+<h5 id="orderByAsc"><a href="#orderByAsc" class="headerlink" title="orderByAsc"></a>orderByAsc</h5><p>排序：ORDER BY 字段, … ASC</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">orderByAsc(R... columns)</span><br><span class="line">orderByAsc(<span class="keyword">boolean</span> condition, R... columns)</span><br></pre></td></tr></table></figure>
+
+<p>例: orderByAsc(“id”, “name”)—&gt;order by id ASC,name ASC</p>
+<h5 id="orderByDesc"><a href="#orderByDesc" class="headerlink" title="orderByDesc"></a>orderByDesc</h5><p>排序：ORDER BY 字段, … DESC</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">orderByDesc(R... columns)</span><br><span class="line">orderByDesc(<span class="keyword">boolean</span> condition, R... columns)</span><br></pre></td></tr></table></figure>
+
+<p>例: orderByDesc(“id”, “name”)—&gt;order by id DESC,name DESC</p>
+<h5 id="orderBy"><a href="#orderBy" class="headerlink" title="orderBy"></a>orderBy</h5><p>排序：ORDER BY 字段, …</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">orderBy(<span class="keyword">boolean</span> condition, <span class="keyword">boolean</span> isAsc, R... columns)</span><br></pre></td></tr></table></figure>
+
+<p>例: orderBy(true, true, “id”, “name”)—&gt;order by id ASC,name ASC</p>
+<h5 id="having"><a href="#having" class="headerlink" title="having"></a>having</h5><p>HAVING ( sql语句 )</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">having(String sqlHaving, Object... params)</span><br><span class="line">having(<span class="keyword">boolean</span> condition, String sqlHaving, Object... params)</span><br></pre></td></tr></table></figure>
+
+<p>例: having(“sum(age) &gt; 10”)—&gt;having sum(age) &gt; 10<br>例: having(“sum(age) &gt; {0}”, 11)—&gt;having sum(age) &gt; 11</p>
+<h5 id="or"><a href="#or" class="headerlink" title="or"></a>or</h5><p>拼接 OR</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">or()</span><br><span class="line">or(<span class="keyword">boolean</span> condition)</span><br></pre></td></tr></table></figure>
+
+<p>例: eq(“id”,1).or().eq(“name”,“老王”)—&gt;id = 1 or name = ‘老王’</p>
+<p>注意事项:主动调用or表示紧接着下一个方法不是用and连接!(不调用or则默认为使用and连接)</p>
+<p>OR 嵌套</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">or(Function&lt;Param, Param&gt; func)</span><br><span class="line">or(<span class="keyword">boolean</span> condition, Function&lt;Param, Param&gt; func)</span><br></pre></td></tr></table></figure>
+
+<p>例: or(i -&gt; i.eq(“name”, “李白”).ne(“status”, “活着”))—&gt;or (name = ‘李白’ and status &lt;&gt; ‘活着’)</p>
+<h5 id="and"><a href="#and" class="headerlink" title="and"></a>and</h5><p>AND 嵌套</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and(Function&lt;Param, Param&gt; func)</span><br><span class="line">and(<span class="keyword">boolean</span> condition, Function&lt;Param, Param&gt; func)</span><br></pre></td></tr></table></figure>
+
+<p>例: and(i -&gt; i.eq(“name”, “李白”).ne(“status”, “活着”))—&gt;and (name = ‘李白’ and status &lt;&gt; ‘活着’)</p>
+<h5 id="nested"><a href="#nested" class="headerlink" title="nested"></a>nested</h5><p>正常嵌套 不带 AND 或者 OR</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nested(Function&lt;Param, Param&gt; func)</span><br><span class="line">nested(<span class="keyword">boolean</span> condition, Function&lt;Param, Param&gt; func)</span><br></pre></td></tr></table></figure>
+
+<p>例: nested(i -&gt; i.eq(“name”, “李白”).ne(“status”, “活着”))—&gt;(name = ‘李白’ and status &lt;&gt; ‘活着’)</p>
+<h5 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h5><p>拼接 sql</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apply(String applySql, Object... params)</span><br><span class="line">apply(<span class="keyword">boolean</span> condition, String applySql, Object... params)</span><br></pre></td></tr></table></figure>
+
+<p>例: apply(“id = 1”)—&gt;id = 1<br>例: apply(“date_format(dateColumn,’%Y-%m-%d’) = ‘2008-08-08’”)—&gt;date_format(dateColumn,’%Y-%m-%d’) = ‘2008-08-08’”)<br>例: apply(“date_format(dateColumn,’%Y-%m-%d’) = {0}”, “2008-08-08”)—&gt;date_format(dateColumn,’%Y-%m-%d’) = ‘2008-08-08’”)</p>
+<p>注意事项:该方法可用于数据库函数动态入参的params对应前面applySql内部的{index}部分.这样是不会有sql注入风险的,反之会有!</p>
+<h5 id="last"><a href="#last" class="headerlink" title="last"></a>last</h5><p>无视优化规则直接拼接到sql的最后</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">last(String lastSql)</span><br><span class="line">last(<span class="keyword">boolean</span> condition, String lastSql)</span><br></pre></td></tr></table></figure>
+
+<p>例: last(“limit 1”)</p>
+<p>注意事项:只能调用一次,多次调用以最后一次为准 有sql注入的风险,请谨慎使用</p>
+<h5 id="exists"><a href="#exists" class="headerlink" title="exists"></a>exists</h5><p>拼接 EXISTS ( sql语句 )</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exists(String existsSql)</span><br><span class="line">exists(<span class="keyword">boolean</span> condition, String existsSql)</span><br></pre></td></tr></table></figure>
+
+<p>例: exists(“select id from table where age = 1”)—&gt;exists (select id from table where age = 1)</p>
+<h5 id="notExists"><a href="#notExists" class="headerlink" title="notExists"></a>notExists</h5><p>拼接 NOT EXISTS ( sql语句 )</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notExists(String notExistsSql)</span><br><span class="line">notExists(<span class="keyword">boolean</span> condition, String notExistsSql)</span><br></pre></td></tr></table></figure>
+
+<p>例: notExists(“select id from table where age = 1”)—&gt;not exists (select id from table where age = 1)</p>
+<h4 id="QueryWrapper"><a href="#QueryWrapper" class="headerlink" title="QueryWrapper"></a>QueryWrapper</h4><p>继承自AbstractWrapper，自身的内部属性entity也用于生成where条件</p>
+<h5 id="select"><a href="#select" class="headerlink" title="select"></a>select</h5><p>设置查询字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select(String... sqlSelect)</span><br><span class="line">select(Predicate&lt;TableFieldInfo&gt; predicate)</span><br><span class="line">select(Class&lt;T&gt; entityClass, Predicate&lt;TableFieldInfo&gt; predicate)</span><br></pre></td></tr></table></figure>
+
+<p>例: select(“id”, “name”, “age”)<br>例: select(i -&gt; i.getProperty().startsWith(“test”))</p>
+<h4 id="UpdateWrapper"><a href="#UpdateWrapper" class="headerlink" title="UpdateWrapper"></a>UpdateWrapper</h4><p>继承自AbstractWrapper，自身的内部属性entity也用于生成where条件</p>
+<h5 id="set"><a href="#set" class="headerlink" title="set"></a>set</h5><p>SQL SET 字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set(String column, Object val)</span><br><span class="line">set(<span class="keyword">boolean</span> condition, String column, Object val)</span><br></pre></td></tr></table></figure>
+
+<p>例: set(“name”, “老李头”)<br>例: set(“name”, “”)—&gt;数据库字段值变为空字符串<br>例: set(“name”, null)—&gt;数据库字段值变为null</p>
+<h5 id="setSql"><a href="#setSql" class="headerlink" title="setSql"></a>setSql</h5><p>设置 SET 部分 SQL</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setSql(String sql)</span><br></pre></td></tr></table></figure>
+
+<p>例: set(“name = ‘老李头’)</p>
+<h4 id="使用Wrapper自定义SQL"><a href="#使用Wrapper自定义SQL" class="headerlink" title="使用Wrapper自定义SQL"></a>使用Wrapper自定义SQL</h4><h5 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h5><p>在Mapper接口中自定义方法，参数为Wrapper类型，并添加注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Select(&quot;select * from mysql_data $&#123;ew.customSqlSegment&#125;&quot;)</span></span><br><span class="line"><span class="function">List&lt;MysqlData&gt; <span class="title">getAll</span><span class="params">(<span class="meta">@Param(Constants.WRAPPER)</span> Wrapper wrapper)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="XML形式"><a href="#XML形式" class="headerlink" title="XML形式"></a>XML形式</h5><p>在Mapper.xml映射文件中，添加sql语句</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=<span class="string">&quot;getAll&quot;</span> resultType=<span class="string">&quot;MysqlData&quot;</span>&gt;</span><br><span class="line">    SELECT * FROM mysql_data $&#123;ew.customSqlSegment&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造器应用"><a href="#构造器应用" class="headerlink" title="构造器应用"></a>构造器应用</h4><h5 id="比较运算"><a href="#比较运算" class="headerlink" title="比较运算"></a>比较运算</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.gt(<span class="string">&quot;age&quot;</span>, <span class="number">20</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE age &gt; ?</span><br></pre></td></tr></table></figure>
+
+<h5 id="between-1"><a href="#between-1" class="headerlink" title="between"></a>between</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.between(<span class="string">&quot;age&quot;</span>, <span class="number">21</span>, <span class="number">28</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE age BETWEEN ? AND ?</span><br></pre></td></tr></table></figure>
+
+<h5 id="like-1"><a href="#like-1" class="headerlink" title="like"></a>like</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.like(<span class="string">&quot;last_name&quot;</span>, <span class="string">&quot;张&quot;</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE last_name LIKE ?</span><br><span class="line">Parameters: %张%(String)</span><br></pre></td></tr></table></figure>
+
+<h5 id="in-1"><a href="#in-1" class="headerlink" title="in"></a>in</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.in(<span class="string">&quot;id&quot;</span>, <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE last_name LIKE ?</span><br><span class="line">Parameters: %张%(String)</span><br></pre></td></tr></table></figure>
+
+<h5 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口中添加自定义方法</span></span><br><span class="line"><span class="meta">@Select(&quot;select gender,count(gender) num from tmp_person $&#123;ew.customSqlSegment&#125;&quot;)</span></span><br><span class="line">List&lt;Map&lt;String, Object&gt;&gt; selectGroupByGender(<span class="meta">@Param(Constants.WRAPPER)</span> Wrapper queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//测试</span></span><br><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.groupBy(<span class="string">&quot;gender&quot;</span>);</span><br><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list = personMapper.selectGroupByGender(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">select gender,count(gender) num from tmp_person GROUP BY gender</span><br></pre></td></tr></table></figure>
+
+<h5 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.orderBy(<span class="keyword">true</span>, <span class="keyword">true</span> , <span class="string">&quot;age&quot;</span>,<span class="string">&quot;id&quot;</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person ORDER BY age ASC , id ASC</span><br></pre></td></tr></table></figure>
+
+<h5 id="or-1"><a href="#or-1" class="headerlink" title="or"></a>or</h5><p>主动调用or表示紧接着调用下一个方法是用or连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.lt(<span class="string">&quot;age&quot;</span>, <span class="number">20</span>).or().like(<span class="string">&quot;last_name&quot;</span>, <span class="string">&quot;j&quot;</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE age &lt; ? OR last_name LIKE ?</span><br></pre></td></tr></table></figure>
+
+<p>利用lambda表达式实现or的嵌套</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.ge(<span class="string">&quot;age&quot;</span>, <span class="number">20</span>).or(i-&gt;i.eq(<span class="string">&quot;gender&quot;</span>,<span class="number">1</span>).ne(<span class="string">&quot;last_name&quot;</span>, <span class="string">&quot;tom&quot;</span>));</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE age &gt;= ? OR ( gender = ? AND last_name &lt;&gt; ? )</span><br></pre></td></tr></table></figure>
+
+<h5 id="and-1"><a href="#and-1" class="headerlink" title="and"></a>and</h5><p>默认为使用and连接，表示紧接着调用下一个方法是用and连接</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.gt(<span class="string">&quot;age&quot;</span>, <span class="number">20</span>).eq(<span class="string">&quot;gender&quot;</span>, <span class="number">1</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE age &gt; ? AND gender = ?</span><br></pre></td></tr></table></figure>
+
+<h5 id="利用lambda表达式实现and的嵌套"><a href="#利用lambda表达式实现and的嵌套" class="headerlink" title="利用lambda表达式实现and的嵌套"></a>利用lambda表达式实现and的嵌套</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.ge(<span class="string">&quot;age&quot;</span>, <span class="number">20</span>).and(i-&gt;i.eq(<span class="string">&quot;gender&quot;</span>,<span class="number">1</span>).or().ne(<span class="string">&quot;last_name&quot;</span>, <span class="string">&quot;tom&quot;</span>));</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE age &gt;= ? AND ( gender = ? OR last_name &lt;&gt; ? )</span><br></pre></td></tr></table></figure>
+
+<h5 id="select设置查询字段"><a href="#select设置查询字段" class="headerlink" title="select设置查询字段"></a>select设置查询字段</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Person&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">queryWrapper.select(<span class="string">&quot;id&quot;</span>,<span class="string">&quot;last_name&quot;</span>,<span class="string">&quot;age&quot;</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(queryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age FROM tmp_person</span><br></pre></td></tr></table></figure>
+
+<h5 id="LambdaQueryWrapper"><a href="#LambdaQueryWrapper" class="headerlink" title="LambdaQueryWrapper"></a>LambdaQueryWrapper</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取支持lambda表达式的条件构造器</span></span><br><span class="line">LambdaQueryWrapper&lt;Person&gt; lambdaQueryWrapper = <span class="keyword">new</span> QueryWrapper&lt;Person&gt;().lambda();</span><br><span class="line">lambdaQueryWrapper.eq(Person::getLastName, <span class="string">&quot;tom&quot;</span>);</span><br><span class="line">List&lt;Person&gt; list = personMapper.selectList(lambdaQueryWrapper);</span><br><span class="line"></span><br><span class="line"><span class="comment">//生成的sql语句</span></span><br><span class="line">SELECT id,last_name,age,gender,email FROM tmp_person WHERE last_name = ?</span><br></pre></td></tr></table></figure>
+
+
+
+<div class="article-footer reveal fs14"><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://su3.cn/2024/06/18/2024061901/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://su3.cn/2024/06/18/2024061901/&title=MybatisPlus条件语句 - 苏三博客&summary=MybatisPlus"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=MybatisPlus条件语句 - 苏三博客&amp;body=https://su3.cn/2024/06/18/2024061901/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://su3.cn/2024/06/18/2024061901/"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/06/18/2024061802/">MybatisPlus常用操作</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/06/18/20240617hh/">Java-list,map常用操作</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="zhhltc/blogcomments" data-repo-id="R_kgDOI35Puw" data-category="Announcements" data-category-id="DIC_kwDOI35Pu84CT54y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><div class="BeiAn-info" style="display: flex;text-align: center;margin:10px;justify-content: center; align-items: center;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/beian.png" title="备案管理系统" style="width:15px;height:15px;"> <a href="http://beian.miit.gov.cn/" style="text-decoration:none;" target=_blank title=备案号>赣ICP备17016237号-1</a></div><div  style="display: flex;text-align: center;justify-content: center; align-items: center;"><span id="timeDate">载入天数...</span>|<span id="times">载入时分秒...</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_uv" style="display:none">本站访客数<span id="busuanzi_value_site_uv"></span>人</span></div><script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script><script type="text/javascript" src="/js/dist/zoomify.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer>
+
+<!--添加网站运行时间 -->
+<!--<br/>-->
+
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/01/2021 12:00:00");
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()", 250);
+</script>
+<!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+ if (!window.location.href.includes("music")) {
+        window.onload = function () {
+          /*添加返回顶部按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,0);");
+          a.setAttribute("id", "All_url_totop")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+          /*添加返回底部的按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,document.body.scrollHeight);");
+          a.setAttribute("id", "All_url_totop2")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+        }
+      }
+</script>
+
+        
+        <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+      
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

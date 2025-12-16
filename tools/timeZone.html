@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+  <title>世界各地时间</title>
+<meta content="世界不同地区时间,时区,时间" name="keywords" /> 
+<meta content="世界不同地区时间,时区,时间！为您提供世界不同地区时间校对,查询现在标准时间,世界不同地区时间校准等。" name="description" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+    
+    h1 {
+      margin-top: 0;
+    }
+    
+    .time-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+    
+    .time-box {
+      background-color: white;
+      padding: 20px;
+      margin: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      min-width: 200px;
+    }
+    
+    .time-box h2 {
+      margin-top: 0;
+    }
+    
+    .time-box p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>世界各地时间</h1>
+  <div class="time-container">
+  </div>
+
+  <label for="time-zones">选择时区:</label>
+  <select id="time-zones" multiple>
+  </select>
+  <button onclick="addTimeZone()">添加</button>
+  
+  <div style="margin:30px 0;"></div>
+
+  <input type="text" id="time-zone-name" placeholder="输入时区名称" />
+  <input type="text" id="time-zone-tz" placeholder="输入时区" />
+  <button onclick="addCustomTimeZone()">添加</button>
+  
+  <div style="margin:30px 0;"></div>
+  
+  <label for="timestamp-input">输入时间戳(注意带毫秒):</label>
+  <input type="number" id="timestamp-input" placeholder="输入时间戳(注意带毫秒)" />
+  
+  <label for="time-zone-select">选择时区:</label>
+  <select id="time-zone-select">
+  </select>
+  
+  <button onclick="convertTimestamp()">转换</button>
+  
+   <div style="margin:30px 0;"></div>
+  
+  <input type="text" id="time-zone-nameT" placeholder="输入时间戳(注意带毫秒)" />
+  
+ <input type="text" id="time-zone-tzT" placeholder="输入时区" />
+  
+  <button onclick="convertTimestamp2()">转换</button>
+  
+  <div style="margin:30px 0;"></div>
+  
+  <div id="convertTimestampResult"></div>
+  
+  <script>
+    const allTimeZones = Intl.supportedValuesOf('timeZone');
+    const timeZones = [
+      { name: "北京时间", timeZone: "Asia/Shanghai" },
+      { name: "纽约时间", timeZone: "America/New_York" },
+      { name: "伦敦时间", timeZone: "Europe/London" },
+      { name: "东京时间", timeZone: "Asia/Tokyo" }
+    ];
+
+    function populateTimeZones() {
+      const timeZonesSelect = document.getElementById("time-zones");
+	  const timeZoneSelectEl = document.getElementById("time-zone-select");
+      for (const timeZone of allTimeZones) {
+        const option = document.createElement("option");
+        option.value = timeZone;
+        option.text = timeZone;
+        timeZonesSelect.add(option);
+		 timeZoneSelectEl.add(option.cloneNode(true));
+      }
+    }
+	
+	 function convertTimestamp() {
+      const timestampInput = document.getElementById("timestamp-input");
+      const timeZoneSelect = document.getElementById("time-zone-select");
+      const selectedTimeZone = timeZoneSelect.value;
+      const timestamp = parseInt(timestampInput.value);
+
+      if (isNaN(timestamp) || timestamp < 0) {
+        alert("请输入有效的时间戳!");
+        return;
+      }
+
+      const dateObj = new Date(timestamp);
+      const formattedDate = dateObj.toLocaleString("zh-CN", { timeZone: selectedTimeZone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      //alert(`时间戳 ${timestamp} 在时区 ${selectedTimeZone} 下对应的时间是: ${formattedDate}`);
+	 let resultLabel = document.getElementById("convertTimestampResult");
+  resultLabel.textContent = `时间戳 ${timestamp} 在时区 ${selectedTimeZone} 下对应的时间是: ${formattedDate}`;
+    }
+	
+	function convertTimestamp2() {
+	  
+      const timestampInput = document.getElementById("time-zone-nameT");
+      const timeZoneSelect =document.getElementById("time-zone-tzT");
+      const selectedTimeZone = timeZoneSelect.value;
+      const timestamp = parseInt(timestampInput.value);
+
+      if (isNaN(timestamp) || timestamp < 0) {
+        alert("请输入有效的时间戳!");
+        return;
+      }
+try{
+const dateObj = new Date(timestamp );
+      const formattedDate = dateObj.toLocaleString("zh-CN", { timeZone: selectedTimeZone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      //alert(`时间戳 ${timestamp} 在时区 ${selectedTimeZone} 下对应的时间是: ${formattedDate}`);
+	 let resultLabel = document.getElementById("convertTimestampResult");
+  resultLabel.textContent = `时间戳 ${timestamp} 在时区 ${selectedTimeZone} 下对应的时间是: ${formattedDate}`;
+}catch (error) {
+        alert("无效的时区名称,请重新输入!");
+        return;
+      }
+      
+    }
+
+    function addTimeZone() {
+      const timeZonesSelect = document.getElementById("time-zones");
+      const selectedOptions = Array.from(timeZonesSelect.selectedOptions);
+      for (const option of selectedOptions) {
+        if (!document.querySelector(`.time-box h2[textContent="${option.value}"]`)) {
+          //addTimeBox(option.value, option.value);
+		  timeZones.unshift({
+			  name: option.value,
+			  timeZone: option.value
+			})
+        }
+      }
+    }
+
+    function addCustomTimeZone() {
+      const timeZoneNameInput = document.getElementById("time-zone-name");
+      const timeZoneTZInput = document.getElementById("time-zone-tz");
+
+      const timeZoneName = timeZoneNameInput.value || "自定义时区";
+      const timeZoneTZ = timeZoneTZInput.value;
+
+      try {
+        const currentTime = new Date();
+        const currentTimestamp = Math.floor(currentTime.getTime() / 1000);
+        const timeZoneDate = new Date(currentTimestamp * 1000).toLocaleString("zh-CN", { timeZone: timeZoneTZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+        //addTimeBox(timeZoneName, timeZoneTZ);
+		 timeZones.unshift({
+			  name: timeZoneName,
+			  timeZone: timeZoneTZ
+			})
+      } catch (error) {
+        alert("无效的时区名称,请重新输入!");
+        return;
+      }
+
+      timeZoneNameInput.value = "";
+      timeZoneTZInput.value = "";
+    }
+
+    function addTimeBox(name, timeZone) {
+      const timeContainer = document.querySelector(".time-container");
+      const timeBox = document.createElement("div");
+      timeBox.classList.add("time-box");
+
+      const heading = document.createElement("h2");
+      heading.textContent = name;
+      timeBox.appendChild(heading);
+
+      const timeElement = document.createElement("p");
+      timeElement.textContent = new Date().toLocaleString("zh-CN", { timeZone: timeZone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      timeBox.appendChild(timeElement);
+
+      const timestampElement = document.createElement("p");
+      timestampElement.textContent = "时间戳: " + Math.floor(new Date().getTime() / 1000);
+      timeBox.appendChild(timestampElement);
+
+      timeContainer.appendChild(timeBox);
+    }
+	
+	function updateTime() {
+      const timeContainer = document.querySelector(".time-container");
+      timeContainer.innerHTML = "";
+	  
+
+      for (const timeZone of timeZones) {
+        // 获取当前时间
+        const currentTime = new Date();
+        const currentTimestamp = Math.floor(currentTime.getTime() / 1000);
+
+        // 创建时间盒子
+        const timeBox = document.createElement("div");
+        timeBox.classList.add("time-box");
+
+        // 添加时区名称
+        const heading = document.createElement("h2");
+        heading.textContent = timeZone.name;
+        timeBox.appendChild(heading);
+
+        // 添加当前时间
+        const timeElement = document.createElement("p");
+        timeElement.textContent = currentTime.toLocaleString("zh-CN", { timeZone: timeZone.timeZone, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+        timeBox.appendChild(timeElement);
+
+        // 添加时间戳
+        const timestampElement = document.createElement("p");
+        timestampElement.textContent = "时间戳: " + currentTimestamp;
+        timeBox.appendChild(timestampElement);
+		
+		// 添加星期几
+		const currentTime2 = new Date().toLocaleString("zh-CN", { timeZone: timeZone.timeZone });
+		const currentDate = new Date(currentTime2);
+        const dayOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][currentDate.getDay()];
+        const dayElement = document.createElement("p");
+        dayElement.textContent = dayOfWeek;
+        timeBox.appendChild(dayElement);
+
+        // 添加时间盒子到容器
+        timeContainer.appendChild(timeBox);
+      }
+    }
+
+    populateTimeZones();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>

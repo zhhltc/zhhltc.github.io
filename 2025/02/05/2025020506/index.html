@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>JPOM构建通知到飞书 - 苏三博客</title>
+
+  
+    <meta name="description" content="JPOM构建通知到飞书">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JPOM构建通知到飞书">
+<meta property="og:url" content="https://su3.cn/2025/02/05/2025020506/index.html">
+<meta property="og:site_name" content="苏三博客">
+<meta property="og:description" content="JPOM构建通知到飞书">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190034.png">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190133.png">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190240.png">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190440.png">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190604.png">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190713.png">
+<meta property="og:image" content="https://su3.cn/postimg/WX20250205-190754.png">
+<meta property="article:published_time" content="2025-02-05T19:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-16T09:08:08.838Z">
+<meta property="article:author" content="SuSan">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://su3.cn/postimg/WX20250205-190034.png">
+  
+  
+  
+  <meta name="keywords" content="笔记">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/lxgwwenkaiscreen.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar"  style="width:52px;height:52px;" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title" style="font-size: 1.12rem;">苏三博客</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:#CD853F;">- Su3.cn 无限制,有些线路较慢</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:green;">- Xen.cc 静态资源托管加速,限流</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/utils/">工具</a><a class="nav-item" href="/music/">歌单</a><a class="nav-item" href="/about/">更多</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">JPOM构建通知到飞书</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A3%9E%E4%B9%A6%E6%B7%BB%E5%8A%A0%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E5%B9%B6%E5%8F%96%E5%BE%97%E9%93%BE%E6%8E%A5"><span class="toc-text">飞书添加机器人，并取得链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jpom%E6%B7%BB%E5%8A%A0%E8%84%9A%E6%9C%AC"><span class="toc-text">jpom添加脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%84%9A%E6%9C%AC"><span class="toc-text">单机器人脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%84%9A%E6%9C%AC"><span class="toc-text">多机器人脚本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B0%E6%9E%84%E5%BB%BA%E4%B8%AD%E8%AE%BE%E7%BD%AE%E5%9B%9E%E8%B0%83"><span class="toc-text">到构建中设置回调</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></div><div id="post-meta">发布于&nbsp;<time datetime="2025-02-05T19:00:00.000Z">2025-02-05</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>JPOM构建通知到飞书</span></h1>
+<h3 id="飞书添加机器人，并取得链接"><a href="#飞书添加机器人，并取得链接" class="headerlink" title="飞书添加机器人，并取得链接"></a>飞书添加机器人，并取得链接</h3><div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190034.png" fancybox="true"/></div></div>
+
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190133.png" fancybox="true"/></div></div>
+
+
+<h3 id="jpom添加脚本"><a href="#jpom添加脚本" class="headerlink" title="jpom添加脚本"></a>jpom添加脚本</h3><div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190240.png" fancybox="true"/></div></div>
+
+<h4 id="单机器人脚本"><a href="#单机器人脚本" class="headerlink" title="单机器人脚本"></a>单机器人脚本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">set -x</span><br><span class="line"></span><br><span class="line"># 设置时区为上海时区</span><br><span class="line">export TZ=&quot;Asia/Shanghai&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&gt;&gt;&gt; 脚本开始执行 &lt;&lt;&lt;&quot;</span><br><span class="line"></span><br><span class="line">######################################自定义参数区域#######################################</span><br><span class="line"># Jpom链接</span><br><span class="line">jpom_url=&quot;http://xx.xx:2122&quot;</span><br><span class="line"></span><br><span class="line"># 飞书机器人 webhook 地址（请替换为你实际的地址）</span><br><span class="line">feishu_webhook=&quot;https://open.feishu.cn/open-apis/bot/v2/hook/token&quot;</span><br><span class="line"></span><br><span class="line"># 如果需要，可以设置关注的事件标题或状态（数组），用于过滤特定消息</span><br><span class="line">feishu_watch_titles=(&quot;监控告警&quot;)</span><br><span class="line">feishu_watch_status=(&quot;失败&quot;)</span><br><span class="line">######################################自定义参数区域#######################################</span><br><span class="line"></span><br><span class="line"># URL编码函数（如需要链接中使用）</span><br><span class="line">urlencode() &#123;</span><br><span class="line">  local string=&quot;$1&quot;</span><br><span class="line">  local encoded=&quot;&quot;</span><br><span class="line">  local length=&quot;$&#123;#string&#125;&quot;</span><br><span class="line">  for (( i = 0; i &lt; length; i++ )); do</span><br><span class="line">    local c=&quot;$&#123;string:i:1&#125;&quot;</span><br><span class="line">    case &quot;$c&quot; in</span><br><span class="line">      [a-zA-Z0-9.~_-]) encoded+=&quot;$c&quot; ;;</span><br><span class="line">      *) encoded+=$(printf &#x27;%%%02X&#x27; &quot;&#x27;$c&quot;) ;;</span><br><span class="line">    esac</span><br><span class="line">  done</span><br><span class="line">  echo &quot;$encoded&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 检查变量是否存在于数组中</span><br><span class="line">array_contains() &#123;</span><br><span class="line">  local target=&quot;$1&quot;</span><br><span class="line">  shift</span><br><span class="line">  local array=(&quot;$@&quot;)</span><br><span class="line">  for item in &quot;$&#123;array[@]&#125;&quot;; do</span><br><span class="line">    if [ &quot;$item&quot; == &quot;$target&quot; ]; then</span><br><span class="line">      return 0  # 存在返回 0</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">  return 1      # 不存在返回 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 推送到飞书</span><br><span class="line">function push_to_feishu() &#123;</span><br><span class="line">  # 参数：$1: title, $2: status, $3: name, 后续为内容数组</span><br><span class="line">  title=&quot;$1&quot;</span><br><span class="line">  status=&quot;$2&quot;</span><br><span class="line">  name=&quot;$3&quot;</span><br><span class="line">  shift 3</span><br><span class="line">  contents=(&quot;$@&quot;)</span><br><span class="line"></span><br><span class="line">  cur_datetime=$(date +&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">  </span><br><span class="line">  # 构建消息内容（纯文本，换行用 \n）</span><br><span class="line">  message=&quot;【$&#123;title&#125;】\n&quot;</span><br><span class="line">  message+=&quot;项目：$&#123;name&#125;\n&quot;</span><br><span class="line">  message+=&quot;状态：$&#123;status&#125;\n&quot;</span><br><span class="line">  message+=&quot;时间：$&#123;cur_datetime&#125;\n&quot;</span><br><span class="line">  message+=&quot;链接：$&#123;jpom_url&#125;\n&quot;</span><br><span class="line">  for content in &quot;$&#123;contents[@]&#125;&quot;; do</span><br><span class="line">    message+=&quot;$&#123;content&#125;\n&quot;</span><br><span class="line">  done</span><br><span class="line"></span><br><span class="line">  echo &quot;&gt;&gt;&gt; 将发送的消息内容：&quot;</span><br><span class="line">  echo -e &quot;$&#123;message&#125;&quot;</span><br><span class="line"></span><br><span class="line">  # 构造 JSON 消息体</span><br><span class="line">  read -r -d &#x27;&#x27; json_payload &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;msg_type&quot;: &quot;text&quot;,</span><br><span class="line">  &quot;content&quot;: &#123;</span><br><span class="line">    &quot;text&quot;: &quot;$&#123;message&#125;&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">  echo &quot;&gt;&gt;&gt; JSON Payload: $&#123;json_payload&#125;&quot;</span><br><span class="line"></span><br><span class="line">  # 发送通知，并输出响应信息</span><br><span class="line">  response=$(curl -H &quot;Content-Type: application/json&quot; -X POST -d &quot;$&#123;json_payload&#125;&quot; &quot;$&#123;feishu_webhook&#125;&quot;)</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 飞书响应: $&#123;response&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 通用推送函数</span><br><span class="line">function common_push() &#123;</span><br><span class="line">  # 参数：$1: title, $2: status, $3: name, 后续为内容数组</span><br><span class="line">  title=&quot;$1&quot;</span><br><span class="line">  status=&quot;$2&quot;</span><br><span class="line">  name=&quot;$3&quot;</span><br><span class="line">  shift 3</span><br><span class="line">  contents=(&quot;$@&quot;)</span><br><span class="line"></span><br><span class="line">  send_notify=1</span><br><span class="line">  if [ &quot;$&#123;title&#125;&quot; == &quot;监控告警&quot; ]; then</span><br><span class="line">    if ! array_contains &quot;$&#123;title&#125;&quot; &quot;$&#123;feishu_watch_titles[@]&#125;&quot; &amp;&amp; ! array_contains &quot;$&#123;status&#125;&quot; &quot;$&#123;feishu_watch_status[@]&#125;&quot;; then</span><br><span class="line">      send_notify=0</span><br><span class="line">    fi</span><br><span class="line">  fi</span><br><span class="line"></span><br><span class="line">  if [ $&#123;send_notify&#125; -eq 1 ]; then</span><br><span class="line">    push_to_feishu &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">  else</span><br><span class="line">    echo &quot;&gt;&gt;&gt; 消息未满足推送条件，不发送 &lt;&lt;&lt;&quot;</span><br><span class="line">  fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 构建事件推送</span><br><span class="line">function build_event_push() &#123;</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 进入构建事件推送逻辑 &lt;&lt;&lt;&quot;</span><br><span class="line">  echo &quot;trigger_build_id: $&#123;trigger_build_id&#125;&quot;</span><br><span class="line">  echo &quot;trigger_build_name: $&#123;trigger_build_name&#125;&quot;</span><br><span class="line">  echo &quot;trigger_build_number_id: $&#123;trigger_build_number_id&#125;&quot;</span><br><span class="line">  echo &quot;trigger_trigger_user: $&#123;trigger_trigger_user&#125;&quot;</span><br><span class="line">  echo &quot;trigger_type: $&#123;trigger_type&#125;&quot;</span><br><span class="line"></span><br><span class="line">  title=&quot;构建通知&quot;</span><br><span class="line">  cur_datetime=$(date +&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">  name=&quot;$&#123;trigger_build_name&#125;&quot;</span><br><span class="line">  contents=(</span><br><span class="line">    &quot;任务：#$&#123;trigger_build_number_id&#125;&quot;</span><br><span class="line"> #    &quot;项目：$&#123;trigger_build_name&#125;&quot;</span><br><span class="line"> #   &quot;执行人：$&#123;trigger_trigger_user&#125;&quot;</span><br><span class="line"> #   &quot;时间：$&#123;cur_datetime&#125;&quot;</span><br><span class="line">  )</span><br><span class="line">  case &quot;$&#123;trigger_type&#125;&quot; in</span><br><span class="line">    &quot;startReady&quot; )</span><br><span class="line">      status=&quot;开始&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    &quot;success&quot; )</span><br><span class="line">      status=&quot;成功&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    &quot;stop&quot; | &quot;error&quot; )</span><br><span class="line">      status=&quot;失败&quot;</span><br><span class="line">      contents+=(&quot;\n错误信息：$&#123;trigger_status_msg&#125;&quot;)</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    * )</span><br><span class="line">      echo &quot;&gt;&gt;&gt; 未知的 trigger_type: $&#123;trigger_type&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">      ;;</span><br><span class="line">  esac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 监控事件推送</span><br><span class="line">function monitor_event_push() &#123;</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 进入监控事件推送逻辑 &lt;&lt;&lt;&quot;</span><br><span class="line">  echo &quot;trigger_monitor_id: $&#123;trigger_monitor_id&#125;&quot;</span><br><span class="line">  title=&quot;监控告警&quot;</span><br><span class="line">  cur_datetime=$(date +&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">  name=&quot;$&#123;trigger_project_name&#125;&quot;</span><br><span class="line">  contents=(</span><br><span class="line">    &quot;监控：$&#123;trigger_monitor_name&#125;&quot;</span><br><span class="line">    &quot;节点：$&#123;trigger_node_name&#125;&quot;</span><br><span class="line">    &quot;项目：$&#123;trigger_project_name&#125;&quot;</span><br><span class="line">    &quot;时间：$&#123;cur_datetime&#125;&quot;</span><br><span class="line">    &quot;内容：$&#123;trigger_title&#125;&quot;</span><br><span class="line">  )</span><br><span class="line">  case &quot;$&#123;trigger_run_status&#125;&quot; in</span><br><span class="line">    &quot;true&quot; )</span><br><span class="line">      status=&quot;恢复&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    &quot;false&quot; )</span><br><span class="line">      status=&quot;异常&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    * )</span><br><span class="line">      echo &quot;&gt;&gt;&gt; 未知的 trigger_run_status: $&#123;trigger_run_status&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">      ;;</span><br><span class="line">  esac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 根据传入的环境变量判断调用哪种事件推送逻辑</span><br><span class="line">if [ -n &quot;$trigger_build_id&quot; ]; then</span><br><span class="line">  build_event_push</span><br><span class="line">elif [ -n &quot;$trigger_monitor_id&quot; ]; then</span><br><span class="line">  monitor_event_push</span><br><span class="line">else</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 未检测到触发变量，执行默认测试调用 &lt;&lt;&lt;&quot;</span><br><span class="line">  # 默认测试调用，测试飞书消息发送</span><br><span class="line">  push_to_feishu &quot;测试标题&quot; &quot;测试状态&quot; &quot;测试项目&quot; &quot;测试内容1&quot; &quot;测试内容2&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="多机器人脚本"><a href="#多机器人脚本" class="headerlink" title="多机器人脚本"></a>多机器人脚本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">set -x</span><br><span class="line"></span><br><span class="line"># 设置时区为上海时区</span><br><span class="line">export TZ=&quot;Asia/Shanghai&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;&gt;&gt;&gt; 脚本开始执行 &lt;&lt;&lt;&quot;</span><br><span class="line"></span><br><span class="line">######################################自定义参数区域#######################################</span><br><span class="line"># Jpom链接</span><br><span class="line">jpom_url=&quot;http://xxx.xx:2122&quot;</span><br><span class="line"></span><br><span class="line"># 飞书机器人 webhook 地址（请替换为你实际的地址）</span><br><span class="line">feishu_webhook=&quot;https://open.feishu.cn/open-apis/bot/v2/hook/token1&quot;</span><br><span class="line">feishu_webhook2=&quot;https://open.feishu.cn/open-apis/bot/v2/hook/token2&quot;</span><br><span class="line"></span><br><span class="line"># 如果需要，可以设置关注的事件标题或状态（数组），用于过滤特定消息</span><br><span class="line">feishu_watch_titles=(&quot;监控告警&quot;)</span><br><span class="line">feishu_watch_status=(&quot;失败&quot;)</span><br><span class="line">######################################自定义参数区域#######################################</span><br><span class="line"></span><br><span class="line"># URL编码函数（如需要链接中使用）</span><br><span class="line">urlencode() &#123;</span><br><span class="line">  local string=&quot;$1&quot;</span><br><span class="line">  local encoded=&quot;&quot;</span><br><span class="line">  local length=&quot;$&#123;#string&#125;&quot;</span><br><span class="line">  for (( i = 0; i &lt; length; i++ )); do</span><br><span class="line">    local c=&quot;$&#123;string:i:1&#125;&quot;</span><br><span class="line">    case &quot;$c&quot; in</span><br><span class="line">      [a-zA-Z0-9.~_-]) encoded+=&quot;$c&quot; ;;</span><br><span class="line">      *) encoded+=$(printf &#x27;%%%02X&#x27; &quot;&#x27;$c&quot;) ;;</span><br><span class="line">    esac</span><br><span class="line">  done</span><br><span class="line">  echo &quot;$encoded&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 检查变量是否存在于数组中</span><br><span class="line">array_contains() &#123;</span><br><span class="line">  local target=&quot;$1&quot;</span><br><span class="line">  shift</span><br><span class="line">  local array=(&quot;$@&quot;)</span><br><span class="line">  for item in &quot;$&#123;array[@]&#125;&quot;; do</span><br><span class="line">    if [ &quot;$item&quot; == &quot;$target&quot; ]; then</span><br><span class="line">      return 0  # 存在返回 0</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">  return 1      # 不存在返回 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 推送到飞书</span><br><span class="line">function push_to_feishu() &#123;</span><br><span class="line">  # 参数：$1: title, $2: status, $3: name, 后续为内容数组</span><br><span class="line">  title=&quot;$1&quot;</span><br><span class="line">  status=&quot;$2&quot;</span><br><span class="line">  name=&quot;$3&quot;</span><br><span class="line">  shift 3</span><br><span class="line">  contents=(&quot;$@&quot;)</span><br><span class="line"></span><br><span class="line">  cur_datetime=$(date +&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">  </span><br><span class="line">  # 构建消息内容（纯文本，换行用 \n）</span><br><span class="line">  message=&quot;【$&#123;title&#125;】\n&quot;</span><br><span class="line">  message+=&quot;名称：$&#123;name&#125;\n&quot;</span><br><span class="line">  message+=&quot;状态：$&#123;status&#125;\n&quot;</span><br><span class="line">  message+=&quot;时间：$&#123;cur_datetime&#125;\n&quot;</span><br><span class="line">  # message+=&quot;链接：$&#123;jpom_url&#125;\n&quot;</span><br><span class="line">  for content in &quot;$&#123;contents[@]&#125;&quot;; do</span><br><span class="line">    message+=&quot;$&#123;content&#125;&quot;</span><br><span class="line">  done</span><br><span class="line"></span><br><span class="line">  echo &quot;&gt;&gt;&gt; 将发送的消息内容：&quot;</span><br><span class="line">  echo -e &quot;$&#123;message&#125;&quot;</span><br><span class="line"></span><br><span class="line">  # 构造 JSON 消息体</span><br><span class="line">  read -r -d &#x27;&#x27; json_payload &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;msg_type&quot;: &quot;text&quot;,</span><br><span class="line">  &quot;content&quot;: &#123;</span><br><span class="line">    &quot;text&quot;: &quot;$&#123;message&#125;&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">  echo &quot;&gt;&gt;&gt; JSON Payload: $&#123;json_payload&#125;&quot;</span><br><span class="line"></span><br><span class="line">  # 发送通知，并输出响应信息</span><br><span class="line">  response=$(curl -H &quot;Content-Type: application/json&quot; -X POST -d &quot;$&#123;json_payload&#125;&quot; &quot;$&#123;feishu_webhook&#125;&quot;)</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 飞书响应: $&#123;response&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">  response2=$(curl -H &quot;Content-Type: application/json&quot; -X POST -d &quot;$&#123;json_payload&#125;&quot; &quot;$&#123;feishu_webhook2&#125;&quot;)</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 飞书响应2: $&#123;response2&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 通用推送函数</span><br><span class="line">function common_push() &#123;</span><br><span class="line">  # 参数：$1: title, $2: status, $3: name, 后续为内容数组</span><br><span class="line">  title=&quot;$1&quot;</span><br><span class="line">  status=&quot;$2&quot;</span><br><span class="line">  name=&quot;$3&quot;</span><br><span class="line">  shift 3</span><br><span class="line">  contents=(&quot;$@&quot;)</span><br><span class="line"></span><br><span class="line">  send_notify=1</span><br><span class="line">  if [ &quot;$&#123;title&#125;&quot; == &quot;监控告警&quot; ]; then</span><br><span class="line">    if ! array_contains &quot;$&#123;title&#125;&quot; &quot;$&#123;feishu_watch_titles[@]&#125;&quot; &amp;&amp; ! array_contains &quot;$&#123;status&#125;&quot; &quot;$&#123;feishu_watch_status[@]&#125;&quot;; then</span><br><span class="line">      send_notify=0</span><br><span class="line">    fi</span><br><span class="line">  fi</span><br><span class="line"></span><br><span class="line">  if [ $&#123;send_notify&#125; -eq 1 ]; then</span><br><span class="line">    push_to_feishu &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">  else</span><br><span class="line">    echo &quot;&gt;&gt;&gt; 消息未满足推送条件，不发送 &lt;&lt;&lt;&quot;</span><br><span class="line">  fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 构建事件推送</span><br><span class="line">function build_event_push() &#123;</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 进入构建事件推送逻辑 &lt;&lt;&lt;&quot;</span><br><span class="line">  echo &quot;trigger_build_id: $&#123;trigger_build_id&#125;&quot;</span><br><span class="line">  echo &quot;trigger_build_name: $&#123;trigger_build_name&#125;&quot;</span><br><span class="line">  echo &quot;trigger_build_number_id: $&#123;trigger_build_number_id&#125;&quot;</span><br><span class="line">  echo &quot;trigger_trigger_user: $&#123;trigger_trigger_user&#125;&quot;</span><br><span class="line">  echo &quot;trigger_type: $&#123;trigger_type&#125;&quot;</span><br><span class="line"></span><br><span class="line">  title=&quot;test环境构建通知-多机器人测试&quot;</span><br><span class="line">  cur_datetime=$(date +&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">  name=&quot;$&#123;trigger_build_name&#125;&quot;</span><br><span class="line">  contents=(</span><br><span class="line"> #    &quot;任务：#$&#123;trigger_build_number_id&#125;&quot;</span><br><span class="line"> #    &quot;项目：$&#123;trigger_build_name&#125;&quot;</span><br><span class="line">   &quot;执行人：$&#123;trigger_trigger_user&#125;&quot;</span><br><span class="line"> #   &quot;时间：$&#123;cur_datetime&#125;&quot;</span><br><span class="line">  )</span><br><span class="line">  case &quot;$&#123;trigger_type&#125;&quot; in</span><br><span class="line">    &quot;startReady&quot; )</span><br><span class="line">      status=&quot;开始构建&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    &quot;success&quot; )</span><br><span class="line">      status=&quot;构建成功&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    &quot;stop&quot; | &quot;error&quot; )</span><br><span class="line">      status=&quot;构建失败&quot;</span><br><span class="line">      contents+=(&quot;\n错误信息：$&#123;trigger_status_msg&#125;&quot;)</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    * )</span><br><span class="line">      echo &quot;&gt;&gt;&gt; 未知的 trigger_type: $&#123;trigger_type&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">      ;;</span><br><span class="line">  esac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 监控事件推送</span><br><span class="line">function monitor_event_push() &#123;</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 进入监控事件推送逻辑 &lt;&lt;&lt;&quot;</span><br><span class="line">  echo &quot;trigger_monitor_id: $&#123;trigger_monitor_id&#125;&quot;</span><br><span class="line">  title=&quot;监控告警&quot;</span><br><span class="line">  cur_datetime=$(date +&quot;%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line">  name=&quot;$&#123;trigger_project_name&#125;&quot;</span><br><span class="line">  contents=(</span><br><span class="line">    &quot;监控：$&#123;trigger_monitor_name&#125;&quot;</span><br><span class="line">    &quot;节点：$&#123;trigger_node_name&#125;&quot;</span><br><span class="line">    &quot;项目：$&#123;trigger_project_name&#125;&quot;</span><br><span class="line">    &quot;时间：$&#123;cur_datetime&#125;&quot;</span><br><span class="line">    &quot;内容：$&#123;trigger_title&#125;&quot;</span><br><span class="line">  )</span><br><span class="line">  case &quot;$&#123;trigger_run_status&#125;&quot; in</span><br><span class="line">    &quot;true&quot; )</span><br><span class="line">      status=&quot;恢复&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    &quot;false&quot; )</span><br><span class="line">      status=&quot;异常&quot;</span><br><span class="line">      common_push &quot;$&#123;title&#125;&quot; &quot;$&#123;status&#125;&quot; &quot;$&#123;name&#125;&quot; &quot;$&#123;contents[@]&#125;&quot;</span><br><span class="line">      ;;</span><br><span class="line">    * )</span><br><span class="line">      echo &quot;&gt;&gt;&gt; 未知的 trigger_run_status: $&#123;trigger_run_status&#125; &lt;&lt;&lt;&quot;</span><br><span class="line">      ;;</span><br><span class="line">  esac</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 根据传入的环境变量判断调用哪种事件推送逻辑</span><br><span class="line">if [ -n &quot;$trigger_build_id&quot; ]; then</span><br><span class="line">  build_event_push</span><br><span class="line">elif [ -n &quot;$trigger_monitor_id&quot; ]; then</span><br><span class="line">  monitor_event_push</span><br><span class="line">else</span><br><span class="line">  echo &quot;&gt;&gt;&gt; 未检测到触发变量，执行默认测试调用 &lt;&lt;&lt;&quot;</span><br><span class="line">  # 默认测试调用，测试飞书消息发送</span><br><span class="line">  push_to_feishu &quot;测试标题&quot; &quot;测试状态&quot; &quot;测试项目&quot; &quot;测试内容1&quot; &quot;测试内容2&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>保存后获取回调地址</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190440.png" fancybox="true"/></div></div>
+
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190604.png" fancybox="true"/></div></div>
+
+
+<h3 id="到构建中设置回调"><a href="#到构建中设置回调" class="headerlink" title="到构建中设置回调"></a>到构建中设置回调</h3><div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190713.png" fancybox="true"/></div></div>
+
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://su3.cn/postimg/WX20250205-190754.png" fancybox="true"/></div></div>
+
+<p>把之前脚本的回调地址粘贴到WebHooks中，注意！如果是在一台服务器中，用内网地址，别用外网地址，否则可能会连接超时导致触发不了！</p>
+
+
+
+<div class="article-footer reveal fs14"><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://su3.cn/2025/02/05/2025020506/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://su3.cn/2025/02/05/2025020506/&title=JPOM构建通知到飞书 - 苏三博客&summary=JPOM构建通知到飞书"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=JPOM构建通知到飞书 - 苏三博客&amp;body=https://su3.cn/2025/02/05/2025020506/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://su3.cn/2025/02/05/2025020506/"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2025/02/06/2025020601/">JPOM绑定服务日志</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/02/05/20250205/">JPOM搭建</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="zhhltc/blogcomments" data-repo-id="R_kgDOI35Puw" data-category="Announcements" data-category-id="DIC_kwDOI35Pu84CT54y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><div class="BeiAn-info" style="display: flex;text-align: center;margin:10px;justify-content: center; align-items: center;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/beian.png" title="备案管理系统" style="width:15px;height:15px;"> <a href="http://beian.miit.gov.cn/" style="text-decoration:none;" target=_blank title=备案号>赣ICP备17016237号-1</a></div><div  style="display: flex;text-align: center;justify-content: center; align-items: center;"><span id="timeDate">载入天数...</span>|<span id="times">载入时分秒...</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_uv" style="display:none">本站访客数<span id="busuanzi_value_site_uv"></span>人</span></div><script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script><script type="text/javascript" src="/js/dist/zoomify.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer>
+
+<!--添加网站运行时间 -->
+<!--<br/>-->
+
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/01/2021 12:00:00");
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()", 250);
+</script>
+<!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+ if (!window.location.href.includes("music")) {
+        window.onload = function () {
+          /*添加返回顶部按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,0);");
+          a.setAttribute("id", "All_url_totop")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+          /*添加返回底部的按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,document.body.scrollHeight);");
+          a.setAttribute("id", "All_url_totop2")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+        }
+      }
+</script>
+
+        
+        <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+      
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

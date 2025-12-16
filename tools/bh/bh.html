@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            HTML标签闭合检测工具
+        </title>
+        <link type="text/css" rel="stylesheet" href="style.css">
+        <script language="javascript" src="b=js&amp;f=jquery.js">
+        </script>
+        <script type="text/javascript" src="htmlformat.js">
+        </script>
+        <style type="text/css">
+            *{margin:0;padding:0;font-size:12px;} ul{list-style:none} #header h3 {font-size:
+            16px;} #main{background:#eee;width:90%;border:1px solid #999;margin:10px
+            auto;position:relative;padding: 15px;} #header{height:55px;text-align:
+            center; line-height: 55px;} #checkhtml{padding:15px 11px 0 0px;height:80px}
+            #checkhtml li{float:left;margin:10px 10px 10px 0;display:block;border:1px
+            solid #a4a197;width:91px;height:35px;} #checkhtml li a{display:block;width:91px;height:35px;line-height:35px;text-align:center;color:#666;font-size:14px;text-decoration:none}
+            #checkhtml li a:hover{color:#ccc;} #checkhtml li.hover{color:#ccc;} #checkhtml
+            li#Copy{float:right} #inputsource{width:100%;margin:0 auto;margin-top:15px;border:1px
+            solid #999;display:block;height:170px;overflow:auto;overflow-x:hidden;font-size:14px;}
+            #tips{ background:#fff; border:1px solid #ccc; width:150px; height:40px;
+            line-height:40px;font-weight:bold; font-size:20px; text-align:center; top:210px;
+            left:188px;position:absolute; padding:0px 5px; color:#360;z-index:9999;
+            display:none;} #cval{width:400px;margin:0 auto;border:1px solid #999;height:100px;margin-left:10px;padding:1px;}
+            #user_defined{height:100px;padding:10px;} #user_tag{width:102px;white-space:break;float:left;}
+            #user_tag p{line-height: 20px;} .loading{display:none}
+        </style>
+    </head>
+    
+    <body>
+        <div id="main">
+            <div id="header">
+                <a href="https://su3.cn">
+                    <h3>
+                        HTML标签闭合检测工具
+                    </h3>
+                </a>
+            </div>
+            <textarea id="inputsource">
+            </textarea>
+            <ul id="checkhtml">
+                <li>
+                    <a href="javascript:;" onclick="checkhtml(0)">
+                        检测
+                    </a>
+                </li>
+            </ul>
+            <div class="output-content">
+                <div id="wrapper">
+                    <div id="title">
+                    </div>
+                    <div id="lists">
+                        <em class="loading">
+                            Loading...
+                        </em>
+                    </div>
+                    <div id="source">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            // crx插件对象
+            var crx = {
+                message: {
+                    "extDescription": {
+                        "message": "检测HTML标签是否正确闭合的工具。"
+                    },
+                    "extName": {
+                        "message": "HTML标签检测器"
+                    },
+                    "reload": {
+                        "message": "请刷新页面重试"
+                    },
+                    "noEndTag": {
+                        "message": "没有结束标签"
+                    },
+                    "noStartTag": {
+                        "message": "没有开始标签"
+                    },
+                    "earlier": {
+                        "message": "过早闭合，早于"
+                    },
+                    "later": {
+                        "message": "过晚闭合，晚于"
+                    },
+                    "perfect": {
+                        "message": "完整的HTML标签"
+                    },
+                    "line": {
+                        "message": "行"
+                    },
+                    "oneError": {
+                        "message": "1个标签错误"
+                    },
+                    "errors": {
+                        "message": "个标签错误"
+                    }
+                },
+                getMessage: function(where) {
+                    for (key in this.message) {
+                        if (where == key) {
+                            return this.message[key].message;
+                        }
+                    }
+                }
+            }
+
+            function checkhtml() {
+                $(".loading").show();
+                var html = $("#inputsource").val();
+                opened = {},
+                closedObj = {},
+                result = {},
+                errors = [],
+                debug = [],
+                EMPTYTAG = ['img', 'link', 'meta', 'br', 'hr', 'input', 'embed', 'area', 'base', 'basefont', 'bgsound', 'param', 'wbr', 'col']; //单标签
+                TAGNAME = ['!doctype', 'a', 'abbr', 'acronym', 'address', 'applet', 'area', 'article', 'aside', 'audio', 'b', 'base', 'basefont', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'command', 'datalist', 'dd', 'del', 'details', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'keygen', 'isindex', 'kbd', 'label', 'legend', 'li', 'link', 'map', 'mark', 'menu', 'meta', 'meter', 'nav', 'noframes', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strike', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'tt', 'u', 'ul', 'var', 'video', 'xmp']; //不在其中的标签会输出到控制台
+                /** 定义indexOf */
+                EMPTYTAG.indexOf = EMPTYTAG.indexOf ||
+                function(str) {
+                    for (var i = 0,
+                    l = this.length; i < l; i++) {
+                        if (this[i] == str) {
+                            return i;
+                        }
+                    }
+                    return - 1;
+                };
+
+                TAGNAME.indexOf = TAGNAME.indexOf ||
+                function(str) {
+
+                    for (var i = 0,
+                    l = this.length; i < l; i++) {
+                        if (this[i] == str) {
+                            return i;
+                        }
+                    }
+                    return - 1;
+                };
+
+                (function() {
+                    /** 定义了一个判断是否有闭合标签的函数 */
+                    var closure = function(html, index, tagName) {
+
+                        var closeRe = new RegExp("^<(/)?" + tagName + "([^>]*)>$", "im"); //闭合标签的正则</tag xxxx>
+                        var tagPattern = new RegExp("<script(?:\\s[^>]*)?>[\\s\\S]*?<\/script>|<!--[\\s\\S]*?-->|<(/)?" + tagName + "(?:\\s[^>]*?)?>", "igm");
+                        var ignorePattern = /^<script(?:\s[^>]*)?>[\s\S]*?<\/script>$|^<!--[\s\S]*?-->$/gm; //注释
+                        var singlePattern = new RegExp("^<" + tagName + "([^/]*)/>$", "im"); //单标签的
+                        tagPattern.lastIndex = index;
+                        var depth = 1;
+                        var tag = null;
+                        var r = null;
+                        while (tag = tagPattern.exec(html)) {
+                            var head = tag.index;
+                            var tail = head + tag[0].length;
+                            tagPattern.lastIndex = tail;
+
+                            if (tag[0].match(ignorePattern) || tag[0].match(singlePattern)) {
+                                continue;
+                            }
+                            if (r = tag[0].match(closeRe)) {
+                                if (r[1] == '/') {
+                                    //console.log(depth-1);
+                                    if (--depth == 0) {
+                                        return closedObj[head] ? false: {
+                                            head: head,
+                                            tail: tail
+                                        }; //不知道这里为什么要加这个判断
+                                    }
+                                } else {
+                                    //console.log(depth+1);
+                                    depth++;
+                                }
+                            }
+                        }
+                        return false
+                    };
+                    var tagPattern = /<script(?:\s[^>]*)?>[\s\S]*?<\/script>|<!--[\s\S]*?-->|<([a-zA-Z1-9:]+)((?:\s[^>]*)?)>/gm; //融合了正常标签和注释的tag...
+                    var ignorePattern = /^<script(?:\s[^>]*)?>[\s\S]*?<\/script>$|^<!--[\s\S]*?-->$/gm; //注释
+                    var openPattern = /^<([a-zA-Z1-9:]+)((?:\s[^>]*)?)\s*>$/m; //标签开始的正则，注意g和m的差别
+                    var tag = null;
+                    var found = null;
+                    var ignore = null;
+                    while (tag = tagPattern.exec(html)) {
+                        var head = tag.index;
+                        var tail = head + tag[0].length;
+                        tagPattern.lastIndex = tail;
+                        //console.log("found:"+found);
+                        //console.log(tag);
+                        if (tag[0].match(ignorePattern)) {
+                            continue;
+                        }
+                        if (found = tag[0].match(openPattern)) {
+                            var tagName = found[1].toLowerCase();
+                            var attr = found[2];
+                            if (TAGNAME.indexOf(tagName) < 0) {
+                                console.log("未能识别的标签：" + tagName);
+                                continue; //非正常标签不判断，主要是防止误判的script内的大小于号
+                            }
+                            if (EMPTYTAG.indexOf(tagName) >= 0 || (attr && attr.charAt(attr.length - 1) == '/')) { //单标签的判断
+                                closedObj[head] = {
+                                    open: head,
+                                    openTail: tail,
+                                    close: head,
+                                    closeTail: tail,
+                                    tagName: tagName,
+                                    attr: attr
+                                }
+                            } else {
+                                //必须在这步以前判断script内的内容
+                                //console.log("open");
+                                //console.log(tag[0]);
+                                var cls = closure(html, tail, tagName);
+                                //console.log("tail:"+tail);
+                                //console.log("tagName:"+tagName);
+                                //console.log(cls);
+                                if (cls) {
+                                    opened[head] = closedObj[cls.head] = {
+                                        open: head,
+                                        openTail: tail,
+                                        close: cls.head,
+                                        closeTail: cls.tail,
+                                        tagName: tagName,
+                                        attr: attr
+                                    };
+                                } else {
+                                    errors.push({
+                                        id: errors.length,
+                                        head: head,
+                                        tail: tail,
+                                        tagName: tagName,
+                                        attr: attr,
+                                        message: crx.getMessage("noEndTag")
+                                    });
+                                }
+                            }
+                        }
+                    }
+                })();
+
+                //console.log(opened);
+                //console.log(closedObj);
+                /** 只有闭合没有开始的标签 */
+                //console.log(closedObj);
+                (function() {
+                    var tagPattern = /<script(?:\s[^>]*)?>[\s\S]*?<\/script>|<!--[\s\S]*?-->|<\/([a-zA-Z1-9:]+)>/gm; //融合了正常闭合标签和注释的tag...
+                    var ignorePattern = /^<script(?:\s[^>]*)?>[\s\S]*?<\/script>$|^<!--[\s\S]*?-->$/gm; //注释
+                    var closePattern = /^<\/([a-zA-Z1-9:]+)>$/m;
+                    var tag = null;
+                    var found = null;
+                    var ignore = null;
+                    while (tag = tagPattern.exec(html)) {
+                        var head = tag.index;
+                        var tail = head + tag[0].length;
+                        tagPattern.lastIndex = tail;
+                        if (tag[0].match(ignorePattern)) { //用ignorePattern.test(tag[0])会出错，比如<span><!--<li class=\"price\"><a title=\"点击按价格（从高到低）重新排序\" href=\"#\"><span>价格</span></a></li>--><!--<li class=\"price\"><a title=\"点击按价格（从高到低）重新排序\" href=\"#\"><span>价格</span></a></li>--></span> 第二个<!--.*?-->会认为不是ignore的
+                            //console.log("close");
+                            //console.log(tag[0]);
+                            continue;
+                        }
+                        if (found = tag[0].match(closePattern)) {
+                            var tagName = found[1].toLowerCase();
+                            var attr = '';
+                            if (TAGNAME.indexOf(tagName) < 0) {
+                                console.log("未能识别的标签：" + tagName);
+                                continue; //非正常标签不判断，主要是防止误判的script内的大小于号
+                            }
+                            if (EMPTYTAG.indexOf(tagName) < 0) {
+                                if (!closedObj[head]) {
+                                    //console.log("failed:"+head);
+                                    errors.push({
+                                        id: errors.length,
+                                        head: head,
+                                        tail: tail,
+                                        tagName: '/' + tagName,
+                                        attr: attr,
+                                        message: crx.getMessage("noStartTag")
+                                    })
+                                }
+                            }
+                        }
+                    }
+                })();
+
+                /** 检查tag关闭的先后顺序 */
+                (function() {
+                    var checked = [];
+                    for (var i in opened) {
+                        var cl = opened[i];
+                        for (var j = checked.length - 1; j >= 0; j--) {
+                            var ch = checked[j];
+                            if (ch.open < cl.open && cl.open < ch.close && ch.close < cl.close) { //<ch><cl></ch></cl>
+                                errors.push({
+                                    id: errors.length,
+                                    head: ch.close,
+                                    tail: ch.closeTail,
+                                    tagName: '/' + ch.tagName,
+                                    attr: '',
+                                    message: crx.getMessage("earlier") + '&lt;' + cl.tagName + cl.attr + '&gt;'
+                                }); //为什么push进去之后会多一个行号？
+                                errors.push({
+                                    id: errors.length,
+                                    head: cl.close,
+                                    tail: cl.closeTail,
+                                    tagName: '/' + cl.tagName,
+                                    attr: '',
+                                    message: crx.getMessage("later") + '&lt;' + ch.tagName + ch.attr + '&gt;'
+                                });
+                            } else if (ch.close < cl.open) {
+                                checked.splice(j, 1)
+                            }
+                        }
+                        checked.push(cl)
+                    }
+                })();
+
+                /** 输出错误信息 */
+                (function() {
+                    var sourceLine = 1;
+                    var re = function(htmlCode) {
+                        return htmlCode.replace(/[<>&\r\n \t]/g,
+                        function(c) {
+                            switch (c) {
+                            case '<':
+                                return '&lt;';
+                            case '>':
+                                return '&gt;';
+                            case '&':
+                                return '&amp;';
+                            case "\r":
+                                return '';
+                            case "\n":
+                                var cls = sourceLine % 2 == 0 ? 'e': 'o';
+                                return '</div>\n<div class="ln">' + (++sourceLine) + '</div><div class="' + cls + '"> ';
+                            case "\t":
+                                return "&nbsp;&nbsp;&nbsp;&nbsp;";
+                            case " ":
+                                return "&nbsp;"
+                            }
+                        })
+                    };
+
+                    var sourceCode = ['<div class="ln">1</div><div class="e"> '];
+                    errors.sort(function(a, b) {
+                        return a.head - b.head
+                    });
+                    var rular = 0;
+                    for (var i = 0,
+                    l = errors.length; i < l; i++) {
+                        var uc = errors[i];
+                        if (rular < uc.tail) {
+                            var head = re(html.substring(rular, uc.head));
+                            var tag = re(html.substring(uc.head, uc.tail));
+                            sourceCode.push(head, '<span class="error">', '<a id = "a' + uc.id + '"', ' title="' + uc.message + '"', ' href="#d' + uc.id + '">', tag, '</a></span>');
+                            uc.lineNumber = sourceLine;
+
+                            rular = uc.tail
+                        }
+                    }
+                    sourceCode.push(re(html.substring(rular)), '<br clear="all">');
+                    result['source'] = sourceCode.join("")
+                })();
+
+                (function() {
+                    if (errors.length > 0) {
+                        var listHTML = ['<dl id="TCerrorLists">'];
+                        for (var i = 0,
+                        l = errors.length; i < l; i++) {
+                            //console.log(errors);
+                            var uc = errors[i];
+                            listHTML.push('<dt>' + (uc.lineNumber ? crx.getMessage("line") + ' ' + uc.lineNumber + ':': '') + '</dt>', '<dd><a id="d' + uc.id + '"', ' href="#a' + uc.id + '">&lt;', uc.tagName + uc.attr, '&gt;</a> : ', uc.message, '</dd>')
+                        }
+                        listHTML.push('</dl>');
+                        result['list'] = listHTML.join("")
+                    } else {
+                        result['list'] = ''
+                    }
+                })();
+
+                var errorCount = errors.length;
+                var message = (errorCount == 0 ? crx.getMessage("perfect") : errorCount == 1 ? crx.getMessage("oneError") : errorCount + crx.getMessage("errors"));
+                result['message'] = message;
+                result['count'] = errorCount;
+                result['class'] = errorCount ? 'fail': 'success';
+
+                $(".loading").hide();
+                $("#wrapper").addClass(result['class']);
+                $("#title").html(result['message']);
+                $("#lists").html(result['list']);
+                $("#source").html(result['source']);
+
+            }
+        </script>
+       
+    </body>
+
+</html>

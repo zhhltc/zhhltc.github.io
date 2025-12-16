@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>james分布式版本部署一 - 苏三博客</title>
+
+  
+    <meta name="description" content="james分布式版本部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="james分布式版本部署一">
+<meta property="og:url" content="https://su3.cn/2025/02/10/2025james01/index.html">
+<meta property="og:site_name" content="苏三博客">
+<meta property="og:description" content="james分布式版本部署">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-10T10:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-13T15:00:00.000Z">
+<meta property="article:author" content="SuSan">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  <meta name="keywords" content="笔记">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/lxgwwenkaiscreen.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar"  style="width:52px;height:52px;" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title" style="font-size: 1.12rem;">苏三博客</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:#CD853F;">- Su3.cn 无限制,有些线路较慢</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:green;">- Xen.cc 静态资源托管加速,限流</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/utils/">工具</a><a class="nav-item" href="/music/">歌单</a><a class="nav-item" href="/about/">更多</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">james分布式版本部署一</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83"><span class="toc-text">基础环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEJAVA-HOME"><span class="toc-text">设置JAVA_HOME</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Libc6"><span class="toc-text">安装Libc6</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F%E5%92%8C%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-text">更新系统和安装必要的软件包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%AD%E9%97%B4%E4%BB%B6-Docker%EF%BC%88%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%89"><span class="toc-text">安装中间件-Docker（方式一）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Docker"><span class="toc-text">安装Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%80%89-%E5%85%81%E8%AE%B8%E9%9D%9Eroot%E7%94%A8%E6%88%B7%E8%BF%90%E8%A1%8C"><span class="toc-text">(可选)允许非root用户运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE-Docker-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-text">设置 Docker 开机自启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%E5%AE%89%E8%A3%85DockerCompose"><span class="toc-text">（可选）安装DockerCompose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-text">安装中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85cassandra-3-11-10"><span class="toc-text">安装cassandra:3.11.10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85opensearch-2-1-0"><span class="toc-text">安装opensearch:2.1.0</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85rabbitmq-3-9-18"><span class="toc-text">安装rabbitmq:3.9.18</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%BB%B6%E6%97%B6%E6%8F%92%E4%BB%B6-%E9%A1%B9%E7%9B%AE%E6%9C%89%E7%94%A8%E5%88%B0"><span class="toc-text">安装延时插件-项目有用到</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85zenko-cloudserver-8-2-6"><span class="toc-text">安装zenko&#x2F;cloudserver:8.2.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85TIka"><span class="toc-text">安装TIka</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%AD%E9%97%B4%E4%BB%B6-%E6%89%8B%E5%8A%A8%EF%BC%88%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%89"><span class="toc-text">安装中间件-手动（方式二）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85opensearch-2-1-0-1"><span class="toc-text">安装opensearch:2.1.0</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B"><span class="toc-text">解压</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%EF%BC%88%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%89"><span class="toc-text">开机自启（方式一）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8%EF%BC%88%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%89"><span class="toc-text">直接启动（方式二）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85"><span class="toc-text">验证安装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#OpenSearchDashboards%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">OpenSearchDashboards（可选）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#OpenSearchDashboards%E8%87%AA%E5%90%AF%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">OpenSearchDashboards自启（可选）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85rabbitmq-3-8-2"><span class="toc-text">安装rabbitmq:3.8.2</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="toc-text">前置环境</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5MQ%E7%9A%84GPGKey"><span class="toc-text">导入MQ的GPGKey</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0APT-%E4%BB%93%E5%BA%93"><span class="toc-text">添加APT 仓库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%B4%A2%E5%BC%95"><span class="toc-text">更新软件包索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%8F%AF%E7%94%A8%E7%89%88%E6%9C%AC"><span class="toc-text">查找可用版本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%AC"><span class="toc-text">安装指定版本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%B9%B6%E9%AA%8C%E8%AF%81"><span class="toc-text">启动并验证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-text">开机自启</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E7%8A%B6%E6%80%81"><span class="toc-text">检查状态</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%AF%E7%94%A8RabbitMQ%E7%AE%A1%E7%90%86%E6%8F%92%E4%BB%B6"><span class="toc-text">启用RabbitMQ管理插件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-text">开放端口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%BB%B6%E6%97%B6%E6%B6%88%E6%81%AF%E6%8F%92%E4%BB%B6%EF%BC%8C%E9%A1%B9%E7%9B%AE%E6%9C%89%E7%94%A8%E5%88%B0"><span class="toc-text">安装延时消息插件，项目有用到</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">创建用户（可选）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85TIka-1"><span class="toc-text">安装TIka</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-1"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF-1"><span class="toc-text">开机自启</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85cassandra-4-0-10"><span class="toc-text">安装cassandra 4.0.10</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0-Cassandra-%E5%AE%98%E6%96%B9%E4%BB%93%E5%BA%93"><span class="toc-text">添加 Cassandra 官方仓库</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-2"><span class="toc-text">下载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-1"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B3%BB%E7%BB%9F%E4%B8%93%E7%94%A8%E7%94%A8%E6%88%B7"><span class="toc-text">创建系统专用用户</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="toc-text">开机启动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-text">启动</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE"><span class="toc-text">防火墙配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-text">验证</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8CQL-Shell"><span class="toc-text">使用CQL Shell</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%8F%82%E8%80%83"><span class="toc-text">集群参考</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="toc-text">安装nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%B4%A2%E5%BC%95-1"><span class="toc-text">更新软件包索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85%E7%89%88%E6%9C%AC"><span class="toc-text">验证安装版本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="toc-text">配置文件路径</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF-2"><span class="toc-text">开机自启</span></a></li></ol></li></ol></li></ol></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/James/">James</a></div><div id="post-meta">发布于&nbsp;<time datetime="2025-02-10T10:00:00.000Z">2025-02-10</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>james分布式版本部署一</span></h1>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>服务器系统：Ubuntu 20.04.6 LTS</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/apache/james-project">总项目地址</a><br><a target="_blank" rel="noopener" href="https://james.apache.org/server/install.html">官方文档</a><br><a target="_blank" rel="noopener" href="https://github.com/apache/james-project/tree/james-project-3.8.2">3.8.2项目地址</a><br><a target="_blank" rel="noopener" href="https://dlcdn.apache.org/james/server/3.8.2/james-server-distributed-guice.zip">james3.8.2下载地址</a></p>
+<p>当前安装james3.8.2版本</p>
+<h2 id="基础环境"><a href="#基础环境" class="headerlink" title="基础环境"></a>基础环境</h2><p>James 3.8.2需要 Java 运行时环境，Java 版本 11。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install openjdk-11-jdk</span><br><span class="line">sudo apt install maven</span><br></pre></td></tr></table></figure>
+
+<p>在运行 James 之前，应将环境变量 JAVA_HOME 设置为 JRE 主目录,如果不确定可以先查看一下。</p>
+<h3 id="设置JAVA-HOME"><a href="#设置JAVA-HOME" class="headerlink" title="设置JAVA_HOME"></a>设置JAVA_HOME</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $JAVA_HOME</span><br></pre></td></tr></table></figure>
+
+<p>我这里执行上面的命令并无结果输出，也就是没有设置这个环境变量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/# java -version</span><br><span class="line">openjdk version &quot;11.0.26&quot; 2025-01-21</span><br><span class="line">OpenJDK Runtime Environment (build 11.0.26+4-post-Ubuntu-1ubuntu120.04)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 11.0.26+4-post-Ubuntu-1ubuntu120.04, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/# mvn -v</span><br><span class="line">Apache Maven 3.6.3</span><br><span class="line">Maven home: /usr/share/maven</span><br><span class="line">Java version: 11.0.26, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64</span><br><span class="line">Default locale: en, platform encoding: UTF-8</span><br><span class="line">OS name: &quot;linux&quot;, version: &quot;5.15.0-1075-gcp&quot;, arch: &quot;amd64&quot;, family: &quot;unix&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出这台测试服务器之前安装过java 11.0.26,maven 3.6.3，所以需要先找出之前的安装路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --config java</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/# update-alternatives --config java</span><br><span class="line">There is only one alternative in link group java (providing /usr/bin/java): /usr/lib/jvm/java-11-openjdk-amd64/bin/java</span><br><span class="line">Nothing to configure.</span><br></pre></td></tr></table></figure>
+
+<p>打开 /etc/environment 文件进行编辑</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/environment</span><br></pre></td></tr></table></figure>
+<p>mac系统，编辑完成后按control+x键退出编辑，按y键保存,如果没有退出，再敲一下回车键</p>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/environment</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾添加以下行，注意不要把路径直接指向bin目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=&quot;/usr/lib/jvm/java-11-openjdk-amd64&quot;</span><br></pre></td></tr></table></figure>
+
+<p>保存并退出编辑器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/usr/lib/jvm/java-11-openjdk-amd64/bin# nano /etc/environment</span><br><span class="line">root@mail-test:/usr/lib/jvm/java-11-openjdk-amd64/bin# cat  /etc/environment</span><br><span class="line">PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin&quot;</span><br><span class="line">JAVA_HOME=&quot;/usr/lib/jvm/java-11-openjdk-amd64&quot;</span><br></pre></td></tr></table></figure>
+
+<p>使更改生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/environment</span><br></pre></td></tr></table></figure>
+
+<p>通过以下命令来验证 JAVA_HOME 是否设置正确</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/usr/lib/jvm/java-11-openjdk-amd64/bin# echo $JAVA_HOME</span><br><span class="line">/usr/lib/jvm/java-11-openjdk-amd64</span><br><span class="line">root@mail-test:/usr/lib/jvm/java-11-openjdk-amd64/bin# </span><br></pre></td></tr></table></figure>
+
+<p>为了确保系统能够找到 Java 可执行文件，还需要将 JAVA_HOME/bin 添加到 PATH 环境变量中</p>
+<p>打开 ~/.bashrc 或 ~/.bash_profile 文件进行编辑</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾添加以下行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>使更改生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装Libc6"><a href="#安装Libc6" class="headerlink" title="安装Libc6"></a>安装Libc6</h3><p>先验证是否安装了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/# dpkg -l | grep libc6</span><br><span class="line">ii  libc6:amd64                           2.31-0ubuntu9.17                  amd64        GNU C Library: Shared libraries</span><br><span class="line">ii  libc6-dev:amd64                       2.31-0ubuntu9.17                  amd64        GNU C Library: Development Libraries and Header Files</span><br><span class="line">root@mail-test:/# </span><br></pre></td></tr></table></figure>
+
+<p>这台服务器已经安装了，所以跳过，如果没有安装需要先安装一下，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libc6-i386 libc6-dev-i386</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新系统和安装必要的软件包"><a href="#更新系统和安装必要的软件包" class="headerlink" title="更新系统和安装必要的软件包"></a>更新系统和安装必要的软件包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade -y</span><br><span class="line">sudo apt install -y apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装中间件-Docker（方式一）"><a href="#安装中间件-Docker（方式一）" class="headerlink" title="安装中间件-Docker（方式一）"></a>安装中间件-Docker（方式一）</h2><h3 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h3><p>添加 Docker 的官方 GPG 密钥，使用 GPG 密钥来验证软件包的完整性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br></pre></td></tr></table></figure>
+
+<p>添加 Docker 的 APT 软件源 将 Docker 的官方仓库添加到 APT 源列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<p>更新软件包索引并安装 Docker 从 Docker 的官方仓库安装 Docker 引擎</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<p>验证 Docker 是否安装成功 运行以下命令，检查 Docker 是否正常工作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 显示 Docker 的版本</span><br><span class="line">sudo docker --version</span><br><span class="line"># 运行一个测试容器，验证 Docker 是否正常工作</span><br><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h3 id="可选-允许非root用户运行"><a href="#可选-允许非root用户运行" class="headerlink" title="(可选)允许非root用户运行"></a>(可选)允许非root用户运行</h3><p>默认情况下，Docker 需要 root 权限。如果希望普通用户也能使用 Docker，可以将用户添加到 docker 用户组</p>
+<p>将当前用户添加到 docker 组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+
+<p>重新登录或运行以下命令使更改生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newgrp docker</span><br></pre></td></tr></table></figure>
+
+<p>验证是否无需 sudo 即可运行 Docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置-Docker-开机自启"><a href="#设置-Docker-开机自启" class="headerlink" title="设置 Docker 开机自启"></a>设置 Docker 开机自启</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable docker</span><br><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="（可选）安装DockerCompose"><a href="#（可选）安装DockerCompose" class="headerlink" title="（可选）安装DockerCompose"></a>（可选）安装DockerCompose</h3><p>Docker Compose 是用于定义和运行多容器 Docker 应用的工具。</p>
+<p>下载 Docker Compose 二进制文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L &quot;https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<p>设置权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+
+<p>验证安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装中间件"><a href="#安装中间件" class="headerlink" title="安装中间件"></a>安装中间件</h3><p>在 Docker 上为 James 环境创建自己的用户网络</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/home/james# docker network create --driver bridge james</span><br><span class="line">f876feff33f65ba730ac5e5adfb77489bb293ff7f1d208102007a8af4fc51d84</span><br><span class="line">root@mail-test:/home/james#</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装cassandra-3-11-10"><a href="#安装cassandra-3-11-10" class="headerlink" title="安装cassandra:3.11.10"></a>安装cassandra:3.11.10</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --network james -p 9042:9042 --name=cassandra cassandra:3.11.10</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装opensearch-2-1-0"><a href="#安装opensearch-2-1-0" class="headerlink" title="安装opensearch:2.1.0"></a>安装opensearch:2.1.0</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --network james -p 9200:9200 --name=opensearch --env &#x27;discovery.type=single-node&#x27; opensearchproject/opensearch:2.1.0</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装rabbitmq-3-9-18"><a href="#安装rabbitmq-3-9-18" class="headerlink" title="安装rabbitmq:3.9.18"></a>安装rabbitmq:3.9.18</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --network james -p 5672:5672 -p 15672:15672 --name=rabbitmq rabbitmq:3.9.18-management</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装延时插件-项目有用到"><a href="#安装延时插件-项目有用到" class="headerlink" title="安装延时插件-项目有用到"></a>安装延时插件-项目有用到</h5><p>下载插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.9.0/rabbitmq_delayed_message_exchange-3.9.0.ez</span><br></pre></td></tr></table></figure>
+
+<p>拷贝插件到docker容器中，其中a0f2970be979为容器id</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp rabbitmq_delayed_message_exchange-3.9.0.ez a0f2970be979:/plugins/</span><br></pre></td></tr></table></figure>
+
+<p>进入docker容器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it a0f2970be979 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>启用插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装zenko-cloudserver-8-2-6"><a href="#安装zenko-cloudserver-8-2-6" class="headerlink" title="安装zenko/cloudserver:8.2.6"></a>安装zenko/cloudserver:8.2.6</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --network james --env &#x27;REMOTE_MANAGEMENT_DISABLE=1&#x27; --env &#x27;SCALITY_ACCESS_KEY_ID=accessKey1&#x27; --env &#x27;SCALITY_SECRET_ACCESS_KEY=secretKey1&#x27; --name=s3 zenko/cloudserver:8.2.6</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装TIka"><a href="#安装TIka" class="headerlink" title="安装TIka"></a>安装TIka</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name tika -p 9998:9998 apache/tika</span><br></pre></td></tr></table></figure>
+
+<p>在 James 所在的服务器上，使用 curl 测试是否可以访问 Tika 服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://&lt;docker-host-ip&gt;:9998/tika</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/home/james# curl http://127.0.0.1:9998/tika</span><br><span class="line">This is Tika Server (Apache Tika 3.1.0). Please PUT</span><br><span class="line">root@mail-test:/home/james# </span><br></pre></td></tr></table></figure>
+
+<h2 id="安装中间件-手动（方式二）"><a href="#安装中间件-手动（方式二）" class="headerlink" title="安装中间件-手动（方式二）"></a>安装中间件-手动（方式二）</h2><h4 id="安装opensearch-2-1-0-1"><a href="#安装opensearch-2-1-0-1" class="headerlink" title="安装opensearch:2.1.0"></a>安装opensearch:2.1.0</h4><h5 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.1.0/opensearch-2.1.0-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h5 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/opensearch# tar -xzf opensearch-2.1.0-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd opensearch-2.1.0</span><br></pre></td></tr></table></figure>
+
+<p>编辑 config/opensearch.yml</p>
+<figure class="highlight plaintext"><figcaption><span>my-opensearch-cluster</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#下面3个是集群配置，按默认的或者按这个配置</span><br><span class="line">node.name: my-node-1</span><br><span class="line">discovery.seed_hosts: [&quot;127.0.0.1&quot;]</span><br><span class="line">cluster.initial_master_nodes: [&quot;my-node-1&quot;]</span><br><span class="line"></span><br><span class="line">#放开修改配置信息如下：</span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">#放开/新增，去掉注释，注意格式，空格</span><br><span class="line">discovery.type: single-node</span><br><span class="line">#新增</span><br><span class="line">plugins.security.disabled: true</span><br><span class="line">plugins.security.ssl.http.enabled: false</span><br></pre></td></tr></table></figure>
+
+<h5 id="开机自启（方式一）"><a href="#开机自启（方式一）" class="headerlink" title="开机自启（方式一）"></a>开机自启（方式一）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/systemd/system/opensearch.service</span><br></pre></td></tr></table></figure>
+
+<p>添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=OpenSearch</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=nobody</span><br><span class="line">Group=nogroup</span><br><span class="line"></span><br><span class="line"># OpenSearch 启动命令</span><br><span class="line">ExecStart=/data/runTime/opensearch/opensearch-2.1.0/bin/opensearch</span><br><span class="line"></span><br><span class="line"># 重启策略</span><br><span class="line">Restart=always</span><br><span class="line"></span><br><span class="line"># 环境变量（如果需要）</span><br><span class="line">Environment=OPENSEARCH_HOME=/data/runTime/opensearch/opensearch-2.1.0</span><br><span class="line">Environment=OPENSEARCH_PATH_CONF=/data/runTime/opensearch/opensearch-2.1.0/config</span><br><span class="line"></span><br><span class="line"># 限制资源使用（可选）</span><br><span class="line">LimitNOFILE=65535</span><br><span class="line">LimitNPROC=4096</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>如果不想指定特定的用户和组，但仍然希望以非 root 用户运行 OpenSearch，可以采取以下方法：</p>
+<p>方法 1：使用系统默认用户</p>
+<p>大多数 Linux 系统都有一个默认的普通用户（例如 nobody 或 daemon），可以直接使用这些用户</p>
+<p>方法 2：不指定用户（不推荐）</p>
+<p>如果坚持不指定用户，可以直接删除 User 和 Group 配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=/data/runTime/opensearch/opensearch-2.1.0/bin/opensearch</span><br><span class="line">Restart=always</span><br></pre></td></tr></table></figure>
+
+<p>保存并退出，然后启用并启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl enable opensearch</span><br><span class="line">sudo systemctl start opensearch</span><br></pre></td></tr></table></figure>
+<p>这一步执行失败了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/opensearch/opensearch-2.1.0# sudo systemctl start opensearch</span><br><span class="line">Failed to start opensearch.service: Unit opensearch.service has a bad unit file setting.</span><br></pre></td></tr></table></figure>
+
+<p>先确定路径是否有问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/opensearch/opensearch-2.1.0# ls -l /data/runTime/opensearch/opensearch-2.1.0/bin/opensearch</span><br><span class="line">-rwxr-xr-x 1 ubuntu ubuntu 3030 Jan  1  1970 /data/runTime/opensearch/opensearch-2.1.0/bin/opensearch</span><br></pre></td></tr></table></figure>
+
+<p>确保用户和组权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R nobody:nogroup /data/runTime/opensearch/opensearch-2.1.0</span><br></pre></td></tr></table></figure>
+
+<p>再次尝试启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start opensearch</span><br></pre></td></tr></table></figure>
+
+<p>如果启动失败，查看详细日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo journalctl -u opensearch.service -f</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/opensearch/opensearch-2.1.0# sudo journalctl -u opensearch.service -f</span><br><span class="line">-- Logs begin at Wed 2025-02-12 02:15:58 UTC. --</span><br><span class="line">Feb 12 03:53:26 mail-test systemd[1]: opensearch.service: Service has more than one ExecStart= setting, which is only allowed for Type=oneshot services. Refusing.</span><br><span class="line">Feb 12 03:59:14 mail-test systemd[1]: opensearch.service: Service has more than one ExecStart= setting, which is only allowed for Type=oneshot services. Refusing.</span><br><span class="line">Feb 12 03:59:18 mail-test systemd[1]: opensearch.service: Service has more than one ExecStart= setting, which is only allowed for Type=oneshot services. Refusing.</span><br></pre></td></tr></table></figure>
+
+<p>存在多个 ExecStart= 配置项，而 systemd 不允许在非 Type=oneshot 的服务中定义多个 ExecStart,返回前面步骤把配置文件中多多已经删掉了</p>
+<p>在修改服务文件后，需要重新加载 systemd 配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>再次启动后启动成功</p>
+<h5 id="直接启动（方式二）"><a href="#直接启动（方式二）" class="headerlink" title="直接启动（方式二）"></a>直接启动（方式二）</h5><p>opensearch根目录执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/opensearch -d</span><br></pre></td></tr></table></figure>
+
+<h5 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &quot;localhost:9200&quot;</span><br></pre></td></tr></table></figure>
+
+<p>成功示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/opensearch/opensearch-2.1.0# curl -X GET &quot;localhost:9200&quot;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot; : &quot;mail-test&quot;,</span><br><span class="line">  &quot;cluster_name&quot; : &quot;opensearch&quot;,</span><br><span class="line">  &quot;cluster_uuid&quot; : &quot;t3Ux-LhvTLWb75geNvP0Ig&quot;,</span><br><span class="line">  &quot;version&quot; : &#123;</span><br><span class="line">    &quot;distribution&quot; : &quot;opensearch&quot;,</span><br><span class="line">    &quot;number&quot; : &quot;2.1.0&quot;,</span><br><span class="line">    &quot;build_type&quot; : &quot;tar&quot;,</span><br><span class="line">    &quot;build_hash&quot; : &quot;388c80ad94529b1d9aad0a735c4740dce2932a32&quot;,</span><br><span class="line">    &quot;build_date&quot; : &quot;2022-06-30T21:31:04.823801692Z&quot;,</span><br><span class="line">    &quot;build_snapshot&quot; : false,</span><br><span class="line">    &quot;lucene_version&quot; : &quot;9.2.0&quot;,</span><br><span class="line">    &quot;minimum_wire_compatibility_version&quot; : &quot;7.10.0&quot;,</span><br><span class="line">    &quot;minimum_index_compatibility_version&quot; : &quot;7.0.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tagline&quot; : &quot;The OpenSearch Project: https://opensearch.org/&quot;</span><br><span class="line">&#125;</span><br><span class="line">root@mail-test:/data/runTime/opensearch/opensearch-2.1.0#</span><br></pre></td></tr></table></figure>
+
+<h5 id="OpenSearchDashboards（可选）"><a href="#OpenSearchDashboards（可选）" class="headerlink" title="OpenSearchDashboards（可选）"></a>OpenSearchDashboards（可选）</h5><p>OpenSearch Dashboards 是 OpenSearch 的可视化工具</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/opensearch/opensearch-2.1.0# cd ../../</span><br><span class="line">root@mail-test:/data/runTime# mkdir opensearch-dashboards-210</span><br><span class="line">root@mail-test:/data/runTime# cd opensearch-dashboards-210/</span><br><span class="line">root@mail-test:/data/runTime/opensearch-dashboards-210#</span><br><span class="line"></span><br><span class="line">wget https://artifacts.opensearch.org/releases/bundle/opensearch-dashboards/2.1.0/opensearch-dashboards-2.1.0-linux-x64.tar.gz</span><br><span class="line">tar -xzf opensearch-dashboards-2.1.0-linux-x64.tar.gz</span><br><span class="line">cd opensearch-dashboards-2.1.0</span><br><span class="line">#开机自启的话不执行下面这条手动启动</span><br><span class="line">./bin/opensearch-dashboards</span><br></pre></td></tr></table></figure>
+
+<p>编辑 config/opensearch_dashboards.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server.uuid: &quot;4caaa2ac-c82f-4b5e-9831-6a30c96e4b10&quot;</span><br><span class="line">server.host: &quot;0.0.0.0&quot;  # 监听所有 IP</span><br><span class="line">server.port: 5601       # 默认端口</span><br><span class="line">opensearch.hosts: [&quot;http://localhost:9200&quot;]  # OpenSearch 集群地址</span><br><span class="line">opensearch.ssl.verificationMode: none  # 如果使用自签名证书，禁用 SSL 验证</span><br><span class="line"></span><br><span class="line">#关闭登陆功能，需要opensearch.yml中配置了plugins.security.disabled: true</span><br><span class="line">opensearch_security.enabled: false</span><br></pre></td></tr></table></figure>
+
+<p>在 OpenSearch Dashboards 2.0.1 版本中，server.uuid 必须是真正符合 RFC 4122 UUID 标准的字符串，而不能是任意字符串</p>
+<p>这里千万注意 opensearch.hosts: [“<a href="http://localhost:9200&quot;]">http://localhost:9200&quot;]</a>  # OpenSearch 集群地址<br>默认是https，如果没配证书，这里记得用http</p>
+<p>开放权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R nobody:nogroup /data/runTime/opensearch-dashboards-210/opensearch-dashboards-2.1.0/data</span><br><span class="line">sudo chmod -R 755 /data/runTime/opensearch-dashboards-210/opensearch-dashboards-2.1.0/data</span><br></pre></td></tr></table></figure>
+
+<h5 id="OpenSearchDashboards自启（可选）"><a href="#OpenSearchDashboards自启（可选）" class="headerlink" title="OpenSearchDashboards自启（可选）"></a>OpenSearchDashboards自启（可选）</h5><p>在 /etc/systemd/system/ 目录下创建一个新的服务文件，例如 opensearch-dashboards.service</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/systemd/system/opensearch-dashboards.service</span><br></pre></td></tr></table></figure>
+
+<p>编写服务文件内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=OpenSearch Dashboards</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line"># 运行 OpenSearch Dashboards 的用户和组（可选）</span><br><span class="line">User=nobody</span><br><span class="line">Group=nogroup</span><br><span class="line"></span><br><span class="line"># OpenSearch Dashboards 启动命令</span><br><span class="line">ExecStart=/data/runTime/opensearch-dashboards-210/opensearch-dashboards-2.1.0/bin/opensearch-dashboards</span><br><span class="line"></span><br><span class="line"># 重启策略</span><br><span class="line">Restart=always</span><br><span class="line"></span><br><span class="line"># 环境变量（可选）</span><br><span class="line">Environment=OPENSEARCH_DASHBOARDS_HOME=/data/runTime/opensearch-dashboards-210/opensearch-dashboards-2.1.0</span><br><span class="line">Environment=OPENSEARCH_DASHBOARDS_PATH_CONF=/data/runTime/opensearch-dashboards-210/opensearch-dashboards-2.1.0/config</span><br><span class="line"></span><br><span class="line"># 资源限制（可选）</span><br><span class="line">LimitNOFILE=65535</span><br><span class="line">LimitNPROC=4096</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>确保服务文件的权限正确</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 644 /etc/systemd/system/opensearch-dashboards.service</span><br></pre></td></tr></table></figure>
+
+<p>重新加载 systemd 配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>启用开机自启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable opensearch-dashboards</span><br></pre></td></tr></table></figure>
+
+<p>列出所有开机自启项目，按下箭头可以往下加载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --type=service --state=enabled</span><br></pre></td></tr></table></figure>
+
+<p>启动 OpenSearch Dashboards 服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start opensearch-dashboards</span><br><span class="line">sudo systemctl status opensearch-dashboards</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://&lt;服务器IP&gt;:5601</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &quot;localhost:5601&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果页面正常加载，说明 OpenSearch Dashboards 已成功启动,如果不能访问看看端口是否打开</p>
+<p>如果防火墙端口已开，但是还是无法访问</p>
+<p>确保端口 5601 没有被其他进程占用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i :5601</span><br></pre></td></tr></table></figure>
+
+<p>检查 OpenSearch 集群状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &quot;localhost:9200/_cluster/health?pretty&quot;</span><br></pre></td></tr></table></figure>
+
+<p>查看日志</p>
+<p>如果根目录下没有logs文件夹则运行下面命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo journalctl -u opensearch-dashboards.service --since &quot;2 hours ago&quot; --no-pager</span><br></pre></td></tr></table></figure>
+
+
+<p>访问 http://&lt;服务器IP&gt;:5601 页面提示 OpenSearch Dashboards server is not ready yet</p>
+<p>返回看配置那一步</p>
+<h4 id="安装rabbitmq-3-8-2"><a href="#安装rabbitmq-3-8-2" class="headerlink" title="安装rabbitmq:3.8.2"></a>安装rabbitmq:3.8.2</h4><h5 id="前置环境"><a href="#前置环境" class="headerlink" title="前置环境"></a>前置环境</h5><p>我这里之前安装了1次，没成功，卸载并清理残留</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --purge erlang</span><br><span class="line">sudo apt-get autoremove</span><br><span class="line"></span><br><span class="line">sudo apt-get remove --purge rabbitmq-server</span><br><span class="line">sudo apt-get autoremove</span><br></pre></td></tr></table></figure>
+
+<h5 id="导入MQ的GPGKey"><a href="#导入MQ的GPGKey" class="headerlink" title="导入MQ的GPGKey"></a>导入MQ的GPGKey</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 从 rabbitmq.com 导入签名密钥</span><br><span class="line">curl -fsSL https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+
+<h5 id="添加APT-仓库"><a href="#添加APT-仓库" class="headerlink" title="添加APT 仓库"></a>添加APT 仓库</h5><p>RabbitMQ 官方仓库依托于 Cloudsmith，现在分为 Erlang 和 RabbitMQ 两个仓库，需要分别添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 添加 RabbitMQ Erlang 仓库</span><br><span class="line">echo &quot;deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-erlang/deb/ubuntu focal main&quot; \</span><br><span class="line">  | sudo tee /etc/apt/sources.list.d/rabbitmq-erlang.list</span><br><span class="line"></span><br><span class="line"># 添加 RabbitMQ Server 仓库</span><br><span class="line">echo &quot;deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu focal main&quot; \</span><br><span class="line">  | sudo tee /etc/apt/sources.list.d/rabbitmq-server.list</span><br></pre></td></tr></table></figure>
+
+<h5 id="更新软件包索引"><a href="#更新软件包索引" class="headerlink" title="更新软件包索引"></a>更新软件包索引</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<h5 id="查找可用版本"><a href="#查找可用版本" class="headerlink" title="查找可用版本"></a>查找可用版本</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-cache madison rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/rabbitmq# apt-cache madison rabbitmq-server</span><br><span class="line">rabbitmq-server | 3.8.3-0ubuntu0.2 | http://us-west1.gce.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages</span><br><span class="line">rabbitmq-server | 3.8.3-0ubuntu0.2 | http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages</span><br><span class="line">rabbitmq-server | 3.8.2-0ubuntu1 | http://us-west1.gce.archive.ubuntu.com/ubuntu focal/main amd64 Packages</span><br><span class="line">root@mail-test:/data/runTime/rabbitmq# </span><br></pre></td></tr></table></figure>
+
+<h5 id="安装指定版本"><a href="#安装指定版本" class="headerlink" title="安装指定版本"></a>安装指定版本</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 假设仓库中显示的 3.9.18 版本号带有 -1(或其他后缀)</span><br><span class="line">sudo apt-get install rabbitmq-server=3.8.2-0ubuntu1</span><br></pre></td></tr></table></figure>
+
+<p>如果提示需要安装依赖 Erlang，也可以直接安装依赖,这里执行没有提示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install rabbitmq-server=3.9.18-1 erlang-base erlang-crypto erlang-public-key erlang-ssl</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="启动并验证"><a href="#启动并验证" class="headerlink" title="启动并验证"></a>启动并验证</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="开机自启"><a href="#开机自启" class="headerlink" title="开机自启"></a>开机自启</h5><p>列出所有开机自启项目，按下箭头可以往下加载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --type=service --state=enabled</span><br></pre></td></tr></table></figure>
+
+<p>发现rabbitmq自动设置了开机启动，如果列表里面没有，则用下面的命令设置一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="检查状态"><a href="#检查状态" class="headerlink" title="检查状态"></a>检查状态</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="启用RabbitMQ管理插件"><a href="#启用RabbitMQ管理插件" class="headerlink" title="启用RabbitMQ管理插件"></a>启用RabbitMQ管理插件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<p>启用插件后，你可以通过浏览器访问RabbitMQ的管理界面,默认的用户名和密码是guest/guest</p>
+<p>guest 用户是一个特殊的默认用户，它的默认配置是仅允许通过 localhost 登录，最好新增账号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://&lt;your-server-ip&gt;:15672/</span><br></pre></td></tr></table></figure>
+
+<p>如果登陆 rabbitmq网页提示 User can only log in via localhost</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl set_permissions -p / &lt;username&gt; &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/rabbitmq# sudo rabbitmqctl add_user xen q12345678</span><br><span class="line">Adding user &quot;xen&quot; ...</span><br><span class="line">root@mail-test:/data/runTime/rabbitmq# sudo rabbitmqctl set_user_tags xen administrator</span><br><span class="line">Setting tags for user &quot;xen&quot; to [administrator] ...</span><br><span class="line">root@mail-test:/data/runTime/rabbitmq# sudo rabbitmqctl set_permissions -p / xen &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br><span class="line">Setting permissions for user &quot;xen&quot; in vhost &quot;/&quot; ...</span><br><span class="line">root@mail-test:/data/runTime/rabbitmq#</span><br></pre></td></tr></table></figure>
+
+<p>这将允许用户 <username> 从任何主机访问 RabbitMQ。</p>
+<h5 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h5><p>tcp:5672,15672</p>
+<h5 id="安装延时消息插件，项目有用到"><a href="#安装延时消息插件，项目有用到" class="headerlink" title="安装延时消息插件，项目有用到"></a>安装延时消息插件，项目有用到</h5><p>下载插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/download/3.9.0/rabbitmq_delayed_message_exchange-3.9.0.ez</span><br></pre></td></tr></table></figure>
+
+<p>rabbitmq安装目录通常是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/rabbitmq/lib/rabbitmq_server-&lt;VERSION&gt;/</span><br></pre></td></tr></table></figure>
+
+<p>那么这里应该就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/rabbitmq/lib/rabbitmq_server-3.8.2/</span><br></pre></td></tr></table></figure>
+
+<p>如果找不到，对于从官方仓库或本地 .deb 文件安装的 RabbitMQ 包可以执行下面语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -L rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<p>启用插件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime/rabbitmq# ls</span><br><span class="line">rabbitmq_delayed_message_exchange-3.9.0.ez</span><br><span class="line">root@mail-test:/data/runTime/rabbitmq# mv rabbitmq_delayed_message_exchange-3.9.0.ez /usr/lib/rabbitmq/lib/rabbitmq_server-3.8.2/plugins/</span><br><span class="line">root@mail-test:/data/runTime/rabbitmq#</span><br><span class="line"></span><br><span class="line">rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span><br></pre></td></tr></table></figure>
+
+<p>查看是否启用成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq_delayed_message_exchange</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建用户（可选）"><a href="#创建用户（可选）" class="headerlink" title="创建用户（可选）"></a>创建用户（可选）</h5><p>可以通过以下命令创建一个新的RabbitMQ用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmqctl add_user &lt;username&gt; &lt;password&gt;</span><br><span class="line">sudo rabbitmqctl set_user_tags &lt;username&gt; administrator</span><br><span class="line">sudo rabbitmqctl set_permissions -p / &lt;username&gt; &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装TIka-1"><a href="#安装TIka-1" class="headerlink" title="安装TIka"></a>安装TIka</h4><p>无版本限制</p>
+<h5 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/tika/2.9.3/tika-server-standard-2.9.3.jar</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@mail-test:/data/runTime# mkdir tika</span><br><span class="line">root@mail-test:/data/runTime# ls</span><br><span class="line">opensearch  opensearch-dashboards-210  rabbitmq  tika</span><br><span class="line">root@mail-test:/data/runTime# cd tika/</span><br><span class="line">root@mail-test:/data/runTime/tika# wget https://dlcdn.apache.org/tika/2.8.0/tika-app-2.8.0.jar</span><br></pre></td></tr></table></figure>
+<p>如果404</p>
+<p>则先到 Tika 官方下载页面 查看当前最新可用版本，然后使用对应的下载链接,或者替换链接中的版本号</p>
+<p><a target="_blank" rel="noopener" href="https://tika.apache.org/download.html">官方下载页面</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/tika/2.9.3/tika-server-standard-2.9.3.jar</span><br></pre></td></tr></table></figure>
+
+<h5 id="开机自启-1"><a href="#开机自启-1" class="headerlink" title="开机自启"></a>开机自启</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/systemd/system/tika.service</span><br></pre></td></tr></table></figure>
+
+<p>写入以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Apache Tika Server</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/usr/bin/java -jar /data/runTime/tika/tika-server-standard-2.9.3.jar -p 9998</span><br><span class="line">Restart=on-failure</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>加载并启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl enable tika</span><br><span class="line">sudo systemctl start tika</span><br></pre></td></tr></table></figure>
+
+<p>检查服务状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status tika</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装cassandra-4-0-10"><a href="#安装cassandra-4-0-10" class="headerlink" title="安装cassandra 4.0.10"></a>安装cassandra 4.0.10</h4><h5 id="添加-Cassandra-官方仓库"><a href="#添加-Cassandra-官方仓库" class="headerlink" title="添加 Cassandra 官方仓库"></a>添加 Cassandra 官方仓库</h5><s>
+
+<p>导入 GPG 密钥,此命令会从 Apache 官方下载 Cassandra 的密钥并添加到系统的密钥管理中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -q -O - https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+
+<p>添加 Cassandra 仓库到 sources.list</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -q -O - https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+
+<p>Cassandra 4.0.x 版本对应的仓库地址通常为 40x，请在 /etc/apt/sources.list.d/ 下创建新的源文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;deb [arch=amd64] https://deb.apache.org/cassandra 40x main&quot; \</span><br><span class="line">  | sudo tee /etc/apt/sources.list.d/cassandra.sources.list</span><br></pre></td></tr></table></figure>
+
+<p>更新包索引</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<p>查看可用版本（可选）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-cache madison cassandra</span><br></pre></td></tr></table></figure>
+
+<p>安装指定版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cassandra=4.0.10</span><br></pre></td></tr></table></figure>
+
+<p>一直没法正确执行，放弃</p>
+</s>
+
+<h5 id="下载-2"><a href="#下载-2" class="headerlink" title="下载"></a>下载</h5><p>前往 Apache Cassandra 下载页，或其 官方镜像，找到 4.0.10（4.0.x 系列）的链接后，进入对应的 deb 目录</p>
+<p><a target="_blank" rel="noopener" href="https://downloads.apache.org/cassandra/">官方镜像</a></p>
+<p><a target="_blank" rel="noopener" href="https://cassandra.apache.org/_/download.html">Apache Cassandra 下载页</a></p>
+<p>我这里进的 官方镜像 ，选择版本后文件如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[   ] apache-cassandra-4.0.17-bin.tar.gz        2025-02-06 10:02   46M  </span><br><span class="line">[TXT] apache-cassandra-4.0.17-bin.tar.gz.asc    2025-02-06 10:02  833   </span><br><span class="line">[TXT] apache-cassandra-4.0.17-bin.tar.gz.sha256 2025-02-06 10:02   65   </span><br><span class="line">[TXT] apache-cassandra-4.0.17-bin.tar.gz.sha512 2025-02-06 10:02  129   </span><br><span class="line">[   ] apache-cassandra-4.0.17-src.tar.gz        2025-02-06 10:02   13M  </span><br><span class="line">[TXT] apache-cassandra-4.0.17-src.tar.gz.asc    2025-02-06 10:02  833   </span><br><span class="line">[TXT] apache-cassandra-4.0.17-src.tar.gz.sha256 2025-02-06 10:02   65   </span><br><span class="line">[TXT] apache-cassandra-4.0.17-src.tar.gz.sha512 2025-02-06 10:02  129  </span><br></pre></td></tr></table></figure>
+
+<p>右键文件获取下载链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://downloads.apache.org/cassandra/4.0.17/apache-cassandra-4.0.17-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf apache-cassandra-4.0.17-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h5 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h5><p>编辑~/.bashrc文件，添加Cassandra的路径,直接执行下面语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;export CASSANDRA_HOME=/data/runTime/cassandra401&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">echo &#x27;export PATH=$PATH:$CASSANDRA_HOME/bin&#x27; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>使更改生效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h5><p>编辑/conf/cassandra.yaml文件，根据需要调整配置，如数据存储路径、监听地址等</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /data/runTime/cassandra401/conf/cassandra.yaml</span><br></pre></td></tr></table></figure>
+
+<p>常见配置项：</p>
+<p>data_file_directories: 数据文件存储路径<br>commitlog_directory: 提交日志存储路径<br>saved_caches_directory: 缓存存储路径<br>listen_address: Cassandra节点监听地址<br>rpc_address: 远程过程调用地址</p>
+<h5 id="创建系统专用用户"><a href="#创建系统专用用户" class="headerlink" title="创建系统专用用户"></a>创建系统专用用户</h5><p>为 Cassandra 创建一个专用用户（例如 cassandra），并确保该用户对 Cassandra 的安装目录和数据目录有适当的权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo useradd -r -s /bin/false cassandra</span><br></pre></td></tr></table></figure>
+
+<p>更改目录权限</p>
+<p>将 Cassandra 安装目录和数据目录的所有权更改为新创建的 cassandra 用户。</p>
+<p>假设 Cassandra 安装在 /data/runTime/cassandra401/，数据目录在 /var/lib/cassandra，日志目录在 /var/log/cassandra，运行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R cassandra:cassandra /data/runTime/cassandra401/</span><br><span class="line">sudo chown -R cassandra:cassandra /var/lib/cassandra</span><br><span class="line">sudo chown -R cassandra:cassandra /var/log/cassandra</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="开机启动"><a href="#开机启动" class="headerlink" title="开机启动"></a>开机启动</h5><p>创建Systemd服务文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/systemd/system/cassandra.service</span><br></pre></td></tr></table></figure>
+
+<p>添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Apache Cassandra</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User=cassandra</span><br><span class="line">Group=cassandra</span><br><span class="line">ExecStart=/data/runTime/cassandra401/bin/cassandra -f</span><br><span class="line">Restart=always</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>启用并启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl enable cassandra</span><br><span class="line">sudo systemctl start cassandra</span><br></pre></td></tr></table></figure>
+
+<p>检查服务状态</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status cassandra</span><br></pre></td></tr></table></figure>
+
+<p>如果启动失败，查看日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Feb 13 03:34:16 mail-test cassandra[205447]: Running Cassandra as root user or group is not recommended - please start Cassandra using a different system user.</span><br><span class="line">Feb 13 03:34:16 mail-test cassandra[205447]: If you really want to force running Cassandra as root, use -R command line option.</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: cassandra.service: Main process exited, code=exited, status=1/FAILURE</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: cassandra.service: Failed with result &#x27;exit-code&#x27;.</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: cassandra.service: Scheduled restart job, restart counter is at 5.</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: Stopped Apache Cassandra.</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: cassandra.service: Start request repeated too quickly.</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: cassandra.service: Failed with result &#x27;exit-code&#x27;.</span><br><span class="line">Feb 13 03:34:16 mail-test systemd[1]: Failed to start Apache Cassandra.</span><br></pre></td></tr></table></figure>
+<p>报错如下：不建议使用root用户或root组运行Cassandra，请使用其他系统用户启动Cassandra</p>
+<p>已返回上面步骤，修改自启配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo journalctl -u cassandra.service --since &quot;2 hours ago&quot; --no-pager</span><br></pre></td></tr></table></figure>
+
+<h5 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h5><p>进入Cassandra目录并启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/cassandra -f</span><br></pre></td></tr></table></figure>
+
+<h5 id="防火墙配置"><a href="#防火墙配置" class="headerlink" title="防火墙配置"></a>防火墙配置</h5><p>tcp:9042,7000</p>
+<h5 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodetool status</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用CQL-Shell"><a href="#使用CQL-Shell" class="headerlink" title="使用CQL Shell"></a>使用CQL Shell</h5><p>启动CQL Shell与Cassandra交互</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/cqlsh</span><br></pre></td></tr></table></figure>
+
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>如果忘记了安装目录，可以用下面的命令查找配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find / -name cassandra.yaml 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h5 id="集群参考"><a href="#集群参考" class="headerlink" title="集群参考"></a>集群参考</h5><p>配置 Cassandra 4.0.10 集群主要是对各个节点的配置文件（通常是 cassandra.yaml）进行修改，确保各节点能够相互发现并正确通信。下面是一个基本的配置步骤说明，未验证，仅供参考</p>
+<p>统一集群名称，在所有节点的 cassandra.yaml 中，将 cluster_name 设置为相同的值，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cluster_name: &#x27;MyCluster&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>配置种子节点（Seeds），种子节点用于初始的节点发现，至少指定一个稳定的 IP。建议配置两个或更多，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seeds: &quot;192.168.1.1,192.168.1.2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意：种子节点列表在每个节点中都应保持一致</p>
+<p>设置节点通信地址，listen_address：指定本机用于集群内部节点间通信的 IP 地址（通常为机器实际的私网 IP）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">listen_address: 192.168.1.X  # 各节点各自的IP地址</span><br></pre></td></tr></table></figure>
+
+<p>rpc_address：用于客户端（如 cqlsh）连接的地址，常设置为 0.0.0.0 或本机 IP</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpc_address: 0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<p>如果节点在 NAT 或云环境下部署，还需要设置<br>broadcast_address：对外公布的 IP 地址，用于集群内部的对等通信。<br>broadcast_rpc_address：对外公布的 RPC 连接地址。</p>
+<p>选择合适的 Snitch<br>配置 endpoint_snitch 以反映数据中心、机架等拓扑信息。通常建议使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">endpoint_snitch: GossipingPropertyFileSnitch</span><br></pre></td></tr></table></figure>
+
+<p>如有需要，可编辑 cassandra-rackdc.properties 文件，配置数据中心和机架信息</p>
+<p>启动并检查集群状态<br>在每个节点修改好配置后启动 Cassandra 服务。<br>使用 nodetool status 命令检查集群状态，确保所有节点状态为 UN（Up/Normal）。<br>其他注意事项<br>确保各节点之间网络互通，防火墙或安全组已开放必要的端口（如 7000、7001、9042 等）。<br>每个节点的硬件配置、JVM 参数等也应根据实际负载进行调优</p>
+<p><a target="_blank" rel="noopener" href="https://cassandra.apache.org/doc/latest/">官方文档</a></p>
+<h4 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h4><h5 id="更新软件包索引-1"><a href="#更新软件包索引-1" class="headerlink" title="更新软件包索引"></a>更新软件包索引</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
+
+<h5 id="验证安装版本"><a href="#验证安装版本" class="headerlink" title="验证安装版本"></a>验证安装版本</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -v</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置文件路径"><a href="#配置文件路径" class="headerlink" title="配置文件路径"></a>配置文件路径</h5><p>使用 apt 安装 nginx 后，其默认的配置文件存放在 /etc/nginx 目录下，主要配置文件为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p>此外，虚拟主机（站点）的配置文件通常存放在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/nginx/sites-available</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/nginx/sites-enabled</span><br></pre></td></tr></table></figure>
+
+<h5 id="开机自启-2"><a href="#开机自启-2" class="headerlink" title="开机自启"></a>开机自启</h5><p>使用 apt 安装 nginx 后，Ubuntu 系统通常会自动启用 nginx 的 systemd 服务，这样 nginx 就会在开机时自动启动。可以使用以下命令检查 nginx 是否已设置为开机自启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl is-enabled nginx</span><br></pre></td></tr></table></figure>
+
+<p>如果输出结果为 enabled，说明 nginx 已经设置为开机自启；<br>如果输出结果为 disabled 或其他状态，则可以手动启用，执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable nginx</span><br></pre></td></tr></table></figure>
+
+
+
+<div class="article-footer reveal fs14"><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://su3.cn/2025/02/10/2025james01/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://su3.cn/2025/02/10/2025james01/&title=james分布式版本部署一 - 苏三博客&summary=james分布式版本部署"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=james分布式版本部署一 - 苏三博客&amp;body=https://su3.cn/2025/02/10/2025james01/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://su3.cn/2025/02/10/2025james01/"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2025/02/11/20250211/">谷歌云防火墙开关端口和锁定ip</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/02/10/2025james02/">james分布式版本部署二</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="zhhltc/blogcomments" data-repo-id="R_kgDOI35Puw" data-category="Announcements" data-category-id="DIC_kwDOI35Pu84CT54y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><div class="BeiAn-info" style="display: flex;text-align: center;margin:10px;justify-content: center; align-items: center;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/beian.png" title="备案管理系统" style="width:15px;height:15px;"> <a href="http://beian.miit.gov.cn/" style="text-decoration:none;" target=_blank title=备案号>赣ICP备17016237号-1</a></div><div  style="display: flex;text-align: center;justify-content: center; align-items: center;"><span id="timeDate">载入天数...</span>|<span id="times">载入时分秒...</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_uv" style="display:none">本站访客数<span id="busuanzi_value_site_uv"></span>人</span></div><script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script><script type="text/javascript" src="/js/dist/zoomify.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer>
+
+<!--添加网站运行时间 -->
+<!--<br/>-->
+
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/01/2021 12:00:00");
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()", 250);
+</script>
+<!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+ if (!window.location.href.includes("music")) {
+        window.onload = function () {
+          /*添加返回顶部按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,0);");
+          a.setAttribute("id", "All_url_totop")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+          /*添加返回底部的按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,document.body.scrollHeight);");
+          a.setAttribute("id", "All_url_totop2")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+        }
+      }
+</script>
+
+        
+        <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+      
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

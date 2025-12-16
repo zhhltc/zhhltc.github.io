@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>springboot整合富文本编辑器editor.md - 苏三博客</title>
+
+  
+    <meta name="description" content="Editor.md——功能非常丰富的编辑器，左端编辑，右端预览，非常方便，完全免费">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot整合富文本编辑器editor.md">
+<meta property="og:url" content="https://su3.cn/2021/11/12/SpringBoot-editor/index.html">
+<meta property="og:site_name" content="苏三博客">
+<meta property="og:description" content="Editor.md——功能非常丰富的编辑器，左端编辑，右端预览，非常方便，完全免费">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-12T13:35:30.000Z">
+<meta property="article:modified_time" content="2025-12-16T09:08:08.843Z">
+<meta property="article:author" content="SuSan">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  <meta name="keywords" content="笔记">
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    
+      <link href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/lxgwwenkaiscreen.css" rel="stylesheet">
+    
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar"  style="width:52px;height:52px;" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/pic.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title" style="font-size: 1.12rem;">苏三博客</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:#CD853F;">- Su3.cn 无限制,有些线路较慢</div><div class="sub cap" style="margin-top:3px;font-size:10px;color:green;">- Xen.cc 静态资源托管加速,限流</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客</a><a class="nav-item" href="/utils/">工具</a><a class="nav-item" href="/music/">歌单</a><a class="nav-item" href="/about/">更多</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="data-toc"><div class="widget-header cap dis-select"><span class="name">springboot整合富文本编辑器editor.md</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA"><span class="toc-text">基础工程搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E7%BC%96%E8%BE%91%E6%95%B4%E5%90%88%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-text">文章编辑整合（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%B1%95%E7%A4%BA"><span class="toc-text">文章展示</span></a></li></ol></div></div></widget>
+
+
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Java/">Java</a></div><div id="post-meta">发布于&nbsp;<time datetime="2021-11-12T13:35:30.000Z">2021-11-12</time></div></div>
+
+<article class='md-text content post'>
+<h1 class="article-title"><span>springboot整合富文本编辑器editor.md</span></h1>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PE411i7CV">狂神哔哩哔哩视频地址</a><br><strong>Editor.md</strong>——功能非常丰富的编辑器，左端编辑，右端预览，非常方便，完全免费</p>
+<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://pandao.github.io/editor.md/">https://pandao.github.io/editor.md/</a></li>
+<li>官网下载：<a target="_blank" rel="noopener" href="https://pandao.github.io/editor.md/">https://pandao.github.io/editor.md/</a></li>
+</ul>
+<h3 id="基础工程搭建"><a href="#基础工程搭建" class="headerlink" title="基础工程搭建"></a>基础工程搭建</h3><blockquote>
+<p>数据库设计</p>
+</blockquote>
+<p>article：文章表</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th></th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>int</td>
+<td>文章的唯一ID</td>
+</tr>
+<tr>
+<td>author</td>
+<td>varchar</td>
+<td>作者</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>content</td>
+<td>longtext</td>
+<td>文章的内容</td>
+</tr>
+</tbody></table>
+<p>建表SQL：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `article` (</span><br><span class="line">`id` <span class="type">int</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT COMMENT <span class="string">&#x27;int文章的唯一ID&#x27;</span>,</span><br><span class="line">`author` <span class="type">varchar</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;作者&#x27;</span>,</span><br><span class="line">`title` <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;标题&#x27;</span>,</span><br><span class="line">`content` longtext <span class="keyword">NOT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;文章的内容&#x27;</span>,</span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>基础项目搭建</p>
+</blockquote>
+<p>1、建一个SpringBoot项目配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">datasource:</span></span><br><span class="line">  <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">  <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">  <span class="comment">#?serverTimezone=UTC解决时区的报错</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8</span></span><br><span class="line">  <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br></pre></td></tr></table></figure>
+
+<p>2、实体类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//文章类</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Article</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> id; <span class="comment">//文章的唯一ID</span></span><br><span class="line">   <span class="keyword">private</span> String author; <span class="comment">//作者名</span></span><br><span class="line">   <span class="keyword">private</span> String title; <span class="comment">//标题</span></span><br><span class="line">   <span class="keyword">private</span> String content; <span class="comment">//文章的内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、mapper接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ArticleMapper</span> </span>&#123;</span><br><span class="line">   <span class="comment">//查询所有的文章</span></span><br><span class="line">   <span class="function">List&lt;Article&gt; <span class="title">queryArticles</span><span class="params">()</span></span>;</span><br><span class="line">   <span class="comment">//新增一个文章</span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">addArticle</span><span class="params">(Article article)</span></span>;</span><br><span class="line">   <span class="comment">//根据文章id查询文章</span></span><br><span class="line">   <span class="function">Article <span class="title">getArticleById</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line">   <span class="comment">//根据文章id删除文章</span></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">deleteArticleById</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">       <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.kuang.mapper.ArticleMapper&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;queryArticles&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Article&quot;</span>&gt;</span></span><br><span class="line">      select * from article</span><br><span class="line">   <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getArticleById&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Article&quot;</span>&gt;</span></span><br><span class="line">      select * from article where id = #&#123;id&#125;</span><br><span class="line">   <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;addArticle&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Article&quot;</span>&gt;</span></span><br><span class="line">      insert into article (author,title,content) values (#&#123;author&#125;,#&#123;title&#125;,#&#123;content&#125;);</span><br><span class="line">   <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">&quot;deleteArticleById&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int&quot;</span>&gt;</span></span><br><span class="line">      delete from article where id = #&#123;id&#125;</span><br><span class="line">   <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>既然已经提供了 myBatis 的映射配置文件，自然要告诉 spring boot 这些文件的位置</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mybatis:</span></span><br><span class="line"><span class="attr">mapper-locations:</span> <span class="string">classpath:com/kuang/mapper/*.xml</span></span><br><span class="line"><span class="attr">type-aliases-package:</span> <span class="string">com.kuang.pojo</span></span><br></pre></td></tr></table></figure>
+
+<p>编写一个Controller测试下，是否ok；</p>
+<h3 id="文章编辑整合（重点）"><a href="#文章编辑整合（重点）" class="headerlink" title="文章编辑整合（重点）"></a>文章编辑整合（重点）</h3><p>1、导入 editor.md 资源 ，删除多余文件</p>
+<p>2、编辑文章页面 editor.html、需要引入 jQuery；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;x-admin-sm&quot;</span> lang=<span class="string">&quot;zh&quot;</span> xmlns:th=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">   &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">   &lt;title&gt;秦疆<span class="string">&#x27;Blog&lt;/title&gt;</span></span><br><span class="line"><span class="string">   &lt;meta name=&quot;renderer&quot; content=&quot;webkit&quot;&gt;</span></span><br><span class="line"><span class="string">   &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;</span></span><br><span class="line"><span class="string">   &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi&quot; /&gt;</span></span><br><span class="line"><span class="string">   &lt;!--Editor.md--&gt;</span></span><br><span class="line"><span class="string">   &lt;link rel=&quot;stylesheet&quot; th:href=&quot;@&#123;/editormd/css/editormd.css&#125;&quot;/&gt;</span></span><br><span class="line"><span class="string">   &lt;link rel=&quot;shortcut icon&quot; href=&quot;https://pandao.github.io/editor.md/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;div class=&quot;layui-fluid&quot;&gt;</span></span><br><span class="line"><span class="string">   &lt;div class=&quot;layui-row layui-col-space15&quot;&gt;</span></span><br><span class="line"><span class="string">       &lt;div class=&quot;layui-col-md12&quot;&gt;</span></span><br><span class="line"><span class="string">           &lt;!--博客表单--&gt;</span></span><br><span class="line"><span class="string">           &lt;form name=&quot;mdEditorForm&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;div&gt;</span></span><br><span class="line"><span class="string">                  标题：&lt;input type=&quot;text&quot; name=&quot;title&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;/div&gt;</span></span><br><span class="line"><span class="string">               &lt;div&gt;</span></span><br><span class="line"><span class="string">                  作者：&lt;input type=&quot;text&quot; name=&quot;author&quot;&gt;</span></span><br><span class="line"><span class="string">               &lt;/div&gt;</span></span><br><span class="line"><span class="string">               &lt;div id=&quot;article-content&quot;&gt;</span></span><br><span class="line"><span class="string">                   &lt;textarea name=&quot;content&quot; id=&quot;content&quot; style=&quot;display:none;&quot;&gt; &lt;/textarea&gt;</span></span><br><span class="line"><span class="string">               &lt;/div&gt;</span></span><br><span class="line"><span class="string">           &lt;/form&gt;</span></span><br><span class="line"><span class="string">       &lt;/div&gt;</span></span><br><span class="line"><span class="string">   &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;!--editormd--&gt;</span></span><br><span class="line"><span class="string">&lt;script th:src=&quot;@&#123;/editormd/lib/jquery.min.js&#125;&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;script th:src=&quot;@&#123;/editormd/editormd.js&#125;&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;script type=&quot;text/javascript&quot;&gt;</span></span><br><span class="line"><span class="string">   var testEditor;</span></span><br><span class="line"><span class="string">   //window.onload = function()&#123; &#125;</span></span><br><span class="line"><span class="string">   $(function() &#123;</span></span><br><span class="line"><span class="string">       testEditor = editormd(&quot;article-content&quot;, &#123;</span></span><br><span class="line"><span class="string">           width : &quot;95%&quot;,    //宽</span></span><br><span class="line"><span class="string">           height : 600,    //高</span></span><br><span class="line"><span class="string">           syncScrolling : &quot;single&quot;,</span></span><br><span class="line"><span class="string">           path : &quot;../editormd/lib/&quot;,    //加载编辑器lib路径</span></span><br><span class="line"><span class="string">           saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea</span></span><br><span class="line"><span class="string">           emoji: true,        //功能开启表情</span></span><br><span class="line"><span class="string">           theme: &quot;dark&quot;,//工具栏主题</span></span><br><span class="line"><span class="string">           previewTheme: &quot;dark&quot;,//预览主题</span></span><br><span class="line"><span class="string">           editorTheme: &quot;pastel-on-dark&quot;,//编辑主题</span></span><br><span class="line"><span class="string">           tex : true,                   // 开启科学公式TeX语言支持，默认关闭</span></span><br><span class="line"><span class="string">           flowChart : true,             // 开启流程图支持，默认关闭</span></span><br><span class="line"><span class="string">           sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,</span></span><br><span class="line"><span class="string">           //图片上传</span></span><br><span class="line"><span class="string">           imageUpload : true,</span></span><br><span class="line"><span class="string">           imageFormats : [&quot;jpg&quot;, &quot;jpeg&quot;, &quot;gif&quot;, &quot;png&quot;, &quot;bmp&quot;, &quot;webp&quot;],</span></span><br><span class="line"><span class="string">           imageUploadURL : &quot;/article/file/upload&quot;,</span></span><br><span class="line"><span class="string">           onload : function() &#123;</span></span><br><span class="line"><span class="string">               console.log(&#x27;</span>onload<span class="string">&#x27;, this);</span></span><br><span class="line"><span class="string">          &#125;,</span></span><br><span class="line"><span class="string">           /*指定需要显示的功能按钮*/</span></span><br><span class="line"><span class="string">           toolbarIcons : function() &#123;</span></span><br><span class="line"><span class="string">               return [&quot;undo&quot;,&quot;redo&quot;,&quot;|&quot;,</span></span><br><span class="line"><span class="string">                   &quot;bold&quot;,&quot;del&quot;,&quot;italic&quot;,&quot;quote&quot;,&quot;ucwords&quot;,&quot;uppercase&quot;,&quot;lowercase&quot;,&quot;|&quot;,</span></span><br><span class="line"><span class="string">                   &quot;h1&quot;,&quot;h2&quot;,&quot;h3&quot;,&quot;h4&quot;,&quot;h5&quot;,&quot;h6&quot;,&quot;|&quot;,</span></span><br><span class="line"><span class="string">                   &quot;list-ul&quot;,&quot;list-ol&quot;,&quot;hr&quot;,&quot;|&quot;,</span></span><br><span class="line"><span class="string">                   &quot;link&quot;,&quot;reference-link&quot;,&quot;image&quot;,&quot;code&quot;,&quot;preformatted-text&quot;,</span></span><br><span class="line"><span class="string">                   &quot;code-block&quot;,&quot;table&quot;,&quot;datetime&quot;,&quot;emoji&quot;,&quot;html-entities&quot;,&quot;pagebreak&quot;,&quot;|&quot;,</span></span><br><span class="line"><span class="string">                   &quot;goto-line&quot;,&quot;watch&quot;,&quot;preview&quot;,&quot;fullscreen&quot;,&quot;clear&quot;,&quot;search&quot;,&quot;|&quot;,</span></span><br><span class="line"><span class="string">                   &quot;help&quot;,&quot;info&quot;,&quot;releaseIcon&quot;, &quot;index&quot;]</span></span><br><span class="line"><span class="string">          &#125;,</span></span><br><span class="line"><span class="string">           /*自定义功能按钮，下面我自定义了2个，一个是发布，一个是返回首页*/</span></span><br><span class="line"><span class="string">           toolbarIconTexts : &#123;</span></span><br><span class="line"><span class="string">               releaseIcon : &quot;&lt;span bgcolor=\&quot;gray\&quot;&gt;发布&lt;/span&gt;&quot;,</span></span><br><span class="line"><span class="string">               index : &quot;&lt;span bgcolor=\&quot;red\&quot;&gt;返回首页&lt;/span&gt;&quot;,</span></span><br><span class="line"><span class="string">          &#125;,</span></span><br><span class="line"><span class="string">           /*给自定义按钮指定回调函数*/</span></span><br><span class="line"><span class="string">           toolbarHandlers:&#123;</span></span><br><span class="line"><span class="string">               releaseIcon : function(cm, icon, cursor, selection) &#123;</span></span><br><span class="line"><span class="string">                   //表单提交</span></span><br><span class="line"><span class="string">                   mdEditorForm.method = &quot;post&quot;;</span></span><br><span class="line"><span class="string">                   mdEditorForm.action = &quot;/article/addArticle&quot;;//提交至服务器的路径</span></span><br><span class="line"><span class="string">                   mdEditorForm.submit();</span></span><br><span class="line"><span class="string">              &#125;,</span></span><br><span class="line"><span class="string">               index : function()&#123;</span></span><br><span class="line"><span class="string">                   window.location.href = &#x27;</span>/<span class="string">&#x27;;</span></span><br><span class="line"><span class="string">              &#125;,</span></span><br><span class="line"><span class="string">          &#125;</span></span><br><span class="line"><span class="string">      &#125;);</span></span><br><span class="line"><span class="string">  &#125;);</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、编写Controller，进行跳转，以及保存文章</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/article&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleController</span> </span>&#123;</span><br><span class="line">   <span class="meta">@GetMapping(&quot;/toEditor&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">toEditor</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;editor&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="meta">@PostMapping(&quot;/addArticle&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">addArticle</span><span class="params">(Article article)</span></span>&#123;</span><br><span class="line">       articleMapper.addArticle(article);</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;editor&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>图片上传问题</p>
+</blockquote>
+<p>1、前端js中添加配置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//图片上传</span></span><br><span class="line"><span class="attr">imageUpload</span> : <span class="literal">true</span>,</span><br><span class="line"><span class="attr">imageFormats</span> : [<span class="string">&quot;jpg&quot;</span>, <span class="string">&quot;jpeg&quot;</span>, <span class="string">&quot;gif&quot;</span>, <span class="string">&quot;png&quot;</span>, <span class="string">&quot;bmp&quot;</span>, <span class="string">&quot;webp&quot;</span>],</span><br><span class="line"><span class="attr">imageUploadURL</span> : <span class="string">&quot;/article/file/upload&quot;</span>, <span class="comment">// //这个是上传图片时的访问地址</span></span><br></pre></td></tr></table></figure>
+
+<p>2、后端请求，接收保存这个图片, 需要导入 FastJson 的依赖</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//博客图片上传问题</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/file/upload&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> JSONObject <span class="title">fileUpload</span><span class="params">(<span class="meta">@RequestParam(value = &quot;editormd-image-file&quot;, required = true)</span> MultipartFile file, HttpServletRequest request)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">   <span class="comment">//上传路径保存设置</span></span><br><span class="line">   <span class="comment">//获得SpringBoot当前项目的路径：System.getProperty(&quot;user.dir&quot;)</span></span><br><span class="line">   String path = System.getProperty(<span class="string">&quot;user.dir&quot;</span>)+<span class="string">&quot;/upload/&quot;</span>;</span><br><span class="line">   <span class="comment">//按照月份进行分类：</span></span><br><span class="line">   Calendar instance = Calendar.getInstance();</span><br><span class="line">   String month = (instance.get(Calendar.MONTH) + <span class="number">1</span>)+<span class="string">&quot;月&quot;</span>;</span><br><span class="line">   path = path+month;</span><br><span class="line">   File realPath = <span class="keyword">new</span> File(path);</span><br><span class="line">   <span class="keyword">if</span> (!realPath.exists())&#123;</span><br><span class="line">       realPath.mkdir();</span><br><span class="line">  &#125;</span><br><span class="line">   <span class="comment">//上传文件地址</span></span><br><span class="line">   System.out.println(<span class="string">&quot;上传文件保存地址：&quot;</span>+realPath);</span><br><span class="line">   <span class="comment">//解决文件名字问题：我们使用uuid;</span></span><br><span class="line">   String filename = <span class="string">&quot;ks-&quot;</span>+UUID.randomUUID().toString().replaceAll(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">   <span class="comment">//通过CommonsMultipartFile的方法直接写文件（注意这个时候）</span></span><br><span class="line">   file.transferTo(<span class="keyword">new</span> File(realPath +<span class="string">&quot;/&quot;</span>+ filename));</span><br><span class="line">   <span class="comment">//给editormd进行回调</span></span><br><span class="line">   JSONObject res = <span class="keyword">new</span> JSONObject();</span><br><span class="line">   res.put(<span class="string">&quot;url&quot;</span>,<span class="string">&quot;/upload/&quot;</span>+month+<span class="string">&quot;/&quot;</span>+ filename);</span><br><span class="line">   res.put(<span class="string">&quot;success&quot;</span>, <span class="number">1</span>);</span><br><span class="line">   res.put(<span class="string">&quot;message&quot;</span>, <span class="string">&quot;upload success!&quot;</span>);</span><br><span class="line">   <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、解决文件回显显示的问题，设置虚拟目录映射！在我们自己拓展的MvcConfig中进行配置即可！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMvcConfig</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line">   <span class="comment">// 文件保存在真实目录/upload/下，</span></span><br><span class="line">   <span class="comment">// 访问的时候使用虚路径/upload，比如文件名为1.png，就直接/upload/1.png就ok了。</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">       registry.addResourceHandler(<span class="string">&quot;/upload/**&quot;</span>)</span><br><span class="line">          .addResourceLocations(<span class="string">&quot;file:&quot;</span>+System.getProperty(<span class="string">&quot;user.dir&quot;</span>)+<span class="string">&quot;/upload/&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>表情包问题</p>
+</blockquote>
+<p>自己手动下载，emoji 表情包，放到图片路径下：</p>
+<p>修改editormd.js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Emoji graphics files url path</span></span><br><span class="line">editormd.emoji     = &#123;</span><br><span class="line">   <span class="attr">path</span> : <span class="string">&quot;../editormd/plugins/emoji-dialog/emoji/&quot;</span>,</span><br><span class="line">   <span class="attr">ext</span>   : <span class="string">&quot;.png&quot;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="文章展示"><a href="#文章展示" class="headerlink" title="文章展示"></a>文章展示</h3><p>1、Controller 中增加方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/&#123;id&#125;&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">show</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">int</span> id,Model model)</span></span>&#123;</span><br><span class="line">   Article article = articleMapper.getArticleById(id);</span><br><span class="line">   model.addAttribute(<span class="string">&quot;article&quot;</span>,article);</span><br><span class="line">   <span class="keyword">return</span> <span class="string">&quot;article&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、编写页面 article.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns:th</span>=<span class="string">&quot;http://www.thymeleaf.org&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1, maximum-scale=1&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">title</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;article.title&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!--文章头部信息：标题，作者，最后更新日期，导航--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">h2</span> <span class="attr">style</span>=<span class="string">&quot;margin: auto 0&quot;</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;article.title&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  作者：<span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;float: left&quot;</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;article.author&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!--文章主体内容--&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;doc-content&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">style</span>=<span class="string">&quot;display:none;&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;markdown&quot;</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;article.content&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/editormd/css/editormd.preview.css&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/jquery.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/marked.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/prettify.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/raphael.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/underscore.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/sequence-diagram.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/flowchart.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/lib/jquery.flowchart.min.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">th:src</span>=<span class="string">&quot;@&#123;/editormd/editormd.js&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">   <span class="keyword">var</span> testEditor;</span></span><br><span class="line"><span class="javascript">   $(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">       testEditor = editormd.markdownToHTML(<span class="string">&quot;doc-content&quot;</span>, &#123;</span></span><br><span class="line"><span class="javascript">     <span class="comment">//注意：这里是上面DIV的id</span></span></span><br><span class="line"><span class="javascript">           <span class="attr">htmlDecode</span>: <span class="string">&quot;style,script,iframe&quot;</span>,</span></span><br><span class="line"><span class="javascript">           <span class="attr">emoji</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">           <span class="attr">taskList</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">           <span class="attr">tocm</span>: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">           <span class="attr">tex</span>: <span class="literal">true</span>, <span class="comment">// 默认不解析</span></span></span><br><span class="line"><span class="javascript">           <span class="attr">flowChart</span>: <span class="literal">true</span>, <span class="comment">// 默认不解析</span></span></span><br><span class="line"><span class="javascript">           <span class="attr">sequenceDiagram</span>: <span class="literal">true</span>, <span class="comment">// 默认不解析</span></span></span><br><span class="line"><span class="javascript">           <span class="attr">codeFold</span>: <span class="literal">true</span></span></span><br><span class="line"><span class="javascript">      &#125;);&#125;);</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>重启项目，访问进行测试！大功告成！</p>
+
+
+
+<div class="article-footer reveal fs14"><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://su3.cn/2021/11/12/SpringBoot-editor/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://su3.cn/2021/11/12/SpringBoot-editor/&title=springboot整合富文本编辑器editor.md - 苏三博客&summary=Editor.md——功能非常丰富的编辑器，左端编辑，右端预览，非常方便，完全免费"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=springboot整合富文本编辑器editor.md - 苏三博客&amp;body=https://su3.cn/2021/11/12/SpringBoot-editor/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://su3.cn/2021/11/12/SpringBoot-editor/"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2021/11/12/SpringBoot-Thymleaf/">SpringBoot整合Thymleaf实现页面静态化</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2021/11/12/git-richang/">Git常用命令总结</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      快来参与讨论吧
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="zhhltc/blogcomments" data-repo-id="R_kgDOI35Puw" data-category="Announcements" data-category-id="DIC_kwDOI35Pu84CT54y" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><div class="BeiAn-info" style="display: flex;text-align: center;margin:10px;justify-content: center; align-items: center;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="/p/imgs/beian.png" title="备案管理系统" style="width:15px;height:15px;"> <a href="http://beian.miit.gov.cn/" style="text-decoration:none;" target=_blank title=备案号>赣ICP备17016237号-1</a></div><div  style="display: flex;text-align: center;justify-content: center; align-items: center;"><span id="timeDate">载入天数...</span>|<span id="times">载入时分秒...</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span><span class="post-meta-divider">|</span><span id="busuanzi_container_site_uv" style="display:none">本站访客数<span id="busuanzi_value_site_uv"></span>人</span></div><script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script><script type="text/javascript" src="/js/dist/zoomify.min.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></footer>
+
+<!--添加网站运行时间 -->
+<!--<br/>-->
+
+<script>
+    var now = new Date();
+
+    function createtime() {
+        var grt = new Date("11/01/2021 12:00:00");
+        now.setTime(now.getTime() + 250);
+        days = (now - grt) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+        }
+        seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if (String(snum).length == 1) {
+            snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+    setInterval("createtime()", 250);
+</script>
+<!-- 添加网站运行时间》 -->
+
+<style>
+  /*返回顶部的css*/
+.All_url_totop{
+position:fixed;right:10px;width: 35px;height: 35px; border-radius: 5px; position: fixed;right: 10px; cursor: pointer;background-repeat: no-repeat; background-position: 50% 50%; background-color: #000; opacity: .1; transition: opacity .2s ease-in-out;z-index: 99999;
+}
+#All_url_totop{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAImjI+py+IPo4xmWmRpyq5dFkzgoY3VY5KS9ykcKy6vnMEr3W417hQAOw==);
+top:384px;
+}
+#All_url_totop2{
+background-image:url(data:img/png;base64,R0lGODlhEgAUAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAASABQAAAIqlB2peX27nINKNsoswnrTLmABKJKcJH5PGl3siKZdabZgWN2rzuPv/yoAADs=);
+top:429px;
+}
+#All_url_totop:hover,
+#All_url_totop2:hover{
+opacity: .5;
+}
+</style>
+
+<script>
+ if (!window.location.href.includes("music")) {
+        window.onload = function () {
+          /*添加返回顶部按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,0);");
+          a.setAttribute("id", "All_url_totop")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+          /*添加返回底部的按钮*/
+          var a = document.createElement("a");
+          a.setAttribute("href", "JavaScript:window.scrollTo(0,document.body.scrollHeight);");
+          a.setAttribute("id", "All_url_totop2")
+          a.setAttribute("class", "All_url_totop");
+          document.body.appendChild(a);
+        }
+      }
+</script>
+
+        
+        <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+      
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

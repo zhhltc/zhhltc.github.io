@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MusicFolderTool</title>
+</head>
+<body>
+  <h1>MusicFolderTool</h1>
+  <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
+  <button onclick="selectFolder()">Select Folder</button>
+  <label for="artist-input">Artist:</label>
+  <input type="text" id="artist-input" placeholder="Enter artist">
+  <label for="url-prefix-input">URL Prefix:</label>
+  <input type="text" id="url-prefix-input" placeholder="Enter URL prefix">
+  <button onclick="copyToClipboard()">Copy to Clipboard</button>
+  <pre id="file-list-output"></pre>
+
+  <script>
+    function selectFolder() {
+      const folderInput = document.getElementById('folder-input');
+      folderInput.click();
+
+      folderInput.addEventListener('change', generateFileList);
+    }
+
+    function generateFileList() {
+      const files = document.getElementById('folder-input').files;
+      const artistInput = document.getElementById('artist-input');
+      const urlPrefixInput = document.getElementById('url-prefix-input');
+
+      const fileList = Array.from(files).map(file => ({
+        name: file.name.replace(/\.[^/.]+$/, ''),
+        artist: artistInput.value,
+        url: `${urlPrefixInput.value}/${file.name}`,
+        cover: 'https://su3.cn/pic.jpg'
+      }));
+
+      const fileListOutput = document.getElementById('file-list-output');
+      fileListOutput.textContent = JSON.stringify(fileList, null, 2);
+    }
+
+    function copyToClipboard() {
+      const fileListOutput = document.getElementById('file-list-output');
+      const fileListText = fileListOutput.textContent;
+
+      navigator.clipboard.writeText(fileListText)
+        .then(() => {
+          console.log('File list copied to clipboard');
+        })
+        .catch((error) => {
+          console.error('Failed to copy file list to clipboard:', error);
+        });
+    }
+  </script>
+</body>
+</html>

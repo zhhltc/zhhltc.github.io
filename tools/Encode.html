@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Encode/Decode</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    button {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>URL Encode/Decode</h1>
+  <textarea id="input-text" placeholder="Enter text here..."></textarea>
+  <br>
+  <button onclick="encodeURL()">Encode URL</button>
+  <button onclick="decodeURL()">Decode URL</button>
+  <br>
+  <textarea id="output-text" readonly></textarea>
+
+  <script>
+    function encodeURL() {
+      var inputText = document.getElementById("input-text").value;
+      var encodedText = encodeURIComponent(inputText);
+      document.getElementById("output-text").value = encodedText;
+    }
+
+    function decodeURL() {
+      var inputText = document.getElementById("input-text").value;
+      var decodedText = decodeURIComponent(inputText);
+      document.getElementById("output-text").value = decodedText;
+    }
+  </script>
+</body>
+</html>
