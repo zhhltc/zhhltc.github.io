@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>md文件图片快速下载</title>
+	</head>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            max-width: 100%;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            color: black;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+        }
+        input[type="text"], input[type="file"], input[type="button"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="button"] {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        input[type="button"]:hover {
+            background-color: #218838;
+        }
+        img {
+            width: 100px;
+            margin-top: 10px;
+        }
+        .img-container {
+            width: 100%;
+            height: 300px;
+            overflow-y: auto;
+            background-color: #F2F2F2;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .img-container div {
+            margin: 5px 0;
+        }
+        @media screen and (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .box {
+                width: 90%;
+            }
+        }
+    </style>
+	<script type="text/javascript">
+		(function (console) {
+		            console.save = function (data, filename) {
+		                if (!data) {
+		                    console.error('No data');
+		                    return;
+		                }
+		         
+		                if (!filename) filename = 'data.json';
+		                if (typeof data === "object") {
+		                    data = JSON.stringify(data, undefined, 4)
+		                }
+		         
+		                var blob = new Blob([data], {type: 'text/json'}),
+		                    e = document.createEvent('MouseEvents'),
+		                    a = document.createElement('a');
+		                a.download = filename;
+		                a.href = window.URL.createObjectURL(blob);
+		                a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+		                e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		                a.dispatchEvent(e)
+		            }
+		         
+		        })(console);
+		
+		        var arr = new Array();
+		        var temp_str ="";
+		        var i = 0;
+		        function showPreview(source){
+		            var input = source;
+		            var reader = new FileReader();
+		            reader.readAsText(input.files[0]);
+		            reader.onload = function() {
+		                if(reader.result) {
+		               //显示文件内容
+		                    temp_str = reader.result;
+		                }
+		            };
+		        }
+		        function showText()
+		        {
+		            if(temp_str=="")
+		            {
+		                alert("请先上传文件");
+		            }
+		            else
+		            {
+		                document.getElementById("text").innerHTML=temp_str;
+						var regexp = /((http|https):\/\/([\w\-]+\.)+[\w\-]+(\/[\w\u4e00-\u9fa5\-\.\/?\@\%\!\&=\+\~\:\#\;\,]*)?)/ig;
+						var img =temp_str.match(regexp).toString();
+						// alert( typeof  img);
+						 if ( img.length != 0 ){
+							var imgArr=img.split(",");
+							var imgArr2=[];
+							if (imgArr.length != 0){
+							console.log("初始链接数量:"+imgArr.length)
+							   imgArr.forEach((item,index)=> {
+								if((item.indexOf(".png")!=-1)||(item.indexOf(".jpg")!=-1)||(item.indexOf(".gif")!=-1)){
+									 imgArr2.push(item);
+									}
+									
+								})
+							}
+							
+							showImgList(imgArr2)
+							
+						 }
+						
+		            }
+		        }
+		
+		        function saveText()
+		        {
+		            var text = document.getElementById("text").value;
+		            if(text=="")
+		            {
+		                alert("没有内容");
+		            }
+		            else
+		            {
+		                console.save(text,"data.json");
+		               
+		            }
+		        }
+				
+				        function showImgList(imgArr)
+		        {
+		           if (imgArr.length != 0){
+				   if(document.getElementById("rparameters").checked){
+									 var iurls2=imgArr[0].split("?");
+									 document.getElementById('imgone').src = iurls2[0];
+									}else{
+									document.getElementById('imgone').src = imgArr[0];
+									}
+								
+							 document.getElementById('imglen').innerHTML="待处理图片数量："+imgArr.length
+							var imgsrcs= document.getElementById('imgsrc');
+								imgsrcs.innerHTML=""
+							   imgArr.forEach((item,index)=> {
+							   if(index<imgArr.length-1){
+							   imgsrcs.innerHTML+=item+',</p>'
+							   }
+							   else{
+							   imgsrcs.innerHTML+=item
+							   }
+									
+								})
+							}
+		        }
+				
+				function downloadPic (imgsrc,imgname) {
+					let x = new XMLHttpRequest()
+					x.open('GET', imgsrc, true)
+					x.responseType = 'blob'
+					x.onload = function () {
+						let url = window.URL.createObjectURL(x.response)
+						let a = document.createElement('a')
+						a.href = url
+						a.download =imgname;
+						a.click()
+					}
+					x.send()
+			}
+			
+			
+			
+			
+			 function imgsgenerate(iurl,imgname)
+		        {
+				var imgsuffix="";
+						if(iurl.indexOf(".png")!=-1){
+									 imgsuffix=".png"
+									}
+						else if(iurl.indexOf(".jpg")!=-1){
+									 imgsuffix=".jpg"
+									}
+						else if(iurl.indexOf(".gif")!=-1){
+									 imgsuffix=".gif"
+									}
+		           var data=document.getElementById("text").innerHTML
+						let filePath=document.getElementById("imgIP").value+ imgname+imgsuffix;
+						var tem=document.getElementById("tem").value
+						var laststr=""
+						if(tem.length!=0)
+		            {
+		                 laststr =tem.replaceAll('url',filePath)
+						handleCopyClipboard(laststr);  
+		            }
+						else{
+						laststr =filePath
+						handleCopyClipboard(filePath); 
+						}
+						var iprefix=document.getElementById("iprefix").value
+						var isuffix=document.getElementById("isuffix").value
+						let newdata=data.replaceAll(iprefix+iurl+isuffix,laststr)
+						document.getElementById("text").innerHTML=newdata;
+		        }
+			
+			handleCopyClipboard = (content) => {
+			document.getElementById("imglast").innerHTML="最近一次处理结果:"+content
+						  const inputDom = document.createElement('input');
+						  inputDom.setAttribute('value', content);
+						  document.body.appendChild(inputDom);
+						  inputDom.select();
+						  document.execCommand('copy');
+						  document.body.removeChild(inputDom);
+						}
+			
+					function downloadImg () {
+					var imgsrcs= document.getElementById('imgsrc');
+					 if(imgsrcs.innerHTML.length==0)
+		            {
+		                alert("没有内容");
+		            }
+		            else
+		            {
+					var imgh=imgsrcs.innerHTML.replaceAll('</p>', '')
+					imgh=imgh.replaceAll('<p>', '')
+		            var imgArr=imgh.split(",");
+					if (imgArr.length != 0){
+							if (imgArr[0].length != 0){
+							
+							 
+									let imgname= Date.parse(new Date())
+									var iurls=imgArr[0]
+									if(document.getElementById("rparameters").checked){
+									 var iurls2=iurls.split("?");
+									 iurls=iurls2[0]
+									}
+									downloadPic(iurls,imgname)
+									imgsgenerate(imgArr[0],imgname);
+										   if (Number(imgArr.length) == 1){
+																	alert("处理完毕!")
+																	}
+																	else{
+																	imgArr.splice(0,1)
+																	}
+																	showImgList(imgArr)
+										}
+							}
+		            }
+					
+				}
+	</script>
+	<body>
+		<div style="display: flex; justify-content: center;">
+			<div id="div" align="center" style="width: 300px;height: 600px; margin-right:50px;">
+				<br>
+				<input type="file" name="file" value="上传文件" onchange="showPreview(this)" />
+				<br>
+				<br>
+				<br>
+
+				<br>
+				<br>
+				<input type="button" value="解析文件内容" onclick="showText()">
+				<br>
+				<br>
+				<input type="button" value="另存文件内容" onclick="saveText()">
+			</div>
+			<div id="div" align="center" style="width: 1000px;height: 600px; ">
+				<textarea id="text" style="width: 1000px;height: 600px; color: black;"></textarea>
+			</div>
+		</div>
+
+
+		<div style="display: flex; justify-content: center;">
+			<div id="div" align="center" style="width: 300px;height: 600px;margin-left:100px;">
+				<br>
+				<br>
+				<img id="imgone" style="width:100px;" />
+				<br>
+				<br>
+				<br>
+				<br>
+				<div id="imglen" align="center"></div>
+				<br>
+
+
+				<div class="inp" >路径前缀：
+					<input id="imgIP" type="text" value="https://su3.cn/postimg/">
+				</div>
+				<br>
+
+				<div class="inp">模板：
+					<input id="tem" type="text" value="{% image  url  %}">
+					<br>url为替换变量
+				</div>
+
+				<br>
+				<div class="inp">需替换的图片前缀：
+					<input id="iprefix" type="text" value="">
+					<br>可为空
+				</div>
+
+				<br>
+
+				<div class="inp">需替换的图片后缀：
+					<input id="isuffix" type="text" value="">
+					<br>可为空
+				</div>
+
+				<br>
+				
+				<div class="inp">去掉url后面的参数：<input type="checkbox" id="rparameters">
+				</div>
+
+				<br>
+				
+				<div id="imglast" align="center"></div>
+				<br>
+				<input type="button" value="下载图片" onclick="downloadImg()">
+				<br>
+			</div>
+
+			<div id="imgsrc" align="center" style="margin:50px auto;width:80%;max-width: 1000px; height:800px;margin-top:150px;margin-left:120px; overflow-y:scroll;background-color:#F2F2F2"></div>
+
+		</div>
+
+
+
+
+	</body>
+</html>

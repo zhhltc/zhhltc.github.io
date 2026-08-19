@@ -1,0 +1,116 @@
+<head>
+	<title>粘贴板图片快速处理</title>
+	<meta charset="utf-8">
+	<style>
+		#container {
+      height: 300px;
+      width: 100%;
+      border: 2px solid black;
+    }
+	#imgName {
+     margin-top:50px;
+    }
+	.inp {
+     margin-top:80px;
+    }
+  </style>
+</head>
+<body>
+	<div id="container"></div>
+	<div id="imgName"></div>
+	<div class="inp">路径前缀：
+		<input id="imgIP" type="text" value="https://su3.cn/postimg/">
+	</div>
+	<div class="inp">模板：
+		<input id="tem" type="text" value="{% image  url  %}">
+	</div>
+	<script>
+		const el = document.getElementById('container');
+					
+				    // 此事件也可以添加到document上，但该事件会有冒泡行为，则本页面上任何位置的粘贴操作都会触发
+				    el.addEventListener('paste', (e) => {
+				      let file = null;
+				      const items = (e.clipboardData || window.clipboardData).items;
+				      if (items && items.length) {
+				        for (let i = 0; i < items.length; i++) {
+				          if (items[i].type.indexOf('image') !== -1) {
+				            // 如果是image类型存为file
+				            file = items[i].getAsFile();
+				            break;
+				          }
+				        }
+				      }
+				     // console.log(file, 'file')
+				      if (file) {
+				        let reader = new FileReader();
+				        reader.onload = function(e) {
+						
+						
+						for (let i = 0; i < el.children.length; i++) {
+				    const element = el.children[i];
+				    element.remove();
+				}
+				
+				          // e.target.result是图片的base64地址
+				          let img = document.createElement('img');
+				          img.src = e.target.result;
+				          el.appendChild(img);
+						  let imgN=Date.parse(new Date());
+						  let filePath=document.getElementById("imgIP").value+ imgN+".png";
+						  document.getElementById('imgName').innerHTML =filePath;
+						  
+						  let tm=document.getElementById("tem").value
+						  if ( tm.trim().length != 0 ){
+						 let str = tm.replace('url',filePath)
+						   handleCopyClipboard(str);  
+						  }else{
+						  handleCopyClipboard(filePath);  
+						  }
+						  
+						  
+						  downloadFileByBase64(img.src,imgN);
+				        }
+				        reader.readAsDataURL(file);
+						
+						
+				
+				      }
+				    })
+					
+				handleCopyClipboard = (content) => {
+				  const inputDom = document.createElement('input');
+				  inputDom.setAttribute('value', content);
+				  document.body.appendChild(inputDom);
+				  inputDom.select();
+				  document.execCommand('copy');
+				  document.body.removeChild(inputDom);
+				}
+				
+				
+				
+				function dataURLtoBlob(dataurl) {
+				    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+				        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+				    while (n--) {
+				        u8arr[n] = bstr.charCodeAt(n);
+				    }
+				    return new Blob([u8arr], { type: mime });
+				}
+				 
+				function downloadFile(url,name='What\'s the fuvk'){
+				    var a = document.createElement("a")
+				    a.setAttribute("href",url)
+				    a.setAttribute("download",name)
+				    a.setAttribute("target","_blank")
+				    let clickEvent = document.createEvent("MouseEvents");
+				    clickEvent.initEvent("click", true, true);  
+				    a.dispatchEvent(clickEvent);
+				}
+				 
+				function downloadFileByBase64(base64,name){
+				    var myBlob = dataURLtoBlob(base64)
+				    var myUrl = URL.createObjectURL(myBlob)
+				    downloadFile(myUrl,name)
+				}
+	</script>
+</body>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>zb · 激活码生成器</title>
+  <style>
+    :root{color-scheme:light;--green:#187753;--line:#d7e0db;--muted:#718178}
+    *{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#eff4f1;color:#17231e;margin:0;display:grid;place-items:center;min-height:100vh;padding:20px}.card{width:min(650px,100%);background:white;padding:32px;border-radius:18px;box-shadow:0 18px 60px #193d2c22}h1{margin:0 0 8px}.warn{color:#b66a30;font-size:12px;line-height:1.7}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:block;color:var(--muted);font-size:13px;margin:18px 0 7px}input,select,button{width:100%;padding:13px;border-radius:10px;border:1px solid var(--line);font-size:15px;background:white}.date-summary{margin:7px 0 0;color:var(--muted);font-size:11px;line-height:1.5}.primary{margin-top:20px;background:var(--green);color:white;border:0;font-weight:700;cursor:pointer}.result-wrap{display:flex;gap:9px;margin-top:20px}.result{flex:1;min-width:0;padding:18px;background:#eff8f4;border:1px dashed #62a889;border-radius:10px;font:700 15px ui-monospace;overflow-wrap:anywhere}.copy{width:auto;padding:0 18px;cursor:pointer}.help{font-size:12px;color:var(--muted);line-height:1.7;margin:12px 0 0}@media(max-width:560px){.grid{grid-template-columns:1fr}.card{padding:22px}}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>zb激活码生成器</h1>
+    <p class="warn">仅供管理员离线使用。页面不保存管理员签名秘钥；请将秘钥与本页面分开保管，严禁发给普通用户。</p>
+    <label for="admin-key">管理员签名秘钥</label>
+    <input id="admin-key" type="password" autocomplete="off" spellcheck="false" placeholder="请输入 Ed25519 管理员秘钥">
+    <label for="installation">用户提供的本机识别码</label>
+    <input id="installation" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
+    <div class="grid">
+      <div><label for="mode">激活模式</label><select id="mode"><option value="permanent">永久激活</option><option value="expiring">指定到期时间</option></select></div>
+      <div id="expiry-field" hidden><label for="expiry">到期日期（含当天，必须手动选择）</label><input id="expiry" type="date"><p id="expiry-summary" class="date-summary"></p></div>
+    </div>
+    <button id="generate" class="primary">生成并复制激活码</button>
+    <div class="result-wrap"><div id="result" class="result">等待生成</div><button id="copy" class="copy" type="button">复制</button></div>
+    <p id="description" class="help">永久激活码不会到期，只能用于当前本机识别码。</p>
+  </main>
+  <script>
+    const LICENSE_PUBLIC_KEY=new Uint8Array([179,80,62,154,71,195,145,235,229,107,61,158,223,170,210,249,134,17,179,94,116,75,115,192,23,125,119,133,97,133,77,17]);
+    const adminKey=document.getElementById('admin-key'),installation=document.getElementById('installation'),mode=document.getElementById('mode'),expiry=document.getElementById('expiry'),expiryField=document.getElementById('expiry-field'),expirySummary=document.getElementById('expiry-summary'),result=document.getElementById('result'),description=document.getElementById('description');
+    const now=new Date(),today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');expiry.value='';
+    function updateExpirySummary(){expirySummary.textContent=!expiry.value?`当前日期：${today}；请确认年份并手动选择到期日期。`:expiry.value<today?`当前日期：${today}；已选择过期日期 ${expiry.value}，可用于开发版测试到期拦截。`:`当前日期：${today}；本注册码有效期至 ${expiry.value} 当天，${expiry.value} 的下一天开始拦截。`}
+    updateExpirySummary();expiry.oninput=updateExpirySummary;
+    function decode64(value){return Uint8Array.from(atob(value),c=>c.charCodeAt(0))}
+    function base64url(bytes){let raw='';for(const byte of bytes)raw+=String.fromCharCode(byte);return btoa(raw).replaceAll('+','-').replaceAll('/','_').replaceAll('=','')}
+    async function loadSigningKey(value){const key=await crypto.subtle.importKey('pkcs8',decode64(value.replaceAll(/\s/g,'')),{name:'Ed25519'},false,['sign']),proof=new TextEncoder().encode('zhuihen-admin-key-check-v1'),signature=await crypto.subtle.sign('Ed25519',key,proof),publicKey=await crypto.subtle.importKey('raw',LICENSE_PUBLIC_KEY,{name:'Ed25519'},false,['verify']);if(!await crypto.subtle.verify('Ed25519',publicKey,signature,proof))throw new Error('管理员秘钥不正确');return key}
+    async function sign(key,bytes){return new Uint8Array(await crypto.subtle.sign('Ed25519',key,bytes))}
+    async function copy(value){if(!value||value==='等待生成')return;try{await navigator.clipboard.writeText(value)}catch{const area=document.createElement('textarea');area.value=value;document.body.append(area);area.select();document.execCommand('copy');area.remove()}}
+    mode.onchange=()=>{const timed=mode.value==='expiring';expiryField.hidden=!timed;description.textContent=timed?'限时激活码在所选日期 23:59:59 后失效，应用下次启动时会重新要求激活。':'永久激活码不会到期，只能用于当前本机识别码。'};
+    document.getElementById('generate').onclick=async()=>{const secret=adminKey.value.trim(),id=installation.value.trim().toUpperCase();if(!secret)return alert('请输入管理员签名秘钥');if(!id)return alert('请输入本机识别码');if(mode.value==='expiring'&&!expiry.value)return alert('请选择到期日期');try{const key=await loadSigningKey(secret),payload={version:2,installationId:id,mode:mode.value,expiresOn:mode.value==='expiring'?expiry.value:null,issuedAt:new Date().toISOString()},payloadBytes=new TextEncoder().encode(JSON.stringify(payload)),signature=await sign(key,payloadBytes),code='ZH2.'+base64url(payloadBytes)+'.'+base64url(signature);result.textContent=code;await copy(code)}catch(error){alert(error instanceof Error&&error.message==='管理员秘钥不正确'?error.message:'管理员秘钥无效，或当前浏览器不支持 Ed25519 签名。\n'+error)}};
+    document.getElementById('copy').onclick=()=>copy(result.textContent);
+  </script>
+</body>
+</html>

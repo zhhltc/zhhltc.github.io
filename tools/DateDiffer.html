@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>日期计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            display: inline-block;
+            text-align: left;
+        }
+        #datePicker {
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="datePicker">选择目标日期:</label>
+        <input type="date" id="datePicker">
+        <div class="result">
+            <p id="daysDifference"></p>
+            <p id="workingDaysDifference"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const datePicker = document.getElementById('datePicker');
+            const daysDifferenceDisplay = document.getElementById('daysDifference');
+            const workingDaysDifferenceDisplay = document.getElementById('workingDaysDifference');
+
+            datePicker.addEventListener('change', function() {
+                const selectedDate = new Date(this.value);
+                const today = new Date();
+                // 计算相差的天数
+                const diffTime = Math.abs(selectedDate - today);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                daysDifferenceDisplay.textContent = `所选日期距离今天有 ${diffDays-1} 天。`;
+
+                // 计算工作日天数差（假设周六和周日为非工作日）
+                let workingDays = 0;
+                for (let day = 1; day <= diffDays; day++) {
+                    const dayOfWeek = (selectedDate.getDay() + day) % 7;
+                    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                        workingDays++;
+                    }
+                }
+                workingDaysDifferenceDisplay.textContent = `所选日期距离今天有 ${workingDays} 个工作日。`;
+            });
+        });
+    </script>
+</body>
+</html>

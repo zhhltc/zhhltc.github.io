@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工具导航</title>
+    <link rel="shortcut icon" href="https://xen.cc/favicon.ico" type="image/xicon">
+  <style>
+    /* 全局样式 */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* 导航栏样式 */
+    .nav {
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .menu {
+      display: flex;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu li {
+      margin-left: 20px;
+    }
+
+    .menu li a {
+      text-decoration: none;
+      color: #333;
+      transition: color 0.3s;
+    }
+
+    .menu li a:hover {
+      color: #007bff;
+    }
+
+    /* 主体内容样式 */
+    .container23 {
+      max-width: 90%;
+      margin: 80px auto 0;
+      padding: 20px;
+    }
+
+    .category23 {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .category23-header {
+      background-color: #f1f1f1;
+      padding: 10px;
+/*       cursor: pointer; */
+    }
+
+    .category23-header h3 {
+      margin: 0;
+    }
+
+    .category23-content {
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .link-container23 {
+      display: inline-block;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .link-container23:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    @media (max-width: 767px) {
+      .container23 {
+        margin-top: 60px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo">工具导航</div>
+    <ul class="menu">
+      <li><a href="https://xen.cc/" target=“_blank”>首页</a></li>
+      <li><a href="https://xen.cc/music/" target=“_blank”>歌单</a></li>
+    </ul>
+  </nav>
+  
+  <div class="container23">
+    <div id="categories"></div>
+  </div>
+
+  <script>
+    // 网址信息数组
+const categories = [
+  {
+    name: "集成工具",
+    links: [
+      { name: "json", url: "https://xen.cc/json/" },
+      { name: "二维码生成", url: "https://xen.cc/tools/qrcode/" },
+      { name: "正则测试工具", url: "https://xen.cc/tools/regex/regex.html" },
+      { name: "urlencode编码解码", url: "https://xen.cc/tools/Encode.html" },
+      { name: "在线ps", url: "https://xen.cc/tools/ps.html" },
+      { name: "QuartzCron生成和解析", url: "https://xen.cc/tools/QuartzCron/" },
+      { name: "时区时间", url: "https://xen.cc/tools/timeZone.html" },
+      { name: "md5在线加密", url: "https://xen.cc/tools/md5/" },
+      { name: "驼峰和下划线互转", url: "https://xen.cc/tools/convertFormat.html" },
+      { name: "字母大小写互换", url: "https://xen.cc/tools/LetterCaseConversion.html" },
+      { name: "字母转大转小", url: "https://xen.cc/tools/LetterSize.html" },
+      { name: "颜色代码对照表", url: "https://xen.cc/tools/ColorCodeReference.html" },
+      { name: "markdown编辑器", url: "https://xen.cc/md" },
+      { name: "字符串去重复", url: "https://xen.cc/tools/qc/qc.html" },
+      { name: "思维导图", url: "https://xen.cc/tools/mindtools/mindtools.html" },
+      { name: "html标签闭合查询", url: "https://xen.cc/tools/bh/bh.html" },
+      { name: "JS/Html在线格式化", url: "https://xen.cc/tools/jshtmlformat/jshtmlformat.html" },
+      { name: "CSS在线格式化", url: "https://xen.cc/tools/csslformat/csslformat.html" },
+      { name: "HTML和JS互转", url: "https://xen.cc/tools/htmljs/htmljs.html" },
+      { name: "H5在线运行", url: "https://xen.cc/tools/h5.html" },
+      { name: "md截图图片快速处理", url: "https://xen.cc/tools/mdimgstool/mdimgtool.html" },
+      { name: "md网络图片快速处理", url: "https://xen.cc/tools/mdimgstool/mdimgstool.html" },
+      { name: "MusicArrayCreat", url: "https://xen.cc/tools/MusicArrayCreat.html" },
+      { name: "MusicFolderTool", url: "https://xen.cc/tools/MusicFolderTool.html" },
+      { name: "AI对话", url: "https://ai.su3.cn" },
+      { name: "活动价格计算", url: "https://xen.cc/tools/ActivityDiscount.html" },
+      { name: "日期间隔计算", url: "https://xen.cc/tools/DateDiffer.html" },
+      { name: "系统更新", url: "https://xen.cc/tools/systemUpdate/" },
+      { name: "wifi卡片", url: "https://xen.cc/tools/wifiCard/" },
+      { name: "音乐", url: "https://xen.cc/tools/music.html" }
+    ]
+  },
+  {
+    name: "资料相关",
+    links: [
+      { name: "Linux命令大全", url: "https://www.linuxcool.com/" },
+      { name: "stellar", url: "https://xaoxuu.com/wiki/stellar/" }
+    ]
+  },
+  {
+    name: "资料整理",
+    links: [
+      { name: "SpringCloud脑图", url: "https://xen.cc/ns/SpringCloud2020.html" },
+      { name: "若依文档", url: "http://doc.ruoyi.vip/" }
+    ]
+  },
+   {
+    name: "开发工具",
+    links: [
+      { name: "maven", url: "https://mvnrepository.com/" },
+      { name: "Java工具类库", url: "https://hutool.cn/docs/" },
+      { name: "特殊符号", url: "http://www.fhdq.net/" }
+    ]
+  },
+ {
+    name: "其他工具",
+    links: [
+      { name: "java在线生成代码", url: "https://java.bejson.com/generator" },
+      { name: "moonshot", url: "https://kimi.moonshot.cn/" },
+      { name: "chatgpt", url: "https://chatgpt.com/" },
+       { name: "vercel", url: "https://vercel.com/" },
+       { name: "zeabur", url: "https://zeabur.com/" },
+      { name: "poe", url: "https://poe.com/" },
+      { name: "ascii字符画1", url: "http://patorjk.com/software/taag" },
+      { name: "ascii字符画2", url: "http://www.network-science.de/ascii/" }
+    ]
+  },
+];
+
+// 渲染函数
+function renderCategories() {
+  const categoriesContainer = document.getElementById("categories");
+
+  categories.forEach(category => {
+    const categoryElement = document.createElement("div");
+    categoryElement.classList.add("category23");
+
+    const categoryHeader = document.createElement("div");
+    categoryHeader.classList.add("category23-header");
+    const categoryTitle = document.createElement("h3");
+    categoryTitle.textContent = category.name;
+    categoryHeader.appendChild(categoryTitle);
+    categoryElement.appendChild(categoryHeader);
+
+    const categoryContent = document.createElement("div");
+    categoryContent.classList.add("category23-content");
+    category.links.forEach(link => {
+      const linkContainer = document.createElement("div");
+      linkContainer.classList.add("link-container23");
+
+      const linkElement = document.createElement("a");
+      linkElement.classList.add("link");
+      linkElement.href = link.url;
+      linkElement.textContent = link.name;
+      linkElement.target = "_blank"; // 在新窗口打开链接
+      linkContainer.appendChild(linkElement);
+
+      categoryContent.appendChild(linkContainer);
+    });
+    categoryElement.appendChild(categoryContent);
+
+    categoriesContainer.appendChild(categoryElement);
+  });
+}
+
+// 渲染网址导航
+renderCategories();
+  </script>
+</body>
+</html>

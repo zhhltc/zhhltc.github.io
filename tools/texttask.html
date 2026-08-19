@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本任务工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                flex-direction: row;
+            }
+
+            .left-panel, .right-panel {
+                flex: 1;
+            }
+        }
+
+        .panel {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-3px);
+        }
+
+        .panel-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        @media (min-width: 576px) {
+            .input-group {
+                flex-direction: row;
+            }
+        }
+
+        #textInput, #ruleInput, #batchTextInput {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        #batchTextInput {
+            min-height: 120px;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        #textInput:focus, #ruleInput:focus, #batchTextInput:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-warning {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #d68910;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-info {
+            background-color: #9b59b6;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #8e44ad;
+        }
+
+        .btn-secondary {
+            background-color: #7f8c8d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #6c7b7d;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .hint {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            min-height: 20px;
+        }
+
+        .hint.duplicate {
+            color: #e74c3c;
+        }
+
+        .hint.success {
+            color: #2ecc71;
+        }
+
+        .hint.error {
+            color: #e74c3c;
+        }
+
+        .list-container {
+            margin-top: 20px;
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .list-length {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .list-items {
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .list-item {
+            padding: 14px 18px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .list-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item-content {
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .list-item-index {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button-group.vertical {
+            flex-direction: column;
+        }
+
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2ecc71;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #95a5a6;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .instructions {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        .rule-management {
+            margin-top: 30px;
+        }
+
+        .rule-display {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+
+        .rule-display h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .rule-display .rule-url {
+            font-family: monospace;
+            background-color: #e8f4fc;
+            padding: 10px;
+            border-radius: 4px;
+            color: #2c3e50;
+        }
+
+        .url-hint {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #e8f4fc;
+            color: #3498db;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+
+        .list-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .list-item-btn {
+            padding: 6px 12px;
+            background-color: #ecf0f1;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .list-item-btn:hover {
+            background-color: #d5dbdb;
+        }
+
+        .rule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .rule-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .rule-item-content {
+            flex: 1;
+            word-break: break-all;
+        }
+
+        .rules-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .no-rules {
+            text-align: center;
+            padding: 20px;
+            color: #95a5a6;
+        }
+
+        .tab-container {
+            margin-top: 20px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .batch-hint {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+        }
+
+        .list-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>🔗 文本任务工具</h1>
+        <p class="subtitle">支持批量添加、列表复制、URL规则替换等功能</p>
+    </header>
+
+    <div class="main-content">
+        <div class="left-panel">
+            <div class="panel">
+                <h2 class="panel-title">文本输入与添加</h2>
+
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" id="singleTabBtn">单条添加</button>
+                        <button class="tab-button" id="batchTabBtn">批量添加</button>
+                    </div>
+
+                    <div class="tab-content active" id="singleTabContent">
+                        <div class="input-section">
+                            <div class="input-group">
+                                <input type="text" id="textInput" placeholder="请输入要添加的文本...">
+                                <button class="btn btn-primary" id="addBtn">添加文本</button>
+                            </div>
+                            <div class="hint" id="hintText"></div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="batchTabContent">
+                        <div class="input-section">
+                            <textarea id="batchTextInput" placeholder="请输入批量文本，支持换行、逗号、分号分隔..."></textarea>
+                            <div class="batch-hint">支持使用换行、中文逗号（，）、英文逗号（,）、中文分号（；）、英文分号（;）分隔多个元素</div>
+                            <div style="margin-top: 10px;">
+                                <button class="btn btn-primary" id="batchAddBtn">批量添加</button>
+                                <button class="btn btn-secondary" id="clearBatchBtn">清空输入</button>
+                            </div>
+                            <div class="hint" id="batchHintText"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule-management">
+                    <h3>URL规则管理</h3>
+                    <div class="input-group" style="margin-top: 15px;">
+                        <input type="text" id="ruleInput" placeholder="输入URL规则，如: https://example.com/search?keyword={key}">
+                        <button class="btn btn-info" id="addRuleBtn">添加规则</button>
+                    </div>
+                    <div class="hint" id="ruleHintText"></div>
+
+                    <div class="current-rule" style="margin-top: 20px;">
+                        <h4>当前生效规则 <span id="currentRuleCount" class="tag">0 条规则</span></h4>
+                        <div id="rulesList" class="rules-list">
+                            <div class="no-rules">暂无URL规则，请添加一个规则</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group vertical">
+                    <button class="btn btn-success" id="completeBtn">完成添加（移除第一项并复制）</button>
+                    <button class="btn btn-warning" id="nextBtn">下一个（移除第一项并复制）</button>
+                    <button class="btn btn-info" id="openWindowBtn">打开新窗口（移除第一项并打开URL）</button>
+                    <button class="btn btn-danger" id="clearBtn">清空所有数据</button>
+                </div>
+            </div>
+
+
+            <div class="panel">
+                <div class="list-header">
+                    <h2 class="panel-title" style="margin-bottom: 0; border-bottom: none;">📋 任务列表</h2>
+                    <div class="list-actions">
+                        <span class="list-length">总数: <span id="taskCount">0</span></span>
+                        <button class="btn btn-secondary btn-sm" id="copyTaskBtn" title="复制整个列表">复制列表</button>
+                    </div>
+                </div>
+
+                <div class="list-container">
+                    <div id="taskList" class="list-items">
+                        <div class="empty-state">
+                            <div>📄</div>
+                            <p>暂无任务内容</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="right-panel">
+
+            <div class="panel">
+                <div class="list-header">
+                    <h2 class="panel-title" style="margin-bottom: 0; border-bottom: none;">📁 归档列表</h2>
+                    <div class="list-actions">
+                        <span class="list-length">总数: <span id="archiveCount">0</span></span>
+                        <button class="btn btn-secondary btn-sm" id="copyArchiveBtn" title="复制整个列表">复制列表</button>
+                    </div>
+                </div>
+
+                <div class="list-container">
+                    <div id="archiveList" class="list-items">
+                        <div class="empty-state">
+                            <div>📂</div>
+                            <p>暂无归档内容</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">数据统计与操作</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">归档项目数</div>
+                        <div class="stat-value" id="totalItems">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">待处理任务数</div>
+                        <div class="stat-value" id="currentTasks">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">已处理项目数</div>
+                        <div class="stat-value" id="processedItems">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">URL规则数</div>
+                        <div class="stat-value" id="ruleCount">0</div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>使用说明：</h3>
+                    <ul>
+                        <li><strong>单条添加</strong>: 输入单个文本，点击"添加文本"按钮</li>
+                        <li><strong>批量添加</strong>: 输入多行文本，用换行、逗号或分号分隔，点击"批量添加"按钮</li>
+                        <li><strong>URL规则格式</strong>: 必须包含{key}变量，如: https://example.com/search?q={key}</li>
+                        <li><strong>完成添加</strong>: 移除任务列表第一项并复制到剪贴板</li>
+                        <li><strong>下一个</strong>: 移除任务列表第一项并复制到剪贴板</li>
+                        <li><strong>打开新窗口</strong>: 移除任务列表第一项，替换URL规则中的{key}变量，并在新标签页打开</li>
+                        <li><strong>复制列表</strong>: 点击列表上方的"复制列表"按钮，复制整个列表内容（换行分隔）</li>
+                        <li><strong>数据持久化</strong>: 刷新页面后数据会保留，需要手动点击"清空所有数据"来清除</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>文本任务工具 &copy; 2026 | 数据保存在本地浏览器中</p>
+    </footer>
+</div>
+
+<div class="copy-notification" id="copyNotification">✅ 已复制到剪贴板！</div>
+
+<script>
+    // 从localStorage加载数据或初始化
+    let archiveList = JSON.parse(localStorage.getItem('textProcessorArchive')) || [];
+    let taskList = JSON.parse(localStorage.getItem('textProcessorTasks')) || [];
+    let urlRules = JSON.parse(localStorage.getItem('textProcessorRules')) || [];
+
+    // DOM元素
+    const textInput = document.getElementById('textInput');
+    const batchTextInput = document.getElementById('batchTextInput');
+    const addBtn = document.getElementById('addBtn');
+    const batchAddBtn = document.getElementById('batchAddBtn');
+    const clearBatchBtn = document.getElementById('clearBatchBtn');
+    const completeBtn = document.getElementById('completeBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const openWindowBtn = document.getElementById('openWindowBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyArchiveBtn = document.getElementById('copyArchiveBtn');
+    const copyTaskBtn = document.getElementById('copyTaskBtn');
+    const hintText = document.getElementById('hintText');
+    const batchHintText = document.getElementById('batchHintText');
+    const archiveListEl = document.getElementById('archiveList');
+    const taskListEl = document.getElementById('taskList');
+    const archiveCount = document.getElementById('archiveCount');
+    const taskCount = document.getElementById('taskCount');
+    const copyNotification = document.getElementById('copyNotification');
+    const totalItems = document.getElementById('totalItems');
+    const currentTasks = document.getElementById('currentTasks');
+    const processedItems = document.getElementById('processedItems');
+    const ruleCount = document.getElementById('ruleCount');
+    const currentRuleCount = document.getElementById('currentRuleCount');
+
+    // URL规则相关元素
+    const ruleInput = document.getElementById('ruleInput');
+    const addRuleBtn = document.getElementById('addRuleBtn');
+    const ruleHintText = document.getElementById('ruleHintText');
+    const rulesList = document.getElementById('rulesList');
+
+    // 标签页相关元素
+    const singleTabBtn = document.getElementById('singleTabBtn');
+    const batchTabBtn = document.getElementById('batchTabBtn');
+    const singleTabContent = document.getElementById('singleTabContent');
+    const batchTabContent = document.getElementById('batchTabContent');
+
+    // 初始化页面
+    function initPage() {
+        updateLists();
+        updateStats();
+        updateRulesList();
+
+        // 监听输入框变化
+        textInput.addEventListener('input', function() {
+            // 输入时清空提示
+            hintText.textContent = '';
+            hintText.className = 'hint';
+        });
+
+        // 监听批量输入框变化
+        batchTextInput.addEventListener('input', function() {
+            // 输入时清空提示
+            batchHintText.textContent = '';
+            batchHintText.className = 'hint';
+        });
+
+        // 监听规则输入框变化
+        ruleInput.addEventListener('input', function() {
+            // 输入时清空提示
+            ruleHintText.textContent = '';
+            ruleHintText.className = 'hint';
+        });
+
+        // 添加按钮点击事件
+        addBtn.addEventListener('click', addText);
+
+        // 批量添加按钮点击事件
+        batchAddBtn.addEventListener('click', batchAddText);
+
+        // 清空批量输入按钮点击事件
+        clearBatchBtn.addEventListener('click', function() {
+            batchTextInput.value = '';
+            batchHintText.textContent = '已清空输入框';
+            batchHintText.className = 'hint success';
+        });
+
+        // 添加规则按钮点击事件
+        addRuleBtn.addEventListener('click', addRule);
+
+        // 完成添加按钮点击事件
+        completeBtn.addEventListener('click', completeTask);
+
+        // 下一个按钮点击事件
+        nextBtn.addEventListener('click', nextTask);
+
+        // 打开新窗口按钮点击事件
+        openWindowBtn.addEventListener('click', openNewWindow);
+
+        // 清空按钮点击事件
+        clearBtn.addEventListener('click', clearAllData);
+
+        // 复制归档列表按钮点击事件
+        copyArchiveBtn.addEventListener('click', copyArchiveList);
+
+        // 复制任务列表按钮点击事件
+        copyTaskBtn.addEventListener('click', copyTaskList);
+
+        // 按Enter键添加文本
+        textInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addText();
+            }
+        });
+
+        // 按Enter键添加规则
+        ruleInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addRule();
+            }
+        });
+
+        // 标签页切换
+        singleTabBtn.addEventListener('click', function() {
+            singleTabBtn.classList.add('active');
+            batchTabBtn.classList.remove('active');
+            singleTabContent.classList.add('active');
+            batchTabContent.classList.remove('active');
+        });
+
+        batchTabBtn.addEventListener('click', function() {
+            batchTabBtn.classList.add('active');
+            singleTabBtn.classList.remove('active');
+            batchTabContent.classList.add('active');
+            singleTabContent.classList.remove('active');
+        });
+    }
+
+    // 添加文本到列表
+    function addText() {
+        const text = textInput.value.trim();
+
+        // 非空校验
+        if (!text) {
+            hintText.textContent = '请输入文本内容';
+            hintText.className = 'hint duplicate';
+            return;
+        }
+
+        // 去除所有空格
+        const processedText = text.replace(/\s+/g, '');
+
+        // 检查是否已存在（不区分大小写）
+        const exists = archiveList.some(item =>
+            item.toLowerCase() === processedText.toLowerCase()
+        );
+
+        if (exists) {
+            hintText.textContent = '该内容已存在，未重复添加';
+            hintText.className = 'hint duplicate';
+            textInput.value = '';
+            return;
+        }
+
+        // 添加到列表
+        archiveList.push(processedText);
+        taskList.push(processedText);
+
+        // 保存到localStorage
+        saveToLocalStorage();
+
+        // 更新界面
+        updateLists();
+        updateStats();
+
+        // 显示成功提示
+        hintText.textContent = '已成功添加文本: ' + processedText;
+        hintText.className = 'hint success';
+
+        // 清空输入框
+        textInput.value = '';
+        textInput.focus();
+    }
+
+    // 批量添加文本到列表
+    function batchAddText() {
+        const text = batchTextInput.value.trim();
+
+        // 非空校验
+        if (!text) {
+            batchHintText.textContent = '请输入文本内容';
+            batchHintText.className = 'hint duplicate';
+            return;
+        }
+
+        // 分割文本：支持换行、中文逗号、英文逗号、中文分号、英文分号
+        const separators = /\n|,|，|;|；/;
+        const items = text.split(separators)
+            .map(item => item.trim())
+            .filter(item => item.length > 0)
+            .map(item => item.replace(/\s+/g, '')); // 去除所有空格
+
+        if (items.length === 0) {
+            batchHintText.textContent = '未找到有效的文本内容';
+            batchHintText.className = 'hint duplicate';
+            return;
+        }
+
+        // 过滤掉已存在的内容（不区分大小写）
+        const newItems = [];
+        const duplicateItems = [];
+
+        items.forEach(item => {
+            const exists = archiveList.some(existingItem =>
+                existingItem.toLowerCase() === item.toLowerCase()
+            );
+
+            if (!exists) {
+                newItems.push(item);
+            } else {
+                duplicateItems.push(item);
+            }
+        });
+
+        // 如果没有新内容
+        if (newItems.length === 0) {
+            batchHintText.textContent = `所有内容都已存在，共 ${duplicateItems.length} 个重复项`;
+            batchHintText.className = 'hint duplicate';
+            return;
+        }
+
+        // 添加到列表
+        archiveList.push(...newItems);
+        taskList.push(...newItems);
+
+        // 保存到localStorage
+        saveToLocalStorage();
+
+        // 更新界面
+        updateLists();
+        updateStats();
+
+        // 显示成功提示
+        let message = `成功添加 ${newItems.length} 个新项`;
+        if (duplicateItems.length > 0) {
+            message += `，跳过 ${duplicateItems.length} 个重复项`;
+        }
+        batchHintText.textContent = message;
+        batchHintText.className = 'hint success';
+
+        // 清空输入框
+        batchTextInput.value = '';
+    }
+
+    // 添加URL规则
+    function addRule() {
+        const rule = ruleInput.value.trim();
+
+        // 非空校验
+        if (!rule) {
+            ruleHintText.textContent = '请输入URL规则';
+            ruleHintText.className = 'hint error';
+            return;
+        }
+
+        // URL格式校验
+        try {
+            new URL(rule);
+        } catch (e) {
+            ruleHintText.textContent = 'URL格式不正确，请检查';
+            ruleHintText.className = 'hint error';
+            return;
+        }
+
+        // 检查是否包含{key}变量
+        if (!rule.includes('{key}')) {
+            ruleHintText.textContent = 'URL规则必须包含{key}变量';
+            ruleHintText.className = 'hint error';
+            return;
+        }
+
+        // 检查是否已存在
+        const exists = urlRules.some(item => item === rule);
+
+        if (exists) {
+            ruleHintText.textContent = '该规则已存在';
+            ruleHintText.className = 'hint duplicate';
+            return;
+        }
+
+        // 添加到规则列表
+        urlRules.push(rule);
+
+        // 保存到localStorage
+        saveToLocalStorage();
+
+        // 更新界面
+        updateRulesList();
+        updateStats();
+
+        // 显示成功提示
+        ruleHintText.textContent = 'URL规则添加成功';
+        ruleHintText.className = 'hint success';
+
+        // 清空输入框
+        ruleInput.value = '';
+        ruleInput.focus();
+    }
+
+    // 完成添加 - 移除任务列表第一项并复制到剪贴板
+    function completeTask() {
+        if (taskList.length === 0) {
+            showNotification('任务列表为空，无内容可复制', 'warning');
+            return;
+        }
+
+        // 获取第一项
+        const firstItem = taskList[0];
+
+        // 复制到剪贴板
+        copyToClipboard(firstItem);
+
+        // 从任务列表中移除
+        taskList.shift();
+
+        // 保存到localStorage
+        saveToLocalStorage();
+
+        // 更新界面
+        updateLists();
+        updateStats();
+
+        // 显示通知
+        showNotification('已复制: ' + firstItem);
+    }
+
+    // 下一个 - 移除任务列表第一项并复制到剪贴板
+    function nextTask() {
+        if (taskList.length === 0) {
+            showNotification('任务列表为空，无内容可复制', 'warning');
+            return;
+        }
+
+        // 获取第一项
+        const firstItem = taskList[0];
+
+        // 复制到剪贴板
+        copyToClipboard(firstItem);
+
+        // 从任务列表中移除
+        taskList.shift();
+
+        // 保存到localStorage
+        saveToLocalStorage();
+
+        // 更新界面
+        updateLists();
+        updateStats();
+
+        // 显示通知
+        showNotification('已复制: ' + firstItem);
+    }
+
+    // 打开新窗口 - 移除任务列表第一项，替换URL规则中的{key}并打开
+    function openNewWindow() {
+        if (taskList.length === 0) {
+            showNotification('任务列表为空，无内容可处理', 'warning');
+            return;
+        }
+
+        if (urlRules.length === 0) {
+            showNotification('请先添加URL规则', 'warning');
+            return;
+        }
+
+        // 获取第一项
+        const firstItem = taskList[0];
+
+        // 获取第一个规则
+        const rule = urlRules[0];
+
+        // 替换{key}变量
+        const url = rule.replace('{key}', encodeURIComponent(firstItem));
+
+        // 从任务列表中移除
+        taskList.shift();
+
+        // 保存到localStorage
+        saveToLocalStorage();
+
+        // 在新标签页中打开URL
+        window.open(url, '_blank');
+
+        // 更新界面
+        updateLists();
+        updateStats();
+
+        // 显示通知
+        showNotification('已打开: ' + url);
+    }
+
+    // 复制归档列表到剪贴板
+    function copyArchiveList() {
+        if (archiveList.length === 0) {
+            showNotification('归档列表为空，无内容可复制', 'warning');
+            return;
+        }
+
+        // 将列表项用换行连接
+        const listText = archiveList.join('\n');
+
+        // 复制到剪贴板
+        copyToClipboard(listText);
+
+        // 显示通知
+        showNotification(`已复制归档列表（${archiveList.length} 项）`);
+    }
+
+    // 复制任务列表到剪贴板
+    function copyTaskList() {
+        if (taskList.length === 0) {
+            showNotification('任务列表为空，无内容可复制', 'warning');
+            return;
+        }
+
+        // 将列表项用换行连接
+        const listText = taskList.join('\n');
+
+        // 复制到剪贴板
+        copyToClipboard(listText);
+
+        // 显示通知
+        showNotification(`已复制任务列表（${taskList.length} 项）`);
+    }
+
+    // 复制文本到剪贴板
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                console.log('已复制到剪贴板: ' + text);
+            })
+            .catch(err => {
+                console.error('复制失败: ', err);
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            });
+    }
+
+    // 显示通知
+    function showNotification(message, type = 'success') {
+        // 更新通知内容
+        if (type === 'warning') {
+            copyNotification.textContent = '⚠️ ' + message;
+            copyNotification.style.backgroundColor = '#f39c12';
+        } else {
+            copyNotification.textContent = '✅ ' + message;
+            copyNotification.style.backgroundColor = '#2ecc71';
+        }
+
+        // 显示通知
+        copyNotification.classList.add('show');
+
+        // 2秒后隐藏
+        setTimeout(() => {
+            copyNotification.classList.remove('show');
+        }, 2000);
+    }
+
+    // 更新列表显示
+    function updateLists() {
+        // 更新归档列表
+        if (archiveList.length === 0) {
+            archiveListEl.innerHTML = '<div class="empty-state"><div>📂</div><p>暂无归档内容</p></div>';
+        } else {
+            let archiveHTML = '';
+            archiveList.forEach((item, index) => {
+                archiveHTML += `
+                    <div class="list-item">
+                        <div class="list-item-content">
+                            <span class="list-item-index">${index + 1}</span>
+                            ${item}
+                        </div>
+                        <div class="list-item-actions">
+                            <button class="list-item-btn" onclick="copyItem('${item.replace(/'/g, "\\'")}')">复制</button>
+                        </div>
+                    </div>
+                    `;
+            });
+            archiveListEl.innerHTML = archiveHTML;
+        }
+
+        // 更新任务列表
+        if (taskList.length === 0) {
+            taskListEl.innerHTML = '<div class="empty-state"><div>📄</div><p>暂无任务内容</p></div>';
+        } else {
+            let taskHTML = '';
+            taskList.forEach((item, index) => {
+                taskHTML += `
+                    <div class="list-item">
+                        <div class="list-item-content">
+                            <span class="list-item-index">${index + 1}</span>
+                            ${item}
+                        </div>
+                        <div class="list-item-actions">
+                            <button class="list-item-btn" onclick="copyItem('${item.replace(/'/g, "\\'")}')">复制</button>
+                        </div>
+                    </div>
+                    `;
+            });
+            taskListEl.innerHTML = taskHTML;
+        }
+
+        // 更新计数
+        archiveCount.textContent = archiveList.length;
+        taskCount.textContent = taskList.length;
+    }
+
+    // 更新规则列表显示
+    function updateRulesList() {
+        if (urlRules.length === 0) {
+            rulesList.innerHTML = '<div class="no-rules">暂无URL规则，请添加一个规则</div>';
+            currentRuleCount.textContent = '0 条规则';
+        } else {
+            let rulesHTML = '';
+            urlRules.forEach((rule, index) => {
+                rulesHTML += `
+                    <div class="rule-item">
+                        <div class="rule-item-content">
+                            <strong>规则 ${index + 1}:</strong> ${rule}
+                        </div>
+                        <div class="list-item-actions">
+                            <button class="list-item-btn" onclick="deleteRule(${index})">删除</button>
+                        </div>
+                    </div>
+                    `;
+            });
+            rulesList.innerHTML = rulesHTML;
+            currentRuleCount.textContent = `${urlRules.length} 条规则`;
+        }
+
+        ruleCount.textContent = urlRules.length;
+    }
+
+    // 删除规则
+    function deleteRule(index) {
+        if (confirm('确定要删除这条规则吗？')) {
+            urlRules.splice(index, 1);
+            saveToLocalStorage();
+            updateRulesList();
+            updateStats();
+            showNotification('规则已删除', 'warning');
+        }
+    }
+
+    // 复制单个项目
+    function copyItem(text) {
+        copyToClipboard(text);
+        showNotification('已复制: ' + text);
+    }
+
+    // 更新统计信息
+    function updateStats() {
+        totalItems.textContent = archiveList.length;
+        currentTasks.textContent = taskList.length;
+        processedItems.textContent = archiveList.length - taskList.length;
+        ruleCount.textContent = urlRules.length;
+    }
+
+    // 清空所有数据
+    function clearAllData() {
+        if (confirm('确定要清空所有数据吗？此操作不可撤销。')) {
+            archiveList = [];
+            taskList = [];
+            urlRules = [];
+            saveToLocalStorage();
+            updateLists();
+            updateRulesList();
+            updateStats();
+            hintText.textContent = '已清空所有数据';
+            hintText.className = 'hint';
+            ruleHintText.textContent = '';
+            batchHintText.textContent = '';
+            showNotification('已清空所有数据', 'warning');
+        }
+    }
+
+    // 保存到localStorage
+    function saveToLocalStorage() {
+        localStorage.setItem('textProcessorArchive', JSON.stringify(archiveList));
+        localStorage.setItem('textProcessorTasks', JSON.stringify(taskList));
+        localStorage.setItem('textProcessorRules', JSON.stringify(urlRules));
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', initPage);
+</script>
+</body>
+</html>

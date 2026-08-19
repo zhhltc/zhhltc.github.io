@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            JS/HTML互转工具
+        </title>
+        <meta name="keywords" content="JS代码美化换,JS代码格式化">
+        <meta name="description" content="JS代码美化、加密压缩。">
+        <link rel="stylesheet" type="text/css" href="tool.css">
+    </head>
+    
+    <body style="">
+        
+                     <!-- /工具开始 -->
+<script language="JavaScript"> 
+	 function rechange(){
+	 document.getElementById('re').value=document.getElementById('oresult').value.replace(/document.writeln\("/g,"").replace(/"\);/g,"").replace(/\\\"/g,"\"").replace(/\\\'/g,"\'").replace(/\\\//g,"\/").replace(/\\\\/g,"\\")
+	 }
+	 function change(){
+	 document.getElementById('oresult2').value="document.writeln(\""+document.getElementById('osource').value.replace(/\\/g,"\\\\").replace(/\\/g,"\\/").replace(/\'/g,"\\\'").replace(/\"/g,"\\\"").split('\n').join("\");\ndocument.writeln(\"")+"\");"
+	 }
+ </script>
+    <div style="width:50%;margin:0 auto;margin-top:5%;">
+        <h2>HTML转JS代码工具</h2>
+        <h3>请将Html源代码粘贴到下面表单中:</h3>
+        <textarea class="toolarea" id="osource" onfocus="change()" onkeyup="change()"></textarea>
+        <h3>下面表单中是相应的Js代码:</h3>
+        <textarea class="toolarea" id="oresult2"></textarea><br>
+        
+        <h2>JS转HTML代码工具</h2>
+        <h3>请将Js源代码粘贴到下面表单中:</h3>
+        <textarea class="toolarea" id="oresult" onfocus="rechange()" onkeyup="rechange()"></textarea>
+        <h3>下面表单中是相应的Html代码:</h3>
+        <textarea class="toolarea" id="re"></textarea>
+        </div>
+    <!-- /工具结束 -->
+               
+    </body>
+
+</html>

@@ -1,0 +1,126 @@
+/* ���˹����� */
+h2{color:#e74987;font-size:18px;font-weight:600;border-left:3px solid #5cc2cf;margin:30px 0 10px 0;font:22px "΢���ź�","Microsoft YaHei";padding-left:12px;line-height:34px}
+h3{font-size:14px;text-decoration:underline;font-weight:lighter;color:#666}
+
+.title{width:100%;border:0;padding:4px 0;}
+.icon img{width:72px;height:72px;float:left;margin-right:15px}
+
+/* sidebar���� */
+.tbox{width:1200px; margin: 0 auto;background-color: #FFF}
+.tool-left{width:152px;float:left;margin-bottom: 20px;}
+.tool-right{width: 1020px;float:right}
+
+.sidebar{width: 140px;height: 600px; padding:20px 10px 500px 2px;}
+.sidebar.fixed {position:fixed;top:10px;}
+.sidebar.fixed dl {margin:0;}
+.sidebar.absolute {position:absolute;bottom:0;}
+.sidebar dl {position:relative;	;padding-bottom:20px;font-size: 14px;font-family: Tahoma, Verdana, "Microsoft Yahei", sans-serif; 
+}
+.sidebar dl dt {position:absolute;top:12px;left:-20px;}
+.sidebar dl .show-list {display:block;width:16px;height:16px;cursor:pointer;}
+.sidebar dl .show-list::before {content:'';	display:block;	width:18px;	height:3px;	background:#5cc2cf;border-radius:1px;position:absolute;top:35%;margin-top:-1px;margin-left: 20px}
+.sidebar dl .show-list.add::after {content:'';	display:block;	width:2px;	height:12px;	background:#000;	border-radius:1px;	position:absolute;	left:5px;top:20%;margin-top:-1px;margin-left: 20px}
+.sidebar dd {margin:0;padding:6px 0;letter-spacing:0.5px;}
+.sidebar dd a {color:#5e5e5e;display:inline-block;padding:2px 4px;transition:0.1s;margin-left: 24px;
+text-decoration:none}
+.sidebar dd a:hover {color:#fff;background:#5cc2cf;	border-radius:3px;}
+.sidebar dd.current a {	color:#5cc2cf;background:transparent;}
+
+.part {	background:#fff;margin-bottom:24px;	border-radius:10px;}
+.part h2 {font-family: Tahoma, Verdana, "Microsoft Yahei", sans-serif; color:#3c3c3c;font-size:18px;font-weight: bold;position:relative;padding:10px 0 16px 24px;border-bottom:1px solid #f1f4f9;line-height:16px;margin-bottom:16px;}
+/* �б� */
+.toollist{width:1000px;clear:both;display:inline-table}
+.toollist dt{font:26px "΢���ź�";height:30px;margin:20px 0 10px 0}
+.toollist dd{font:18px "΢���ź�";width:280px;height:70px;float:left;border:1px solid #DDD;margin:8px}
+.toollist dd:hover{border:1px solid #5cc2d0;}
+.toollist dd img{width:50px;height:50px;float:left;margin-right:10px}
+.toollist dd a{color:#333;display:block;padding:10px 8px}
+.toollist dd a:hover{color:#390;text-decoration:none}
+.toollist dd span{display:block;font-size:12px;color:#999;margin-top:4px}
+
+
+/* ��������ҳ */
+.content-1200{width:1115px;line-height:26px;font-size:14px;float:left;border-left:5px solid #F0F0F0;margin:15px 0 45px 0;padding:10px 15px 0 50px;overflow:hidden}
+.content-1200 img{margin:0 0 12px;max-width:95%;height:auto}
+
+/* ��ʿ���� */
+.tips{font-size:12px;line-height:20px;color:#888;padding:10px 0}
+
+/* ���߼�� */
+.tool-info{padding-top:2rem}
+.tool-info h5{font-size:14px;font-weight:700;padding-bottom:5px}
+.tool-info p{font-size:12px;line-height:1.6;padding-bottom:10px;color:#666}
+.tool-info pre{display:block;overflow-x:auto;padding:.8em;margin-bottom:10px;background:#f6f6f6;-webkit-text-size-adjust:none;border-radius:4px;font-size:12px;font-family:Menlo,Monaco,Consolas,"Courier New",monospace;text-align:left;line-height:1.42857143;word-break:break-all;word-wrap:break-word;color:#555}
+
+
+/* �ı��� */
+.tooltext{padding:4px;margin:10px 0;font-size:18px;width:720px;height:24px;line-height:24px;color:#333}
+.toolarea{padding:4px;margin:8px 0;width:720px;height:250px;color:#333;display:block}
+
+
+/* ��ť */
+.bt-blue{font-size:14px;border:none;line-height:33px;background:#4899E0;font-weight:bold;color:#FFF;cursor:pointer;padding:0 18px;margin-right:12px}
+.bt-blue:hover{background:#368DD9;text-decoration:none}
+.bt-green {font-size:14px;border:none;line-height:33px;background:#6FB934;font-weight:bold;color:#FFF;cursor:pointer;padding:0 18px;margin-right:12px}
+.bt-green:hover{background:#5FA924;text-decoration:none}
+.bt-grey {font-size:14px;border:none;line-height:33px;background:#DDD;font-weight:bold;color:#666;cursor:pointer;padding:0 18px;margin-right:12px}
+.bt-grey:hover{background:#CCC;text-decoration:none}
+
+/* ���߱��� */
+.table-line{margin-bottom:18px;font-size:12px;max-width:100%;background-color:transparent;border-collapse:collapse;border-spacing:0}
+.table-line td{padding:10px;line-height:18px;text-align:left;vertical-align:top;border-top:1px solid #ddd}
+.table-line th{padding:8px;line-height:18px;text-align:left;vertical-align:top;font-weight:700}
+.table-line thead th{vertical-align:bottom}
+.table-line caption+thead tr:first-child td,.table caption+thead tr:first-child th,.table colgroup+thead tr:first-child td,.table colgroup+thead tr:first-child th,.table thead:first-child tr:first-child td,.table thead:first-child tr:first-child th{border-top:0}
+.table-line tbody+tbody{border-top:2px solid #ddd}
+.table-line tbody tr:hover td{background-color:#f2f2f2}
+.table-line thead th{background-color:#f0f0f0;font-weight:400}
+.table-line tfoot td{color:#777;text-align:right;font-size:12px}
+
+/*��ɫ����*/
+.table-orange{border:#ccc solid 1px;border-bottom:none;color:#333; font-family:Verdana}
+.table-orange th{height:36px;border-bottom:#ccc solid 1px;background:#ddd;overflow-y:hidden;padding:0px 10px;text-align:left;font-size:14px}
+.table-orange td{line-height:36px;border-bottom:#ccc solid 1px;background:#FFF;padding:0px 10px;}
+.table-orange tr:nth-of-type(even) td{background:#f4f4f4}/*ż����*/
+.table-orange .tdr{ color:#666; text-align:right;}
+.table-orange .tdl{ color:#f30; text-align:left;border-right:#ccc solid 1px;}
+
+/*��ɫ����*/
+.table-grey{margin:30px 0 0 0}
+.table-grey table{width:100%;border:1px solid #ccc;margin-bottom:10px;border-collapse:collapse}
+.table-grey table td{padding:5px 0;border-right:1px solid #ccc;border-bottom:1px solid #ccc}
+.table-grey table .tit td{font-size:16px;background:#f5f5f5}
+.table-grey tr,.table-grey td{border:1px #dfdfdf solid;padding:10px 25px;text-align:center}
+.table-grey td span{float:left;padding:8px!important}
+.table-grey th{border:1px #dfdfdf solid;background-color:#f2f2f2;color:#000;font-size:15px;font-weight:800;padding:15px 0}
+.table-grey td{background-color:#FFF;font-size:13px}
+.table-grey td.tad_fir{text-align:left;background-color:#f9f9f9;width:200px;padding:10px 0}
+.table-grey td.tad_fir img{float:left;margin:0 0 0 18px}
+.table-grey td.tad_fir p{float:left;margin:10px 0 0 10px;font-size:14px;width:140px}
+.table-grey td.tad_fir p.tad_td{margin:5px 0 0 10px;font-size:12px}
+.table-grey td.tad_fir2{text-align:left;background-color:#f9f9f9;width:260px;padding:10px 0}
+.table-grey td.tad_fir2 img{float:left;margin:0 0 0 18px}
+.table-grey td.tad_fir2 p{float:left;margin:10px 0 0 10px;font-size:14px;width:180px}
+.table-grey td.tad_fir2 p em{color:#999;font-size:12px;font-style:normal;font-family:Verdana,Geneva,sans-serif}
+.table-grey td.tad_fir2 p.tad_td{margin:5px 0 0 10px;font-size:12px}
+.table-grey td.tad_fir_1{background-color:#f9f9f9;width:210px;padding:10px 0}
+.table-grey td.tad_fir_1 p{font-size:16px}
+
+
+/* ���´����� */
+.toolcode{margin:0 8px 26px}
+
+.tool {float:left;margin:12px 0 40px 0;}
+.tool dd{width:82px;height:132px;margin:12px 38px 0 0;float:left;display:inline}
+.tool dd a{color:#666;line-height:30px;text-align:center;display:block}
+.tool dd a:hover{color:#390;text-decoration:none}
+.tool dd img{width:80px;height:80px;border:1px solid #FFF;}
+
+.nav-tool{}
+.nav-tool img{width:50px;height:50px;border:1px solid #EEE}
+.nav-tool dd{width:90px;height:120px;float:left;text-align:center;}
+.nav-tool dd a{color:#666;border-bottom:3px solid #EEE;display:block}
+.nav-tool dd a.on{color:#390}
+.nav-tool dd a:hover{color:#390}
+
+.wenzi{font-size:18px;color:#666;margin-bottom:20px;padding:6px 6px 6px 18px;letter-spacing:2px;}

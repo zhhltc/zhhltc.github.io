@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字母转换和复制</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input, button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+            border: none;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="letterInput">输入字母:</label>
+        <input type="text" id="letterInput" >
+
+        <button onclick="convertToUpperCase()">转换成大写</button>
+        <button onclick="convertToLowerCase()">转换成小写</button>
+        <button onclick="copyToClipboard()">复制</button>
+
+        <p>转换结果: <span id="result"></span></p>
+    </div>
+
+    <script>
+        function convertToUpperCase() {
+            const input = document.getElementById('letterInput').value.toUpperCase();
+            displayResult(input);
+        }
+
+        function convertToLowerCase() {
+            const input = document.getElementById('letterInput').value.toLowerCase();
+            displayResult(input);
+        }
+
+        function displayResult(text) {
+            document.getElementById('result').textContent = text;
+        }
+
+        function copyToClipboard() {
+            const resultElement = document.getElementById('result');
+            const textArea = document.createElement('textarea');
+            textArea.value = resultElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('已复制到剪贴板：' + resultElement.textContent);
+        }
+
+    </script>
+</body>
+</html>

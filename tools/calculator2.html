@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多步骤动态计算器-Su3.cn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --success: #06d6a0;
+            --danger: #ff6b6b;
+            --danger-dark: #ee5253;
+            --gray: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .calculator-container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        .calculator-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .calculator-body {
+            padding: 20px;
+        }
+        .calc-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: var(--border-radius);
+            flex-wrap: wrap;
+        }
+        .row-number {
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .desc-field, .input-field, .select-op, .result-field, .color-picker {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .desc-field { flex: 1; min-width: 100px; }
+        .input-field { width: 100px; text-align: right; }
+        .result-field { background: #edf2ff; font-weight: bold; width: 120px; }
+        .color-picker { width: 50px; padding: 0; cursor: pointer; }
+        .delete-row {
+            background: var(--danger);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            color: white;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .delete-row.disabled { background: var(--gray); cursor: not-allowed; }
+        .add-row-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .json-title {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary-dark);
+        }
+        .json-input {
+            width: 96%;
+            height: 150px;
+            margin-top: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        /* 自适应 */
+        @media (max-width: 600px) {
+            .calc-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .input-field, .result-field, .select-op, .color-picker {
+                width: 96% !important;
+                text-align: left;
+            }
+            .delete-row {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="calculator-container">
+    <div class="calculator-header">
+        <h1><i class="fas fa-calculator"></i> 多步骤动态计算器-Su3.cn</h1>
+        <p>支持多步骤计算、背景色设置和JSON导入导出</p>
+    </div>
+
+    <div class="calculator-body">
+        <div id="calculator-rows"></div>
+        <button id="add-row-btn" class="add-row-btn">
+            <i class="fas fa-plus-circle"></i> 添加计算行
+        </button>
+        <div class="json-title">预设置()</div>
+        <p>"value": #"，则value取上面步骤计算的结果值</p>
+        <p>"value": "#n"，则value取上面第n行的计算结果值</p>
+        <p>"operator": "#"，则该步骤不计算，结果直接展示上一步的计算结果值</p>
+        <textarea id="json-input" class="json-input"></textarea>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calculatorRows = document.getElementById('calculator-rows');
+        const addRowBtn = document.getElementById('add-row-btn');
+        const jsonInput = document.getElementById('json-input');
+        let rowCount = 1;
+        let isUpdatingFromUI = false;
+        let isUpdatingFromJSON = false;
+
+        // 初始演示
+        loadFromJSON([
+            {"desc": "商品重量(kg)-1", "value": 0, "color": "#e2dadc"},
+            {"desc": "物流成本(￥)", "operator": "+", "value": 68, "color": "#ffffff"},
+            {"desc": "操作费(￥)", "operator": "+", "value": 28, "color": "#ffffff"},
+            {"desc": "商品成本(￥)", "operator": "+", "value": 10, "color": "#e2dadc"},
+            {"desc": "总成本(￥)", "operator": "#", "value": 0, "color": "#ffffff"},
+            {"desc": "汇率", "operator": "/", "value": 8.3168, "color": "#ffffff"},
+            {"desc": "折合欧元(€)", "operator": "#", "value": 0, "color": "#ffffff"},
+            {"desc": "定价倍率", "operator": "*", "value": 2, "color": "#ffffff"},
+            {"desc": "定价(€)", "operator": "#", "value": 0, "color": "#b2b1f2"},
+            {"desc": "活动(促销/闪购等)(€)", "operator": "*", "value": 0.8, "color": "#ffffff"},
+            {"desc": "售价(￥)", "operator": "*", "value":8.3168, "color": "#ffffff"},
+            {"desc": "净利润(￥)", "operator": "-", "value": "#5", "color": "#ffffff"},
+        ]);
+
+        addRowBtn.addEventListener('click', () => {
+            createAdditionalRow("新步骤", "+", "", "#ffffff");
+            updateJSONFromUI();
+        });
+
+        jsonInput.addEventListener('input', () => {
+            if (isUpdatingFromUI) return;
+            try {
+                const steps = JSON.parse(jsonInput.value);
+                isUpdatingFromJSON = true;
+                loadFromJSON(steps);
+                isUpdatingFromJSON = false;
+            } catch (e) {}
+        });
+
+        function loadFromJSON(steps) {
+            calculatorRows.innerHTML = '';
+            rowCount = 1;
+            steps.forEach((step, index) => {
+                if (index === 0) {
+                    createInitialRow(step.desc, step.value, step.color || "#ffffff");
+                } else {
+                    createAdditionalRow(step.desc, step.operator, step.value, step.color || "#ffffff");
+                }
+            });
+            calculateAll();
+            if (!isUpdatingFromJSON) updateJSONFromUI();
+        }
+
+        function createInitialRow(desc = '', value = '', color = "#ffffff") {
+            const row = document.createElement('div');
+            row.className = 'calc-row';
+            row.dataset.rowType = 'initial';
+            row.dataset.rowId = rowCount;
+            row.style.backgroundColor = color;
+
+            row.innerHTML = `
+          <span class="row-number">${rowCount}</span>
+          <input type="text" class="desc-field" placeholder="步骤说明" value="${desc}">
+          <input type="text" class="input-field value1" placeholder="起始值" value="${value}" oninput="validateNumberInput(this)">
+          <input type="color" class="color-picker" value="${color}">
+          <input type="text" class="result-field" placeholder="结果" readonly>
+          <button class="delete-row disabled"><i class="fas fa-lock"></i></button>
+        `;
+            calculatorRows.appendChild(row);
+            attachEventListeners(row);
+            rowCount++;
+        }
+
+        function createAdditionalRow(desc = '', operator = '+', value = '', color = "#ffffff") {
+            const row = document.createElement('div');
+            row.className = 'calc-row';
+            row.dataset.rowType = 'additional';
+            row.dataset.rowId = rowCount;
+            row.style.backgroundColor = color;
+
+            row.innerHTML = `
+          <span class="row-number">${rowCount}</span>
+          <input type="text" class="desc-field" placeholder="步骤说明" value="${desc}">
+          <select class="select-op operator">
+            <option value="+" ${operator==="+"?"selected":""}>+</option>
+            <option value="-" ${operator==="-"?"selected":""}>-</option>
+            <option value="*" ${operator==="*"?"selected":""}>×</option>
+            <option value="/" ${operator==="/"?"selected":""}>÷</option>
+            <option value="#" ${operator==="#"?"selected":""}>跳过计算</option>
+          </select>
+          <input type="text" class="input-field value1" placeholder="值" value="${value}" oninput="validateNumberInput(this)">
+          <input type="color" class="color-picker" value="${color}">
+          <input type="text" class="result-field" placeholder="结果" readonly>
+          <button class="delete-row"><i class="fas fa-trash-alt"></i></button>
+        `;
+            calculatorRows.appendChild(row);
+            attachEventListeners(row);
+            rowCount++;
+        }
+
+        function attachEventListeners(row) {
+            const inputs = row.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                if (!input.classList.contains('result-field')) {
+                    input.addEventListener('input', () => {
+                        if (input.classList.contains('color-picker')) row.style.backgroundColor = input.value;
+                        calculateAll();
+                        updateJSONFromUI();
+                    });
+                    input.addEventListener('change', () => {
+                        if (input.classList.contains('color-picker')) row.style.backgroundColor = input.value;
+                        calculateAll();
+                        updateJSONFromUI();
+                    });
+                }
+            });
+            const deleteBtn = row.querySelector('.delete-row');
+            if (!deleteBtn.classList.contains('disabled')) {
+                deleteBtn.addEventListener('click', function() {
+                    row.remove();
+                    renumberRows();
+                    calculateAll();
+                    updateJSONFromUI();
+                });
+            }
+        }
+
+        function renumberRows() {
+            const rows = document.querySelectorAll('.calc-row');
+            rows.forEach((row, index) => {
+                row.querySelector('.row-number').textContent = index + 1;
+                row.dataset.rowId = index + 1;
+            });
+            rowCount = rows.length + 1;
+        }
+
+        function calculateAll() {
+            const rows = document.querySelectorAll('.calc-row');
+            let prevResult = null;
+
+            rows.forEach((row, index) => {
+                const resultField = row.querySelector('.result-field');
+
+                if (row.dataset.rowType === 'initial') {
+                    let value1 = row.querySelector('.value1').value;
+                    if (value1 === '#') value1 = prevResult;
+                    if (value1 && /^#\d+$/.test(value1)) {
+                        const n = parseInt(value1.slice(1)) - 1;
+                        const targetRow = rows[n];
+                        if (targetRow) value1 = parseFloat(targetRow.querySelector('.result-field').value);
+                    } else value1 = parseFloat(value1);
+
+                    if (!isNaN(value1)) {
+                        prevResult = value1;
+                        resultField.value = formatResult(prevResult);
+                    } else {
+                        prevResult = null;
+                        resultField.value = '';
+                    }
+                } else {
+                    const operator = row.querySelector('.operator').value;
+                    let value1 = row.querySelector('.value1').value;
+
+                    if (operator === '#') {
+                        resultField.value = prevResult !== null ? formatResult(prevResult) : '';
+                        return;
+                    }
+
+                    if (value1 === '#') value1 = prevResult;
+                    if (value1 && /^#\d+$/.test(value1)) {
+                        const n = parseInt(value1.slice(1)) - 1;
+                        const targetRow = rows[n];
+                        if (targetRow) value1 = parseFloat(targetRow.querySelector('.result-field').value);
+                    } else value1 = parseFloat(value1);
+
+                    if (prevResult !== null && !isNaN(value1)) {
+                        prevResult = calculate(prevResult, value1, operator);
+                        resultField.value = formatResult(prevResult);
+                    } else resultField.value = '';
+                }
+            });
+        }
+
+        function updateJSONFromUI() {
+            if (isUpdatingFromJSON) return;
+            const rows = document.querySelectorAll('.calc-row');
+            const steps = [];
+            rows.forEach(row => {
+                const color = row.querySelector('.color-picker').value;
+                if (row.dataset.rowType === 'initial') {
+                    steps.push({
+                        desc: row.querySelector('.desc-field').value,
+                        value: row.querySelector('.value1').value,
+                        color: color
+                    });
+                } else {
+                    steps.push({
+                        desc: row.querySelector('.desc-field').value,
+                        operator: row.querySelector('.operator').value,
+                        value: row.querySelector('.value1').value,
+                        color: color
+                    });
+                }
+            });
+            isUpdatingFromUI = true;
+            jsonInput.value = JSON.stringify(steps, null, 2);
+            isUpdatingFromUI = false;
+        }
+
+        function calculate(a, b, operator) {
+            switch (operator) {
+                case '+': return a + b;
+                case '-': return a - b;
+                case '*': return a * b;
+                case '/': return b !== 0 ? a / b : NaN;
+                default: return NaN;
+            }
+        }
+
+        function formatResult(value) {
+            if (isNaN(value)) return '无效计算';
+            return (Math.round(value * 1000000) / 1000000).toString();
+        }
+
+        window.validateNumberInput = function(input) {
+            let value = input.value;
+            if (value === '') { calculateAll(); return; }
+            const validFormat = /^-?\d*\.?\d*$/.test(value);
+            if (!validFormat) {
+                input.value = input.dataset.lastValidValue || '';
+            } else input.dataset.lastValidValue = value;
+            calculateAll();
+            updateJSONFromUI();
+        };
+    });
+</script>
+</body>
+</html>

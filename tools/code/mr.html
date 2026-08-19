@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MirrEdit 激活</title>
+    <style>
+      :root {
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, PingFang SC,
+          Microsoft YaHei, sans-serif;
+        color: #0c0a12;
+        background: #f3f2f7;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2rem 1rem;
+        box-sizing: border-box;
+      }
+      .card {
+        width: 100%;
+        max-width: 32rem;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 24px 64px -16px rgba(16, 12, 32, 0.14), 0 0 0 1px rgba(16, 12, 32, 0.08);
+      }
+      h1 {
+        margin: 0 0 0.35rem;
+        font-size: 1.25rem;
+      }
+      .hint {
+        margin: 0 0 1.25rem;
+        font-size: 0.8125rem;
+        color: #4b465c;
+        line-height: 1.5;
+      }
+      label {
+        display: block;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8a8499;
+        margin-bottom: 0.35rem;
+      }
+      input[type='text'],
+      input[type='password'],
+      textarea,
+      select {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid rgba(16, 12, 32, 0.1);
+        border-radius: 0.75rem;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        background: #ebe9f0;
+      }
+      textarea {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.8125rem;
+        min-height: 5.5rem;
+        resize: vertical;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        border-radius: 0.75rem;
+        padding: 0.6rem 1rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        background: #5b4dff;
+        color: #fff;
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      button.secondary {
+        background: #ebe9f0;
+        color: #0c0a12;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+      }
+      .err {
+        color: #b91c1c;
+        font-size: 0.8125rem;
+        margin: -0.5rem 0 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>激活码生成</h1>
+      <p class="hint">
+        客户在 mr 激活界面复制的<strong>本机码</strong>（32 位十六进制，可含横杠）。签名：
+        HMAC-SHA256(秘钥, 本机码规范化后|year|permanent)。「秘钥」须与桌面程序里
+        <code>electron/license.cjs</code>
+        顶部的 <code>LICENSE_SECRET</code>
+        常量一致（若你在环境里配置了 <code>MIRREDIT_LICENSE_SECRET</code> 则优先用环境变量）。此 HTML 可单独拷贝带走。
+      </p>
+
+      <label for="secret">秘钥</label>
+      <input id="secret" type="password" autocomplete="off" placeholder="与 electron/license.cjs 中 LICENSE_SECRET 一致" />
+
+      <label for="reg">本机码</label>
+      <input id="reg" type="text" autocomplete="off" placeholder="从 MirrEdit 激活界面复制（示例 XXXX-XXXX-…）" />
+
+      <label for="kind">授权类型</label>
+      <select id="kind">
+        <option value="year">年（激活后起 365 天）</option>
+        <option value="permanent">永久</option>
+      </select>
+
+      <div class="actions">
+        <button type="button" id="gen">生成激活码</button>
+        <button type="button" id="copy" class="secondary" disabled>复制激活码</button>
+      </div>
+      <p id="err" class="err" hidden></p>
+
+      <label for="out">生成的激活码</label>
+      <textarea id="out" readonly placeholder="点击「生成激活码」后显示"></textarea>
+    </div>
+
+    <script>
+      const TOKEN_PREFIX = 'ME1.'
+
+      function normalizeMachineCode(s) {
+        return String(s || '')
+          .replace(/[^0-9a-f]/gi, '')
+          .toUpperCase()
+      }
+
+      function base64urlEncode(u8) {
+        let bin = ''
+        u8.forEach(function (b) {
+          bin += String.fromCharCode(b)
+        })
+        return btoa(bin)
+          .replace(/\+/g, '-')
+          .replace(/\//g, '_')
+          .replace(/=+$/, '')
+      }
+
+      async function hmacHex(secret, machineInput, type) {
+        var r = normalizeMachineCode(machineInput)
+        var msg = r + '|' + type
+        var enc = new TextEncoder()
+        var key = await crypto.subtle.importKey(
+          'raw',
+          enc.encode(secret),
+          { name: 'HMAC', hash: 'SHA-256' },
+          false,
+          ['sign'],
+        )
+        var sig = await crypto.subtle.sign('HMAC', key, enc.encode(msg))
+        var bytes = new Uint8Array(sig)
+        var hex = ''
+        for (var i = 0; i < bytes.length; i++) {
+          hex += bytes[i].toString(16).padStart(2, '0')
+        }
+        return hex
+      }
+
+      async function buildToken(secret, machineInput, type) {
+        var r = normalizeMachineCode(machineInput)
+        if (r.length !== 32) throw new Error('本机码须为 32 位十六进制字符（可从界面复制整段）')
+        if (type !== 'year' && type !== 'permanent') throw new Error('类型无效')
+        var h = await hmacHex(secret, machineInput, type)
+        var payload = JSON.stringify({ v: 1, r: r, t: type, h: h })
+        var payloadBytes = new TextEncoder().encode(payload)
+        return TOKEN_PREFIX + base64urlEncode(payloadBytes)
+      }
+
+      var secretEl = document.getElementById('secret')
+      var regEl = document.getElementById('reg')
+      var kindEl = document.getElementById('kind')
+      var outEl = document.getElementById('out')
+      var errEl = document.getElementById('err')
+      var copyBtn = document.getElementById('copy')
+
+      function setErr(msg) {
+        if (!msg) {
+          errEl.hidden = true
+          errEl.textContent = ''
+        } else {
+          errEl.hidden = false
+          errEl.textContent = msg
+        }
+      }
+
+      document.getElementById('gen').addEventListener('click', async function () {
+        setErr('')
+        copyBtn.disabled = true
+        outEl.value = ''
+        try {
+          var token = await buildToken(secretEl.value, regEl.value, kindEl.value)
+          outEl.value = token
+          copyBtn.disabled = false
+        } catch (e) {
+          setErr(e.message || String(e))
+        }
+      })
+
+      copyBtn.addEventListener('click', function () {
+        if (!outEl.value) return
+        navigator.clipboard.writeText(outEl.value).catch(function () {})
+      })
+    </script>
+  </body>
+</html>
